@@ -7,7 +7,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const bcrypt = require('bcryptjs');
 
-const PORT = process.env.NG_HOST_PORT || 8080;
+const PORT = process.env.CMS_HOST_PORT || 8080;
 const ENV = process.env.NODE_ENV;
 const SESSION_SECRET = process.env.SESSION_SECRET
 
