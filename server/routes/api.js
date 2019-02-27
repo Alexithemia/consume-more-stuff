@@ -1,18 +1,23 @@
 const express = require('express');
 const router = express.Router();
+const User = require('../../database/models/User');
+const passport = require('passport');
+const bcrypt = require('bcryptjs');
 const posts = require('./posts');
 const comments = require('./comments');
 const admin = require('./admin');
-const User = require('../database/models/User');
-const passport = require('passport');
-const bcrypt = require('bcryptjs');
 
-const saltRounds = 12;
+function isAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) { next(); }
+  else {
+    res.status(401).json({ success: false, error: 'not authenticated' });
+  };
+};
 
 router.route('/users')
-  .get(function (req, res) {
+  .get(isAuthenticated, function (req, res) {
     User.where('id', req.user.id).fetch({
-      columns: ['email', 'first_name', 'last_name', 'verified']
+      columns: ['username', 'first_name', 'last_name', 'verified']
     })
       .then(function (user) {
         res.json(user);
@@ -21,9 +26,9 @@ router.route('/users')
         res.json(err);
       });
   })
-  .put(function (req, res) {
+  .put(isAuthenticated, function (req, res) {
     User.where('id', req.user.id).save({
-      email: req.body.email,
+      username: req.body.username,
       first_name: req.body.first_name,
       last_name: req.body.last_name
     }, { patch: true })
@@ -36,6 +41,7 @@ router.route('/users')
   });
 
 router.post('/register', (req, res) => {
+  const saltRounds = 12;
   bcrypt.genSalt(saltRounds, (err, salt) => {
     if (err) {
       return res.status(500).json({ success: false, error: err })
@@ -45,10 +51,11 @@ router.post('/register', (req, res) => {
         return res.status(500).json({ success: false, error: err })
       }
       return new User({
-        email: req.body.email,
+        username: req.body.username,
         password: hash,
         first_name: req.body.first_name,
         last_name: req.body.last_name,
+        email: req.body.email
       })
         .save()
         .then((user) => {
@@ -72,8 +79,8 @@ router.get('/logout', (req, res) => {
 
 router.use('/posts', posts);
 
-router.use('/comments', comments);
+// router.use('/comments', comments);
 
-router.use('/admin', admin);
+// router.use('/admin', admin);
 
 module.exports = router;

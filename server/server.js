@@ -1,11 +1,13 @@
 const express = require('express');
 const app = express();
+const User = require('../database/models/User');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const redis = require('connect-redis')(session);
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const bcrypt = require('bcryptjs');
+const api = require('./routes/api');
 
 const PORT = process.env.CMS_HOST_PORT;
 const ENV = process.env.NODE_ENV;
@@ -26,7 +28,7 @@ app.use(bodyParser.json());
 passport.serializeUser((user, done) => {
   return done(null, {
     id: user.id,
-    username: user.username
+    username: user.username,
   });
 });
 
@@ -49,16 +51,16 @@ passport.use(new LocalStrategy(function (username, password, done) {
   return new User({ username: username })
     .fetch()
     .then(user => {
-      user = user.toJSON();
       if (user === null) {
-        return done(null, false, { message: 'bad username or password' });
+        return done(null, false, { message: 'bad email or password' });
       }
       else {
+        user = user.toJSON();
         bcrypt.compare(password, user.password)
           .then((res) => {
             if (res) { return done(null, user); }
             else {
-              return done(null, false, { message: 'bad username or password' });
+              return done(null, false, { message: 'bad email or password' });
             }
           });
       }
@@ -72,6 +74,8 @@ passport.use(new LocalStrategy(function (username, password, done) {
 app.get('/', (req, res) => {
   return res.send('smoke test');
 });
+
+app.use('/api', api);
 
 app.listen(PORT, () => {
   console.log(`Server is running on PORT ${PORT}`);

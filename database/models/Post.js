@@ -4,7 +4,7 @@ require('./Category');
 require('./PostStatus');
 require('./PostCondition');
 
-class Post extends Bookshelf.Model {
+class Post extends bookshelf.Model {
   get tableName() { return 'posts'; }
   get timestamps() { return true; }
 
@@ -25,4 +25,4 @@ class Post extends Bookshelf.Model {
   }
 }
 
-module.exports = bookshelf.Model('Post', Post)
+module.exports = bookshelf.model('Post', Post)

@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const Contact = require('../database/models/Contact');
 
 function isAuthenticated(req, res, next) {
   if (req.isAuthenticated()) { next(); }
