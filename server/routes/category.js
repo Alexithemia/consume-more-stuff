@@ -29,9 +29,9 @@ function isAuthenticated(req, res, next) {
 //   next();
 // }
 
-router.route('/')
+router.route('/:category')
   .get(function (req, res) {
-    Post.forge().orderBy('title', 'ASC').fetchAll({
+    Post.where('category_id', req.params.category).orderBy('title', 'ASC').fetchAll({
       columns: ['id', 'category_id', 'user_id', 'post_status_id', 'post_condition_id', 'title', 'content'],
       withRelated: [{
         'category': function (x) {
@@ -55,25 +55,25 @@ router.route('/')
         res.json(err);
       });
   })
-  .post(isAuthenticated, function (req, res) {
-    Post.forge({
-      category_id: req.body.category_id,
-      user_id: req.user.id,
-      post_status_id: req.body.post_status_id,
-      post_condition_id: req.body.post_condition_id,
-      title: req.body.title,
-      content: req.body.content
-    }).save()
-      .then(function () {
-        res.json({ success: true });
-      })
-      .catch(function (err) {
-        res.json({ success: false, error: err })
-      })
-  })
+// .post(isAdmin, function (req, res) {
+//   Post.forge({
+//     category_id: req.params.category,
+//     user_id: req.user.id,
+//     post_status_id: req.body.post_status_id,
+//     post_condition_id: req.body.post_condition_id,
+//     title: req.body.title,
+//     content: req.body.content
+//   }).save()
+//     .then(function () {
+//       res.json({ success: true });
+//     })
+//     .catch(function (err) {
+//       res.json({ success: false, error: err })
+//     })
+// })
 
 router.route('/search/:term')
-  .get(function (req, res) {
+  .get(isAuthenticated, function (req, res) {
     Post.query(function (search) {
       let term = `%${req.params.term}%`;
       search.whereRaw('LOWER(title) LIKE ?', term)
@@ -103,49 +103,38 @@ router.route('/search/:term')
       });
   })
 
-router.route('/:id')
-  .get(function (req, res) {
-    Post.where('id', req.params.id).fetch({
-      columns: ['id', 'category_id', 'user_id', 'post_status_id', 'post_condition_id', 'title', 'content'],
-      withRelated: [{
-        'category': function (x) {
-          x.column('id', 'name');
-        },
-        'user': function (x) {
-          x.column('id', 'first_name', 'last_name');
-        },
-        'postStatus': function (x) {
-          x.column('id', 'name');
-        },
-        'postCondition': function (x) {
-          x.column('id', 'name');
-        }
-      }]
-    })
-      .then(function (contact) {
-        res.json(contact)
-      })
-      .catch(function (err) {
-        res.json({ success: false, error: err })
-      });
-  })
-  .put(isAuthenticated, function (req, res) {
-    let tempObj = {}
-    if (req.body.category_id) { tempObj.category_id = req.body.category_id };
-    if (req.body.user_id) { tempObj.user_id = req.body.user_id };
-    if (req.body.post_status_id) { tempObj.post_status_id = req.body.post_status_id };
-    if (req.body.post_condition_id) { tempObj.post_condition_id = req.body.post_condition_id };
-    if (req.body.title) { tempObj.title = req.body.title };
-    if (req.body.content) { tempObj.content = req.body.content };
+// router.route('/:id')
+//   .get(isAuthenticated, function (req, res) {
+//     Contact.where('id', req.params.id).fetch({
+//       columns: ['id', 'name', 'address', 'mobile', 'work', 'home', 'email', 'twitter', 'instagram', 'github']
+//     })
+//       .then(function (contact) {
+//         res.json(contact)
+//       })
+//       .catch(function (err) {
+//         res.json({ success: false, error: err })
+//       });
+//   })
+//   .put(isAuthenticated, inputValidation, function (req, res) {
+//     let tempObj = {}
+//     if (req.body.name) { tempObj.name = req.body.name };
+//     if (req.body.address) { tempObj.address = req.body.address };
+//     if (req.body.mobile) { tempObj.mobile = req.body.mobile };
+//     if (req.body.work) { tempObj.work = req.body.work };
+//     if (req.body.home) { tempObj.home = req.body.home };
+//     if (req.body.email) { tempObj.email = req.body.email };
+//     if (req.body.twitter) { tempObj.twitter = req.body.twitter };
+//     if (req.body.instagram) { tempObj.instagram = req.body.instagram };
+//     if (req.body.github) { tempObj.github = req.body.github };
 
-    Post.where('id', req.params.id).save(tempObj, { patch: true })
-      .then(function () {
-        res.json({ success: true });
-      })
-      .catch(function (err) {
-        res.json({ success: false, error: err });
-      });
-  })
+//     Contact.where('id', req.params.id).save(tempObj, { patch: true })
+//       .then(function () {
+//         res.json({ success: true });
+//       })
+//       .catch(function (err) {
+//         res.json({ success: false, error: err });
+//       });
+//   })
 //   .delete(isAuthenticated, function (req, res) {
 //     new Contact({ id: req.params.id }).destroy()
 //       .then(function () {
@@ -154,6 +143,6 @@ router.route('/:id')
 //       .catch(function (err) {
 //         res.status(500).json({ success: false, error: err });
 //       });
-// })
+//   })
 
 module.exports = router;
