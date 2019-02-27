@@ -68,6 +68,20 @@ router.route('/:id')
       });
   })
   .delete(isAuthenticated, function (req, res) {
+    Message.query(function (x) {
+      x.where('to_user_id', req.user.id).andWhere('from_user_id', req.params.id)
+        .del()
+        .then(function () {
+          res.json({ success: true });
+        })
+        .catch(function (err) {
+          res.status(500).json({ success: false, error: err });
+        });
+    })
+  })
+
+router.route('/delete/:id')
+  .delete(isAuthenticated, function (req, res) {
     new Message({ id: req.params.id }).destroy()
       .then(function () {
         res.json({ success: true });
