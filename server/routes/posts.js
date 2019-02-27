@@ -40,7 +40,7 @@ router.route('/')
           x.column('id', 'name');
         },
         'user': function (x) {
-          x.column('id', 'first_name', 'last_name');
+          x.column('id', 'username', 'first_name', 'last_name', 'email');
         },
         'postStatus': function (x) {
           x.column('id', 'name');

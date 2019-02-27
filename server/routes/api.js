@@ -4,7 +4,7 @@ const User = require('../../database/models/User');
 const passport = require('passport');
 const bcrypt = require('bcryptjs');
 const posts = require('./posts');
-const comments = require('./comments');
+const messages = require('./messages');
 const admin = require('./admin');
 
 function isAuthenticated(req, res, next) {
@@ -79,7 +79,7 @@ router.get('/logout', (req, res) => {
 
 router.use('/posts', posts);
 
-// router.use('/comments', comments);
+router.use('/messages', messages);
 
 // router.use('/admin', admin);
 
