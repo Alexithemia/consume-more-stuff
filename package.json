@@ -10,20 +10,24 @@
     "express": "^4.16.4",
     "express-session": "^1.15.6",
     "knex": "^0.16.3",
+    "node-sass": "^4.11.0",
     "nodemon": "^1.18.10",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "pg": "^7.8.1",
     "react": "^16.8.3",
     "react-dom": "^16.8.3",
-    "react-scripts": "2.1.5"
+    "react-redux": "^6.0.1",
+    "react-scripts": "2.1.5",
+    "redux": "^4.0.1",
+    "redux-thunk": "^2.3.0"
   },
   "scripts": {
+    "dev": "./node_modules/nodemon/bin/nodemon.js ./server/server.js",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "dev": "./node_modules/nodemon/bin/nodemon.js ./server/server.js"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": "react-app"
