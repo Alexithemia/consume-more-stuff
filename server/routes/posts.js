@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const Post = require('../../database/models/Post');
+const PostStatus = require('../../database/models/PostStatus');
+const PostCondition = require('../../database/models/PostCondition');
 
 function isAuthenticated(req, res, next) {
   if (req.isAuthenticated()) { next(); }
@@ -72,6 +74,32 @@ router.route('/')
       })
   })
 
+router.route('/status')
+  .get(function (req, res) {
+    PostStatus.fetchAll({
+      columns: ['id', 'name']
+    })
+      .then(function (statusList) {
+        res.json(statusList)
+      })
+      .catch(function (err) {
+        res.json({ success: false, error: err })
+      });
+  })
+
+router.route('/condition')
+  .get(function (req, res) {
+    PostCondition.fetchAll({
+      columns: ['id', 'name']
+    })
+      .then(function (conditionList) {
+        res.json(conditionList)
+      })
+      .catch(function (err) {
+        res.json({ success: false, error: err })
+      });
+  })
+
 router.route('/search/:term')
   .get(function (req, res) {
     Post.query(function (search) {
@@ -122,8 +150,8 @@ router.route('/:id')
         }
       }]
     })
-      .then(function (contact) {
-        res.json(contact)
+      .then(function (post) {
+        res.json(post)
       })
       .catch(function (err) {
         res.json({ success: false, error: err })
@@ -154,6 +182,6 @@ router.route('/:id')
       .catch(function (err) {
         res.status(500).json({ success: false, error: err });
       });
-  })
+  });
 
 module.exports = router;
