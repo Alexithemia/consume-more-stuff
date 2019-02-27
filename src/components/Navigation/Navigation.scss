@@ -1,0 +1,47 @@
+@import '../../../sass/config';
+
+.navigation {
+  background-color: $overlay-background-color;
+  width: 12%;
+  height: 100vh;
+  font-family: $primary-font, $font-type;
+  position: absolute;
+  z-index: 1;
+
+  .navTitle {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: $contrast-font-color;
+    margin-top: $header-height;
+    height: 2em;
+  }
+
+  .navMenu {
+    .navItem {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      transition-delay: 90ms;
+      transition-duration: 150ms;
+      position: relative;
+      left: 1em;
+      margin-top: 1em;
+      width: 92.5%;
+      height: 1.2em;
+
+      .text {
+        font-size: 1.2em;
+        color: $contrast-font-color;
+      }
+
+      &:first-child {
+        margin-top: 0;
+      }
+
+      &:hover {
+        left: 2em;
+        height: 2.4em;
+      }
+    }
+  }
+}
