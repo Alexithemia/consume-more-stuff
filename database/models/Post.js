@@ -9,19 +9,19 @@ class Post extends bookshelf.Model {
   get timestamps() { return true; }
 
   user() {
-    return this.belongsTo('User', 'id', 'user_id');
+    return this.belongsTo('User', 'user_id', 'id');
   }
 
   category() {
-    return this.belongsTo('Category', 'id', 'category_id');
+    return this.belongsTo('Category', 'category_id', 'id');
   }
 
   postStatus() {
-    return this.belongsTo('PostStatus', 'id', 'post_status_id');
+    return this.belongsTo('PostStatus', 'post_status_id', 'id');
   }
 
   postCondition() {
-    return this.belongsTo('PostCondition', 'id', 'post_condition_id');
+    return this.belongsTo('PostCondition', 'post_condition_id', 'id');
   }
 }
 

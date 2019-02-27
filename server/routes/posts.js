@@ -31,8 +31,8 @@ function isAuthenticated(req, res, next) {
 
 router.route('/:category')
   .get(isAuthenticated, function (req, res) {
-    Post.where('category_id', req.params.category).orderBy('name', 'ASC').fetchAll({
-      columns: ['id', 'category_id', 'user_id', 'mobile', 'work', 'home', 'email', 'twitter', 'instagram', 'github'],
+    Post.where('category_id', req.params.category).orderBy('title', 'ASC').fetchAll({
+      columns: ['id', 'category_id', 'user_id', 'post_status_id', 'post_condition_id', 'title', 'content'],
       withRelated: [{
         'category': function (x) {
           x.column('id', 'name');
