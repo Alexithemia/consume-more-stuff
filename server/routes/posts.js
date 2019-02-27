@@ -48,8 +48,8 @@ router.route('/:category')
         }
       }]
     })
-      .then(function (contactList) {
-        res.json(contactList);
+      .then(function (postList) {
+        res.json(postList);
       })
       .catch(function (err) {
         res.json(err);
@@ -72,32 +72,36 @@ router.route('/:category')
       })
   })
 
-// router.route('/search/:term')
-//   .get(isAuthenticated, function (req, res) {
-//     Contact.query(function (search) {
-//       search.where('created_by', req.user.id)
-//         .andWhere(function () {
-//           let term = `%${req.params.term}%`
-//           this.whereRaw('LOWER(name) LIKE ?', term)
-//             .orWhereRaw('LOWER(address) LIKE ?', term)
-//             .orWhereRaw('LOWER(mobile) LIKE ?', term)
-//             .orWhereRaw('LOWER(work) LIKE ?', term)
-//             .orWhereRaw('LOWER(home) LIKE ?', term)
-//             .orWhereRaw('LOWER(email) LIKE ?', term)
-//             .orWhereRaw('LOWER(twitter) LIKE ?', term)
-//             .orWhereRaw('LOWER(instagram) LIKE ?', term)
-//             .orWhereRaw('LOWER(github) LIKE ?', term)
-//         })
-//     }).orderBy('name', 'ASC').fetchAll({
-//       columns: ['id', 'name', 'address', 'mobile', 'work', 'home', 'email', 'twitter', 'instagram', 'github']
-//     })
-//       .then(function (contactList) {
-//         res.json(contactList);
-//       })
-//       .catch(function (err) {
-//         res.json(err);
-//       });
-//   });
+router.route('/search/:term')
+  .get(isAuthenticated, function (req, res) {
+    Post.query(function (search) {
+      let term = `%${req.params.term}%`;
+      search.whereRaw('LOWER(title) LIKE ?', term)
+        .orWhereRaw('LOWER(content) LIKE ?', term);
+    }).orderBy('title', 'ASC').fetchAll({
+      columns: ['id', 'category_id', 'user_id', 'post_status_id', 'post_condition_id', 'title', 'content'],
+      withRelated: [{
+        'category': function (x) {
+          x.column('id', 'name');
+        },
+        'user': function (x) {
+          x.column('id', 'first_name', 'last_name');
+        },
+        'postStatus': function (x) {
+          x.column('id', 'name');
+        },
+        'postCondition': function (x) {
+          x.column('id', 'name');
+        }
+      }]
+    })
+      .then(function (postList) {
+        res.json(postList);
+      })
+      .catch(function (err) {
+        res.json(err);
+      });
+  })
 
 // router.route('/:id')
 //   .get(isAuthenticated, function (req, res) {
