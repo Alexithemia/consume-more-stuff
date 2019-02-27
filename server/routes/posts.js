@@ -9,30 +9,44 @@ function isAuthenticated(req, res, next) {
   };
 };
 
-function inputValidation(req, res, next) {
-  if (!req.body.name) {
-    return res.json({ error: "Contact requires a name" })
-  }
-  if (req.body.email && req.body.email.includes('@') && req.body.email.includes('.')) { }
-  else {
-    return res.json({ error: "Contact email incorrect format" })
-  }
-  if (req.body.home && req.body.home.length < 10 || req.body.home && req.body.home.match(/[^-0-9]/gi)) {
-    return res.json({ error: "Contact home number incorrect format" })
-  }
-  if (req.body.mobile && req.body.mobile.length < 10 || req.body.mobile && req.body.mobile.match(/[^-0-9]/gi)) {
-    return res.json({ error: "Contact mobile number incorrect format" })
-  }
-  if (req.body.work && req.body.work.length < 10 || req.body.work && req.body.work.match(/[^-0-9]/gi)) {
-    return res.json({ error: "Contact work number incorrect format" })
-  }
-  next();
-}
+// function inputValidation(req, res, next) {
+//   if (!req.body.name) {
+//     return res.json({ error: "Contact requires a name" })
+//   }
+//   if (req.body.email && req.body.email.includes('@') && req.body.email.includes('.')) { }
+//   else {
+//     return res.json({ error: "Contact email incorrect format" })
+//   }
+//   if (req.body.home && req.body.home.length < 10 || req.body.home && req.body.home.match(/[^-0-9]/gi)) {
+//     return res.json({ error: "Contact home number incorrect format" })
+//   }
+//   if (req.body.mobile && req.body.mobile.length < 10 || req.body.mobile && req.body.mobile.match(/[^-0-9]/gi)) {
+//     return res.json({ error: "Contact mobile number incorrect format" })
+//   }
+//   if (req.body.work && req.body.work.length < 10 || req.body.work && req.body.work.match(/[^-0-9]/gi)) {
+//     return res.json({ error: "Contact work number incorrect format" })
+//   }
+//   next();
+// }
 
-router.route('/')
+router.route('/:category')
   .get(isAuthenticated, function (req, res) {
-    Contact.where('created_by', req.user.id).orderBy('name', 'ASC').fetchAll({
-      columns: ['id', 'name', 'address', 'mobile', 'work', 'home', 'email', 'twitter', 'instagram', 'github']
+    Post.where('category_id', req.params.category).orderBy('name', 'ASC').fetchAll({
+      columns: ['id', 'category_id', 'user_id', 'mobile', 'work', 'home', 'email', 'twitter', 'instagram', 'github'],
+      withRelated: [{
+        'category': function (x) {
+          x.column('id', 'name');
+        },
+        'user': function (x) {
+          x.column('id', 'first_name', 'last_name');
+        },
+        'postStatus': function (x) {
+          x.column('id', 'name');
+        },
+        'postCondition': function (x) {
+          x.column('id', 'name');
+        }
+      }]
     })
       .then(function (contactList) {
         res.json(contactList);
@@ -43,16 +57,7 @@ router.route('/')
   })
   .post(isAuthenticated, inputValidation, function (req, res) {
     Contact.forge({
-      name: req.body.name,
-      address: req.body.address,
-      mobile: req.body.mobile,
-      work: req.body.work,
-      home: req.body.home,
-      email: req.body.email,
-      twitter: req.body.twitter,
-      instagram: req.body.instagram,
-      github: req.body.github,
-      created_by: req.user.id
+
     }).save()
       .then(function () {
         res.json({ success: true });

@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const items = require('./items');
+const posts = require('./posts');
 const comments = require('./comments');
 const admin = require('./admin');
 const User = require('../database/models/User');
@@ -70,7 +70,7 @@ router.get('/logout', (req, res) => {
   res.json({ success: true });
 });
 
-router.use('/items', items);
+router.use('/posts', posts);
 
 router.use('/comments', comments);
 
