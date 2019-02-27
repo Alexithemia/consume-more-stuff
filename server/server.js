@@ -7,7 +7,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const bcrypt = require('bcryptjs');
 
-const PORT = process.env.NG_HOST_PORT || 8080;
+const PORT = process.env.CMS_HOST_PORT;
 const ENV = process.env.NODE_ENV;
 const SESSION_SECRET = process.env.SESSION_SECRET
 
@@ -23,18 +23,14 @@ app.use(passport.session());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-// after login
 passport.serializeUser((user, done) => {
-  console.log('serializing');
   return done(null, {
     id: user.id,
     username: user.username
   });
 });
 
-// after every request
 passport.deserializeUser((user, done) => {
-  console.log('deserializing');
   return new User({ id: user.id }).fetch()
     .then(dbUser => {
       dbUser = dbUser.toJSON();
@@ -69,7 +65,7 @@ passport.use(new LocalStrategy(function (username, password, done) {
     })
     .catch(err => {
       console.log('error: ', err);
-      return done(err); //500 error
+      return done(err);
     });
 }));
 
