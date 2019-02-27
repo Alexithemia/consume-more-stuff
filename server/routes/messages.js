@@ -32,9 +32,9 @@ function isAuthenticated(req, res, next) {
 
 router.route('/')
   .get(isAuthenticated, function (req, res) {
-    knex.raw('SELECT from_user_id, max(created_at) AS created_at FROM messages GROUP BY from_user_id ORDER BY created_at DESC')
-      .then(function (messageList) {
-        res.json(messageList);
+    knex.raw('SELECT from_user_id, users.username, max(messages.created_at) AS created_at FROM messages INNER JOIN users ON messages.from_user_id = users.id GROUP BY users.username, from_user_id ORDER BY created_at DESC')
+      .then(function (messageUsers) {
+        res.json(messageUsers.rows);
       })
       .catch(function (err) {
         res.json(err);
@@ -55,65 +55,18 @@ router.route('/')
       })
   })
 
-// router.route('/search/:term')
-//   .get(isAuthenticated, function (req, res) {
-//     Contact.query(function (search) {
-//       search.where('created_by', req.user.id)
-//         .andWhere(function () {
-//           let term = `%${req.params.term}%`
-//           this.whereRaw('LOWER(name) LIKE ?', term)
-//             .orWhereRaw('LOWER(address) LIKE ?', term)
-//             .orWhereRaw('LOWER(mobile) LIKE ?', term)
-//             .orWhereRaw('LOWER(work) LIKE ?', term)
-//             .orWhereRaw('LOWER(home) LIKE ?', term)
-//             .orWhereRaw('LOWER(email) LIKE ?', term)
-//             .orWhereRaw('LOWER(twitter) LIKE ?', term)
-//             .orWhereRaw('LOWER(instagram) LIKE ?', term)
-//             .orWhereRaw('LOWER(github) LIKE ?', term)
-//         })
-//     }).orderBy('name', 'ASC').fetchAll({
-//       columns: ['id', 'name', 'address', 'mobile', 'work', 'home', 'email', 'twitter', 'instagram', 'github']
-//     })
-//       .then(function (contactList) {
-//         res.json(contactList);
-//       })
-//       .catch(function (err) {
-//         res.json(err);
-//       });
-//   });
-
-// router.route('/:id')
-//   .get(isAuthenticated, function (req, res) {
-//     Contact.where('id', req.params.id).fetch({
-//       columns: ['id', 'name', 'address', 'mobile', 'work', 'home', 'email', 'twitter', 'instagram', 'github']
-//     })
-//       .then(function (contact) {
-//         res.json(contact)
-//       })
-//       .catch(function (err) {
-//         res.json({ success: false, error: err })
-//       });
-//   })
-//   .put(isAuthenticated, function (req, res) {
-//     let tempObj = {}
-//     if (req.body.name) { tempObj.name = req.body.name };
-//     if (req.body.address) { tempObj.address = req.body.address };
-//     if (req.body.mobile) { tempObj.mobile = req.body.mobile };
-//     if (req.body.work) { tempObj.work = req.body.work };
-//     if (req.body.home) { tempObj.home = req.body.home };
-//     if (req.body.email) { tempObj.email = req.body.email };
-//     if (req.body.twitter) { tempObj.twitter = req.body.twitter };
-//     if (req.body.instagram) { tempObj.instagram = req.body.instagram };
-//     if (req.body.github) { tempObj.github = req.body.github };
-
-//     Contact.where('id', req.params.id).save(tempObj, { patch: true })
-//       .then(function () {
-//         res.json({ success: true });
-//       })
-//       .catch(function (err) {
-//         res.json({ success: false, error: err });
-//       });
-//   })
+router.route('/:id')
+  .get(isAuthenticated, function (req, res) {
+    Message.query(function (x) {
+      x.where('to_user_id', req.user.id).andWhere('from_user_id', req.params.id)
+    }).fetchAll()
+      .then(function (messageList) {
+        res.json(messageList)
+      })
+      .catch(function (err) {
+        res.json({ success: false, error: err })
+      });
+  })
 //   .delete(isAuthenticated, function (req, res) {
 //     new Contact({ id: req.params.id }).destroy()
 //       .then(function () {
