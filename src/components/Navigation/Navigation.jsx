@@ -1,5 +1,6 @@
 import React from 'react';
 import './Navigation.scss';
+import { Link } from 'react-router-dom';
 
 const Navigation = (props) => {
   console.log('COMPONENT LOGGINGGGGGGGGGGG');
@@ -9,8 +10,8 @@ const Navigation = (props) => {
     const { id, name } = current;
 
     return (
-      <li className="navItem">
-        <span className="text">{ current.name }</span>
+      <li key={id} className="navItem">
+        <Link to={`/category/${id}`} className="text">{name}</Link>
       </li>
     );
   });
@@ -22,7 +23,7 @@ const Navigation = (props) => {
       </div>
 
       <ul className="navMenu">
-        { categoryList }
+        {categoryList}
       </ul>
     </div>
   );

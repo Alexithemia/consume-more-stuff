@@ -10,7 +10,7 @@ import Home from '../../components/Home';
 import Login from '../../components/Login';
 
 class App extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
 
     this.state = {};
@@ -26,12 +26,14 @@ class App extends Component {
       <div className="App">
         <Router>
           <>
-            <Header title={ "CMS" } isLoggedIn={ this.props.isLoggedIn } username={ this.props.username } />
-            <Navigation categories={ this.props.categories } />
-            <Switch>
-              <Route path='/login' component={Login} />
-              <Route path='/' component={Home} />
-            </Switch>
+            <Header title={"CMS"} isLoggedIn={this.props.isLoggedIn} username={this.props.username} />
+            <div className="mainContainer">
+              <Navigation categories={this.props.categories} />
+              <Switch>
+                <Route path='/login' component={Login} />
+                <Route path='/' component={Home} />
+              </Switch>
+            </div>
           </>
         </Router>
       </div>
@@ -41,15 +43,15 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    categories : state.categories,
-    username : state.username,
-    isLoggedIn : state.isLoggedIn
+    categories: state.categories,
+    username: state.username,
+    isLoggedIn: state.isLoggedIn
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onLoad : () => {
+    onLoad: () => {
       const actionObject = loadCategories();
 
       return dispatch(actionObject);
