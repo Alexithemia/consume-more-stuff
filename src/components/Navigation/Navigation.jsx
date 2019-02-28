@@ -2,28 +2,27 @@ import React from 'react';
 import './Navigation.scss';
 
 const Navigation = (props) => {
+  console.log('COMPONENT LOGGINGGGGGGGGGGG');
+  console.log(props);
+
+  const categoryList = props.categories.map(current => {
+    const { id, name } = current;
+
+    return (
+      <li className="navItem">
+        <span className="text">{ current.name }</span>
+      </li>
+    );
+  });
+
   return (
     <div className="navigation">
       <div className="navTitle">
-        Home
+        <span className="text">Home</span>
       </div>
-      
+
       <ul className="navMenu">
-        <li className="navItem">
-          <span className="text">Item 1</span>
-        </li>
-        
-        <li className="navItem">
-          <span className="text">Item 2</span>
-        </li>
-        
-        <li className="navItem">
-          <span className="text">Item 3</span>
-        </li>
-        
-        <li className="navItem">
-          <span className="text">Item 4</span>
-        </li>
+        { categoryList }
       </ul>
     </div>
   );
