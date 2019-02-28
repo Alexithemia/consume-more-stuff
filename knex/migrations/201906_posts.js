@@ -7,6 +7,7 @@ exports.up = function (knex, Promise) {
     table.integer('post_condition_id').references('id').inTable('postConditions').notNullable();
     table.string('title').notNullable();
     table.string('content', 5000).nullable();
+    table.integer('views').notNullable().defaultTo(0);
     table.timestamps(true, true);
   })
 };

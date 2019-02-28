@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './App.css';
+import { Route, Link } from 'react-router-dom';
 
 import Header from '../../components/Header';
 import Navigation from '../../components/Navigation';
 import { loadCategories } from '../../actions';
+import Home from '../../components/Home';
 
 class App extends Component {
   constructor (props) {
@@ -21,9 +23,17 @@ class App extends Component {
     console.log(`App.js props are...\n`); console.log(this.props)
     return (
       <div className="App">
-        <Header title={ "CMS" } isLoggedIn={ this.props.isLoggedIn } username={ this.props.username } />
+
+        <div>
+          <Header title={ "CMS" } isLoggedIn={ this.props.isLoggedIn } username={ this.props.username } />
         <Navigation categories={ this.props.categories } />
+        </div>
+        <div>
+          <Home />
+        </div>
       </div>
+
+
     );
   }
 }
