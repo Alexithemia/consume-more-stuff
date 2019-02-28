@@ -1,0 +1,47 @@
+@import '../../../sass/config';
+
+.searchWrap {
+  display: flex;
+  align-items: center;
+
+  .searchWrap {
+    font-family: $primary-font, $font-type;
+    color: $primary-font-color;
+    letter-spacing: 0.1em;
+    width: calc(100% / 3);
+  }
+
+  .searchIcon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $light-background-color;
+    border-top-right-radius: $search-border-radius;
+    border-bottom-right-radius: $search-border-radius;
+    height: 2.2em;
+    width: 2.2em;
+    
+    & img {
+      position: relative;
+      right: 0.6em;
+      padding-left: 0.5em;
+      border-left: 1px solid black;
+      height: 65%;
+      width: 65%;
+    }
+  }
+
+  .searchBar {
+    width: 100%;
+
+    & input {
+      font-size: 1.2em;
+      padding-left: 1em;
+      border: none;
+      border-top-left-radius: $search-border-radius;
+      border-bottom-left-radius: $search-border-radius;
+      height: 1.8em;
+      width: 100%;
+    }
+  }
+}
