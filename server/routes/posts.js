@@ -34,7 +34,7 @@ function isAuthenticated(req, res, next) {
 router.route('/')
   .get(function (req, res) {
     Post.forge().orderBy('title', 'ASC').fetchAll({
-      columns: ['id', 'category_id', 'user_id', 'post_status_id', 'post_condition_id', 'title', 'content'],
+      columns: ['id', 'category_id', 'user_id', 'post_status_id', 'post_condition_id', 'title', 'content', 'views'],
       withRelated: [{
         'category': function (x) {
           x.column('id', 'name');
@@ -134,7 +134,7 @@ router.route('/search/:term')
 router.route('/:id')
   .get(function (req, res) {
     Post.where('id', req.params.id).fetch({
-      columns: ['id', 'category_id', 'user_id', 'post_status_id', 'post_condition_id', 'title', 'content'],
+      columns: ['id', 'category_id', 'user_id', 'post_status_id', 'post_condition_id', 'title', 'content', 'views'],
       withRelated: [{
         'category': function (x) {
           x.column('id', 'name');
@@ -151,7 +151,14 @@ router.route('/:id')
       }]
     })
       .then(function (post) {
-        res.json(post)
+        post.attributes.views += 1;
+        Post.where('id', req.params.id).save({ views: post.attributes.views }, { patch: true })
+          .then(function () {
+            res.json(post);
+          })
+          .catch(function (err) {
+            res.json({ success: false, error: err });
+          });
       })
       .catch(function (err) {
         res.json({ success: false, error: err })
