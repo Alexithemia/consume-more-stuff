@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
+import { login } from '../../actions';
+import './Login.scss';
 
 class Login extends Component {
   constructor(props) {
@@ -32,14 +34,23 @@ class Login extends Component {
   handleSubmit(e) {
     e.preventDefault();
 
-    const login = {};
-    login.email = this.state.emailInput;
-    login.password = this.state.passwordInput;
+    const user = {};
+    user.email = this.state.emailInput;
+    user.password = this.state.passwordInput;
+
+    this.props.login(user)
+    this.setState({
+      emailInput: '',
+      passwordInput: ''
+    })
   }
 
   render() {
     return (
       <div className="loginContainer">
+        <div className="titleContainer">
+          <h1 className="title">Login:</h1>
+        </div>
         <form>
           <div>
             <label name="email"> Email: </label>
@@ -60,12 +71,16 @@ class Login extends Component {
 
 const mapStateToProps = state => {
   return {
-
+    user: state.cmsReducer
   }
 }
 
 const mapDispatchToProps = dispatch => {
-
+  return {
+    login: user => {
+      dispatch(login(user))
+    }
+  }
 }
 
 Login = connect(
