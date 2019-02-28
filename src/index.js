@@ -5,10 +5,20 @@ import './index.css';
 import App from './containers/App/App';
 import * as serviceWorker from './serviceWorker';
 
+import categoryReducer from './reducers';
+import { Provider } from 'react-redux';
+import ReduxThunk from 'redux-thunk';
+import { createStore, applyMiddleware } from 'redux';
+
+const store = createStore(
+  categoryReducer,
+  applyMiddleware(ReduxThunk)  
+);
+
 ReactDOM.render(
-  <Router>
-    <App />
-  </Router>,
+  <Provider store={ store }>
+      <App />
+  </Provider>,
   document.getElementById('root')
 );
 

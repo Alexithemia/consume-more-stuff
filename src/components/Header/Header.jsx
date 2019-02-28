@@ -1,8 +1,10 @@
 import React from 'react';
 import './Header.scss';
 
+import SearchBar from '../../containers/SearchBar';
+
 const Header = (props) => {
-  const { title } = props;
+  const { title, isLoggedIn, username } = props;
 
   return (
     <div className="header">
@@ -16,22 +18,20 @@ const Header = (props) => {
           <div className="title">{ title }</div>
         </div>
 
-        <div className="searchWrap">
-          <form className="searchBar">
-            <input type="text" value="" placeholder="Start typing..." className="search" />
-          </form>
-          <div className="searchIcon">
-            <img src="https://image.flaticon.com/icons/svg/126/126474.svg" alt="search icon" srcset=""/>
-          </div>
-        </div>
+        <SearchBar />
 
         <div className="loginStatusWrap">
           {/* If user authenticated, then display: "Hello, { user.username } <a href="/">Log out</a> */}
-          <div className="loginStatus">
+          { isLoggedIn ?
+            <div className="loginStatus">
+              Welcome back, { username }! <span className="refLogin">Logout</span>
+            </div>
+          : <div className="loginStatus">
             Need an account? <a href="/login" className="refLogin">
               Log in here.
             </a>
           </div>
+          }
         </div>
       </div>
     </div>
