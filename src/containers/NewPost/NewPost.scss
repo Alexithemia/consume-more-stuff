@@ -1,0 +1,39 @@
+@import '../../../sass/config';
+
+.newPostWrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition-delay: 90ms;
+  transition-duration: 150ms;
+  margin-top: 3em;
+  width: 100%;
+  height: fit-content;
+
+  .textWrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition-delay: 90ms;
+    transition-duration: 150ms;
+    width: 55%;
+    border: 0.05em solid black;
+
+    .text {
+      color: $contrast-font-color;
+      font-size: $nav-text-font-size;
+      font-weight: 500;
+      padding: $nav-text-padding;
+      transition-delay: inherit;
+      transition-duration: inherit;
+    }
+
+    &:hover {
+      border: 0.05em solid $contrast-background-color;
+
+      .text {
+        color: $contrast-background-color;
+      }
+    }
+  }
+}
