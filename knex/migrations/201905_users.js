@@ -1,11 +1,12 @@
 exports.up = function (knex, Promise) {
   return knex.schema.createTable('users', function (table) {
     table.increments().primary().unique().notNullable();
-    table.string('email').notNullable();
+    table.string('username').notNullable();
     table.string('password').notNullable();
     table.string('first_name').nullable();
     table.string('last_name').nullable();
-    table.integer('status_id').references('id').inTable('userStatus')
+    table.string('email').notNullable();
+    table.integer('status_id').references('id').inTable('userStatus').defaultTo(2);
     table.timestamps(true, true);
     table.boolean('verified').notNullable().defaultTo(false);
     table.boolean('is_admin').notNullable().defaultTo(false);

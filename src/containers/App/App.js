@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import './App.css';
 
 import Header from '../../components/Header';
-import Navigation from '../Navigation';
+import Navigation from '../../components/Navigation';
 import { loadCategories } from '../../actions';
 
 class App extends Component {
@@ -13,11 +13,15 @@ class App extends Component {
     this.state = {};
   }
 
+  componentDidMount() {
+    return this.props.onLoad();
+  }
+
   render() {
     console.log(`App.js props are...\n`); console.log(this.props)
     return (
       <div className="App">
-        <Header title={ "CMS" } />
+        <Header title={ "CMS" } isLoggedIn={ this.props.isLoggedIn } username={ this.props.username } />
         <Navigation categories={ this.props.categories } />
       </div>
     );
@@ -26,7 +30,9 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    categories : state
+    categories : state.categories,
+    username : state.username,
+    isLoggedIn : state.isLoggedIn
   }
 }
 

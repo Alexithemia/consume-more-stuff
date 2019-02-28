@@ -34,6 +34,7 @@ class SearchBar extends Component {
   render() {
     return (
       <div className="searchWrap">
+        <div className="searchTemplate"></div>
         <form className="searchBar">
           <input ref={ this.searchRef } onChange={ this.handleSearchOnChange } data-type="searchInput" type="text" value={ this.state.searchInput } placeholder="Start typing..." className="search" />
         </form>

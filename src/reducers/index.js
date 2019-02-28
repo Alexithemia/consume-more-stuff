@@ -1,20 +1,16 @@
 import { LOAD_CATEGORIES } from '../actions';
 
 const dummyData = {
-  categories : [
-    { id : 1, name : 'Vehicles' },
-    { id : 2, name : 'Computers' },
-    { id : 3, name : 'Appliances' },
-    { id : 4, name : 'Pet Products' },
-    { id : 5, name : 'Health' }
-  ],
-  isLoggedIn : false
+  categories : [],
+  username : 'Zeke',
+  isLoggedIn : true
 }
 
-const categoryReducer = (state = [], action) => {
+const categoryReducer = (state = dummyData, action) => {
   switch (action.type) {
     case LOAD_CATEGORIES:
-      return [...state, action.payload];
+      // return [...state.categories, action.payload];
+      return Object.assign({}, state, { categories : [...state.categories, ...action.payload] });
     default:
       return state;
   }

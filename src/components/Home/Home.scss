@@ -1,0 +1,33 @@
+@import '../../../sass/config';
+
+.homeContainer{
+  width: 80%;
+  height: 100%;
+  margin-left: 21%;
+  position: relative;
+  top: 85px;
+ 
+  .categoryContainer{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 50px; 
+
+    .itemTitle{
+      width: 100%;
+      margin-left: 20px;
+      margin-bottom: 10px;
+      .title{
+        font-size: 35px;
+      }
+    }
+
+    .itemContainer{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-evenly;
+      
+    }
+    
+  }  
+}
