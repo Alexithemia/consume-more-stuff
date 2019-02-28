@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const Post = require('../../database/models/Post');
+const Category = require('../../database/models/Category');
 
-function isAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) { next(); }
+function isAdmin(req, res, next) {
+  if (req.user.is_admin) { next(); }
   else {
-    res.status(401).json({ success: false, error: 'not authenticated' });
+    res.status(401).json({ success: false, error: 'Unauthorized' });
   };
 };
 
@@ -29,9 +30,31 @@ function isAuthenticated(req, res, next) {
 //   next();
 // }
 
-router.route('/:category')
+router.route('/')
   .get(function (req, res) {
-    Post.where('category_id', req.params.category).orderBy('title', 'ASC').fetchAll({
+    Category.forge().orderBy('name', 'ASC').fetchAll()
+      .then(function (categories) {
+        res.json(categories);
+      })
+      .catch(function (err) {
+        res.json(err);
+      });
+  })
+  .post(isAdmin, function (req, res) {
+    Category.forge({
+      name: req.body.name,
+    }).save()
+      .then(function () {
+        res.json({ success: true });
+      })
+      .catch(function (err) {
+        res.json({ success: false, error: err })
+      })
+  })
+
+router.route('/:id')
+  .get(function (req, res) {
+    Post.where('category_id', req.params.id).orderBy('title', 'ASC').fetchAll({
       columns: ['id', 'category_id', 'user_id', 'post_status_id', 'post_condition_id', 'title', 'content'],
       withRelated: [{
         'category': function (x) {
@@ -55,51 +78,22 @@ router.route('/:category')
         res.json(err);
       });
   })
-// .post(isAdmin, function (req, res) {
-//   Post.forge({
-//     category_id: req.params.category,
-//     user_id: req.user.id,
-//     post_status_id: req.body.post_status_id,
-//     post_condition_id: req.body.post_condition_id,
-//     title: req.body.title,
-//     content: req.body.content
-//   }).save()
-//     .then(function () {
-//       res.json({ success: true });
-//     })
-//     .catch(function (err) {
-//       res.json({ success: false, error: err })
-//     })
-// })
-
-router.route('/search/:term')
-  .get(isAuthenticated, function (req, res) {
-    Post.query(function (search) {
-      let term = `%${req.params.term}%`;
-      search.whereRaw('LOWER(title) LIKE ?', term)
-        .orWhereRaw('LOWER(content) LIKE ?', term);
-    }).orderBy('title', 'ASC').fetchAll({
-      columns: ['id', 'category_id', 'user_id', 'post_status_id', 'post_condition_id', 'title', 'content'],
-      withRelated: [{
-        'category': function (x) {
-          x.column('id', 'name');
-        },
-        'user': function (x) {
-          x.column('id', 'first_name', 'last_name');
-        },
-        'postStatus': function (x) {
-          x.column('id', 'name');
-        },
-        'postCondition': function (x) {
-          x.column('id', 'name');
-        }
-      }]
-    })
-      .then(function (postList) {
-        res.json(postList);
+  .put(isAdmin, function (req, res) {
+    Category.where('id', req.params.id).save({ name: req.body.name }, { patch: true })
+      .then(function () {
+        res.json({ success: true });
       })
       .catch(function (err) {
-        res.json(err);
+        res.json({ success: false, error: err });
+      });
+  })
+  .delete(isAdmin, function (req, res) {
+    new Category({ id: req.params.id }).destroy()
+      .then(function () {
+        res.json({ success: true });
+      })
+      .catch(function (err) {
+        res.status(500).json({ success: false, error: err });
       });
   })
 
