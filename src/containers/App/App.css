@@ -1,4 +1,4 @@
-/* .App{
-  height: 0;
-  width: 0;
-} */
+.mainContainer{
+  display: flex;
+  flex-flow: nowrap;
+}
