@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './App.css';
-import { Route, Link } from 'react-router-dom';
+import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
 
 import Header from '../../components/Header';
 import Navigation from '../../components/Navigation';
 import { loadCategories } from '../../actions';
 import Home from '../../components/Home';
+import Login from '../../components/Login';
 
 class App extends Component {
   constructor (props) {
@@ -23,17 +24,17 @@ class App extends Component {
     console.log(`App.js props are...\n`); console.log(this.props)
     return (
       <div className="App">
-
-        <div>
-          <Header title={ "CMS" } isLoggedIn={ this.props.isLoggedIn } username={ this.props.username } />
-        <Navigation categories={ this.props.categories } />
-        </div>
-        <div>
-          <Home />
-        </div>
+        <Router>
+          <>
+            <Header title={ "CMS" } isLoggedIn={ this.props.isLoggedIn } username={ this.props.username } />
+            <Navigation categories={ this.props.categories } />
+            <Switch>
+              <Route path='/login' component={Login} />
+              <Route path='/' component={Home} />
+            </Switch>
+          </>
+        </Router>
       </div>
-
-
     );
   }
 }

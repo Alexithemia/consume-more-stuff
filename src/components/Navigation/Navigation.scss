@@ -6,7 +6,7 @@
   width: 16em;
   height: 100vh;
   font-family: $primary-font, $font-type;
-  position: absolute;
+  // position: absolute;
   z-index: 1;
 
   .navTitle {
@@ -16,7 +16,7 @@
     font-size: 1.2em;
     font-weight: bold;
     color: $contrast-font-color;
-    margin-top: $header-height;
+    margin-top: 1em;
     height: 2em;
   }
 
