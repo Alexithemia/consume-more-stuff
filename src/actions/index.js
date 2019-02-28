@@ -9,7 +9,7 @@ export const LOGIN_USER = 'LOGIN_USER';
 
 export const login = (user) => {
   return (dispatch) => {
-    return fetch('/login', {
+    return fetch('/api/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
