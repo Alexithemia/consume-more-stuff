@@ -35,8 +35,11 @@ const Header = (props) => {
           {/* If user authenticated, then display: "Hello, { user.username } <a href="/">Log out</a> */}
           <div className="loginStatus">
             Need an account?
-            <Link to='/login' className="refLogin"> Log in here</Link>
-            <Route path='/login' component={Login} />
+            <div>
+
+              <Link to='/login' className="refLogin"> Log in here</Link>
+            </div>
+
           </div>
         </div>
       </div>

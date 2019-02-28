@@ -25,9 +25,7 @@ const store = createStore(cmsReducer, enhancer);
 
 ReactDOM.render(
   <Provider store={store} >
-    <Router>
-      <App />
-    </Router >
+    <App />
   </Provider >,
   document.getElementById('root')
 );

@@ -9,11 +9,7 @@ const LocalStrategy = require('passport-local');
 const bcrypt = require('bcryptjs');
 const api = require('./routes/api');
 
-<<<<<<< HEAD
-const PORT = process.env.CMS_HOST_PORT;
-=======
 const PORT = process.env.CMS_HOST_PORT || 8080;
->>>>>>> development
 const ENV = process.env.NODE_ENV;
 const SESSION_SECRET = process.env.SESSION_SECRET
 
