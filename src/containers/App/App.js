@@ -30,8 +30,8 @@ class App extends Component {
             <div className="mainContainer">
               <Navigation categories={this.props.categories} />
               <Switch>
-                <Route path='/login' component={Login} />
-                <Route path='/' component={Home} />
+                <Route path='/login' component={ Login } />
+                <Route path='/' component={ Home } />
               </Switch>
             </div>
           </>
@@ -45,7 +45,7 @@ const mapStateToProps = (state) => {
   return {
     categories: state.categories,
     username: state.username,
-    isLoggedIn: state.isLoggedIn
+    isLoggedIn: state.loggedIn
   }
 }
 

@@ -18,9 +18,15 @@
     color: $contrast-font-color;
     margin-top: 1em;
     height: 2em;
+
+    &:first-child {
+      margin-top: 0;
+    }
   }
 
   .navMenu {
+    height: fit-content;
+
     .navItem {
       display: flex;
       justify-content: flex-start;
@@ -29,17 +35,27 @@
       transition-duration: 150ms;
       position: relative;
       left: 1em;
-      margin-top: 1em;
       width: 92.5%;
-      height: 1.2em;
+      height: fit-content;
 
       .text {
         font-size: 1.2em;
         color: $contrast-font-color;
+        padding: 0.35em;
+        margin-top: 0.35em;
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+        text-decoration: none;
       }
 
       &:first-child {
         margin-top: 0;
+
+        .text {
+          background-color: $contrast-background-color;
+          color: white;
+          font-weight: bold;
+        }
       }
 
       &:hover {
