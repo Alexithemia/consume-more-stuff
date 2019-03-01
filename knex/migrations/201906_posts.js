@@ -6,7 +6,13 @@ exports.up = function (knex, Promise) {
     table.integer('post_status_id').references('id').inTable('postStatus').notNullable();
     table.integer('post_condition_id').references('id').inTable('postConditions').notNullable();
     table.string('title').notNullable();
-    table.string('content', 5000).nullable();
+    table.string('description', 5000);
+    table.string('image');
+    table.string('price');
+    table.string('manufacturer');
+    table.string('model');
+    table.string('dimensions')
+    table.string('notes');
     table.integer('views').notNullable().defaultTo(0);
     table.timestamps(true, true);
   })
