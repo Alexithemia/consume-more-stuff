@@ -7,7 +7,6 @@ exports.up = function (knex, Promise) {
     table.integer('post_condition_id').references('id').inTable('postConditions').notNullable();
     table.string('title').notNullable();
     table.string('description', 5000);
-    table.string('image');
     table.string('price');
     table.string('manufacturer');
     table.string('model');
