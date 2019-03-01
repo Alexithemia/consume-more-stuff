@@ -3,8 +3,9 @@ const router = express.Router();
 const Post = require('../../database/models/Post');
 const PostStatus = require('../../database/models/PostStatus');
 const PostCondition = require('../../database/models/PostCondition');
-const multer = require('multer')
-const upload = multer({ dest: 'uploads/' })
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' });
+const uploadImage = require('../s3handler');
 
 function isAuthenticated(req, res, next) {
   if (req.isAuthenticated()) { next(); }
@@ -76,7 +77,11 @@ router.route('/')
       .then(function (postData) {
         console.log(postData.attributes.id);
         for (let i = 0; i < req.files.length; i++) {
-          console.log(req.files[i].originalname)
+          uploadImage(req.files[i], req.body.title)
+            .then(function (url) {
+              console.log(url)
+              // forge/save new photo with postData.attributes.id as post_id
+            })
         }
         res.json({ success: true });
       })

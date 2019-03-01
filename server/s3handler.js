@@ -6,27 +6,34 @@ AWS.config.update({
   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
 });
 
-function uploadImage(file, title, filename) {
+function uploadImage(file, title) {
+  console.log(file);
+
   let s3 = new AWS.S3();
 
   //configuring parameters
   let params = {
     Bucket: process.env.AWS_BUCKET_NAME,
-    Body: file,
-    Key: `${title}/${Date.now()}_${filename}` // todo
+    Body: file.path,
+    Key: `${title}/${Date.now()}_${file.originalname}` // todo
   };
 
-  s3.upload(params, function (err, data) {
-    //handle error
-    if (err) {
-      console.log("Error", err);
-    }
+  return new Promise(
+    (resolve, reject) => {
+      s3.upload(params, function (err, data) {
+        //handle error
+        if (err) {
+          reject(err);
+        }
 
-    //success
-    if (data) {
-      console.log("Uploaded in:", data.Location);
-    }
-  });
+        //success
+        if (data) {
+          console.log('returning');
+
+          resolve(data.Location);
+        }
+      });
+    });
 }
 
 module.exports = uploadImage;
