@@ -1,8 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const Post = require('../../database/models/Post');
+const Image = require('../../database/models/Image');
 const PostStatus = require('../../database/models/PostStatus');
 const PostCondition = require('../../database/models/PostCondition');
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' });
+const uploadImage = require('../s3handler');
 
 function isAuthenticated(req, res, next) {
   if (req.isAuthenticated()) { next(); }
@@ -57,17 +61,39 @@ router.route('/')
         res.json(err);
       });
   })
-  .post(isAuthenticated, function (req, res) {
+  .post(isAuthenticated, upload.array('photos', 6), function (req, res) {
     Post.forge({
       category_id: req.body.category_id,
       user_id: req.user.id,
       post_status_id: req.body.post_status_id,
       post_condition_id: req.body.post_condition_id,
       title: req.body.title,
-      content: req.body.content
+      description: req.body.description,
+      price: req.body.price,
+      manufacturer: req.body.manufacturer,
+      model: req.body.model,
+      dimensions: req.body.dimensions,
+      notes: req.body.notes,
     }).save()
-      .then(function () {
-        res.json({ success: true });
+      .then(function (postData) {
+        console.log(postData.attributes.id);
+        for (let i = 0; i < req.files.length; i++) {
+          uploadImage(req.files[i], req.body.title)
+            .then(function (url) {
+              console.log(url)
+              Image.forge({
+                url: url,
+                post_id: postData.attributes.id
+              }).save()
+                .then(function () {
+                  res.json({ success: true });
+                })
+                .catch(function (err) {
+                  i = req.files.length;
+                  res.json({ success: false, error: err });
+                })
+            })
+        }
       })
       .catch(function (err) {
         res.json({ success: false, error: err })
@@ -134,7 +160,7 @@ router.route('/search/:term')
 router.route('/:id')
   .get(function (req, res) {
     Post.where('id', req.params.id).fetch({
-      columns: ['id', 'category_id', 'user_id', 'post_status_id', 'post_condition_id', 'title', 'content', 'views'],
+      columns: ['id', 'category_id', 'user_id', 'post_status_id', 'post_condition_id', 'title', 'description', 'price', 'manufacturer', 'model', 'dimensions', 'notes', 'views'],
       withRelated: [{
         'category': function (x) {
           x.column('id', 'name');
@@ -147,7 +173,10 @@ router.route('/:id')
         },
         'postCondition': function (x) {
           x.column('id', 'name');
-        }
+        },
+        'image': function (x) {
+          x.column('post_id', 'url');
+        },
       }]
     })
       .then(function (post) {

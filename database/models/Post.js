@@ -3,6 +3,7 @@ require('./User');
 require('./Category');
 require('./PostStatus');
 require('./PostCondition');
+require('./Image');
 
 class Post extends bookshelf.Model {
   get tableName() { return 'posts'; }
@@ -22,6 +23,10 @@ class Post extends bookshelf.Model {
 
   postCondition() {
     return this.belongsTo('PostCondition', 'post_condition_id', 'id');
+  }
+
+  image() {
+    return this.hasMany('Image');
   }
 }
 
