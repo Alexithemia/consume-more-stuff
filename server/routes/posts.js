@@ -58,13 +58,20 @@ router.route('/')
       });
   })
   .post(isAuthenticated, function (req, res) {
+
     Post.forge({
       category_id: req.body.category_id,
       user_id: req.user.id,
       post_status_id: req.body.post_status_id,
       post_condition_id: req.body.post_condition_id,
       title: req.body.title,
-      content: req.body.content
+      description: req.body.description,
+      image: req.body.image,
+      price: req.body.price,
+      manufacturer: req.body.manufacturer,
+      model: req.body.model,
+      dimensions: req.body.dimensions,
+      notes: req.body.notes,
     }).save()
       .then(function () {
         res.json({ success: true });
