@@ -14,7 +14,7 @@ class ItemDetailView extends Component {
       title: 'Camera',
       image: 'https://images.unsplash.com/photo-1547214117-a112f358e61b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=693&q=80',
       price: '150',
-      description: 'Vintage Camera',
+      description: 'Vintage Camera Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin venenatis massa in metus tempor, luctus volutpat tellus rutrum. Integer molestie, ligula a varius sodales, risus sem interdum sem, et tempor nunc nunc sed odio. Sed nec mi eu ante consectetur maximus eget id nibh. Nulla feugiat tellus nunc, in sollicitudin urna sagittis non. Ut eu tortor nec nibh varius consequat. Nunc felis augue, tristique eget eros sit amet, faucibus sodales lectus. Nulla suscipit faucibus leo condimentum ultricies. Duis massa elit, malesuada ac dui ac, scelerisque ullamcorper mi. Ut tempus risus felis, eget dapibus enim tempor eu. Suspendisse potenti. Proin iaculis varius augue sit amet tempor. Phasellus venenatis enim nunc, ut tincidunt nisl facilisis luctus. Nam sollicitudin augue ipsum, nec element',
       note: 'Accepting only cash and shipping from the US',
       condition: 4,
       category: 3,
@@ -40,14 +40,16 @@ class ItemDetailView extends Component {
             <h1 className="title">{this.state.title}</h1>
 
             <div className="user">by {this.state.user}</div>
-            <div className="price">Price: ${this.state.price}</div>
-            <div className="description">{this.state.description}</div>
-            <div className="posted">Posted: {this.state.created_at}</div>
-            <div className="updated">Last updated: {this.state.updated_at}</div>
-            <div className="note">Note: {this.state.note}</div>
-            <div className="messageContainer"> Message Me
+            <div className="descriptionContainer">
+              <div className="price">Price: ${this.state.price}</div>
+              <div className="description">{this.state.description}</div>
+              <div className="posted">Posted: {this.state.created_at}</div>
+              <div className="updated">Last updated: {this.state.updated_at}</div>
+              <div className="note">Note: {this.state.note}</div>
+              <div className="messageContainer"> Message Me
               {/* <Link className="MessageLink">Message Me</Link> */}
 
+              </div>
             </div>
           </div>
         </div>
