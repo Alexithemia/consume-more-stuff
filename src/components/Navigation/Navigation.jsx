@@ -1,7 +1,6 @@
 import React from 'react';
 import './Navigation.scss';
 import { Link } from 'react-router-dom';
-import NewPost from '../../containers/NewPost';
 
 const Navigation = (props) => {
 
@@ -42,8 +41,6 @@ const Navigation = (props) => {
           <Link to="/dashboard/settings" className="text">Settings</Link>
         </li>
       </ul>
-
-      <NewPost />
     </div>
   );
 }

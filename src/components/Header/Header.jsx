@@ -47,8 +47,7 @@ class Header extends Component {
               </div>
               :
               <div className="loginStatus">
-                Need an account?
-              <Link to="/login" className="refLogin">
+                Need an account? <Link to="/login" className="refLogin">
                   Log in here.
               </Link>
               </div>
