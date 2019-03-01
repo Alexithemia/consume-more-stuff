@@ -1,4 +1,4 @@
-import { LOGIN_USER } from '../actions';
+import { LOGIN_USER, LOGOUT_USER } from '../actions';
 import { LOAD_CATEGORIES } from '../actions';
 
 const initialState = {
@@ -7,16 +7,18 @@ const initialState = {
   postConditions: [],
   messages: [],
   users: [],
-  username : '',
+  username: localStorage.getItem('username'),
   loggedIn: localStorage.getItem('loggedIn')
 }
 
 const cmsReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOGIN_USER:
-      return Object.assign({}, state, { loggedIn: true });
+      return Object.assign({}, state, { loggedIn: true, username: action.payload.username });
+    case LOGOUT_USER:
+      return Object.assign({}, state, { loggedIn: false, username: '' });
     case LOAD_CATEGORIES:
-      return Object.assign({}, state, { categories : [...state.categories, ...action.payload] });
+      return Object.assign({}, state, { categories: [...state.categories, ...action.payload] });
     default:
       return state;
   }

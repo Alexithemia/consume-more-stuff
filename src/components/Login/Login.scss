@@ -13,7 +13,6 @@
   form{
     width: 260px;
     height: 200px;
-    
 
     div{
       margin-top: 10px;
@@ -36,6 +35,14 @@
         width: 100%;
         border-radius: 12px; 
         font-size: 14px;
+      }
+    }
+
+    .registerLink{
+      text-align: center;
+
+      .link{
+        text-decoration: none;
       }
     }
   }
