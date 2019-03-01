@@ -3,8 +3,6 @@ import './Navigation.scss';
 import { Link } from 'react-router-dom';
 
 const Navigation = (props) => {
-  console.log('COMPONENT LOGGINGGGGGGGGGGG');
-  console.log(props);
 
   const categoryList = props.categories.map(current => {
     const { id, name } = current;

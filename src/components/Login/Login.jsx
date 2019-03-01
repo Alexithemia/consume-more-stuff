@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import { login } from '../../actions';
 import './Login.scss';
 
@@ -8,8 +9,8 @@ class Login extends Component {
     super(props)
 
     this.state = {
-      emailInput: this.props.email,
-      passwordInput: this.props.password,
+      userInput: '',
+      passwordInput: ''
     }
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -20,8 +21,8 @@ class Login extends Component {
     const value = e.target.value;
 
     switch (e.target.name) {
-      case 'email':
-        this.setState({ emailInput: value })
+      case 'username':
+        this.setState({ userInput: value })
         break;
       case 'password':
         this.setState({ passwordInput: value })
@@ -35,12 +36,15 @@ class Login extends Component {
     e.preventDefault();
 
     const user = {};
-    user.email = this.state.emailInput;
+    user.username = this.state.userInput;
     user.password = this.state.passwordInput;
 
     this.props.login(user)
+      .then(() => {
+        this.props.history.push('/');
+      })
     this.setState({
-      emailInput: '',
+      userInput: '',
       passwordInput: ''
     })
   }
@@ -53,8 +57,8 @@ class Login extends Component {
         </div>
         <form>
           <div>
-            <label name="email"> Email: </label>
-            <input type="text" name="email" value={this.state.emailInput} onChange={this.handleInputChange} />
+            <label name="username"> Username: </label>
+            <input type="text" name="username" value={this.state.userInput} onChange={this.handleInputChange} />
           </div>
           <div>
             <label name="password">Password: </label>
@@ -62,6 +66,9 @@ class Login extends Component {
           </div>
           <div className="btnContainer">
             <button className="btn" onClick={this.handleSubmit}>Login</button>
+          </div>
+          <div className="registerLink">
+            <Link to='/register' className="link" >Need a Account?</Link>
           </div>
         </form>
       </div>
@@ -78,7 +85,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     login: user => {
-      dispatch(login(user))
+      return dispatch(login(user))
     }
   }
 }

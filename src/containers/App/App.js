@@ -8,6 +8,7 @@ import Navigation from '../../components/Navigation';
 import { loadCategories } from '../../actions';
 import Home from '../../components/Home';
 import Login from '../../components/Login';
+import Register from '../../components/Register';
 
 class App extends Component {
   constructor(props) {
@@ -21,7 +22,6 @@ class App extends Component {
   }
 
   render() {
-    console.log(`App.js props are...\n`); console.log(this.props)
     return (
       <div className="App">
         <Router>
@@ -30,6 +30,7 @@ class App extends Component {
             <div className="mainContainer">
               <Navigation categories={this.props.categories} />
               <Switch>
+                <Route path='/register' component={Register} />
                 <Route path='/login' component={Login} />
                 <Route path='/' component={Home} />
               </Switch>
@@ -45,7 +46,7 @@ const mapStateToProps = (state) => {
   return {
     categories: state.categories,
     username: state.username,
-    isLoggedIn: state.isLoggedIn
+    isLoggedIn: state.loggedIn
   }
 }
 
