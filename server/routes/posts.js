@@ -3,6 +3,8 @@ const router = express.Router();
 const Post = require('../../database/models/Post');
 const PostStatus = require('../../database/models/PostStatus');
 const PostCondition = require('../../database/models/PostCondition');
+const multer = require('multer')
+const upload = multer({ dest: 'uploads/' })
 
 function isAuthenticated(req, res, next) {
   if (req.isAuthenticated()) { next(); }
@@ -57,8 +59,7 @@ router.route('/')
         res.json(err);
       });
   })
-  .post(isAuthenticated, function (req, res) {
-
+  .post(isAuthenticated, upload.array('photos', 6), function (req, res) {
     Post.forge({
       category_id: req.body.category_id,
       user_id: req.user.id,
@@ -66,14 +67,17 @@ router.route('/')
       post_condition_id: req.body.post_condition_id,
       title: req.body.title,
       description: req.body.description,
-      image: req.body.image,
       price: req.body.price,
       manufacturer: req.body.manufacturer,
       model: req.body.model,
       dimensions: req.body.dimensions,
       notes: req.body.notes,
     }).save()
-      .then(function () {
+      .then(function (postData) {
+        console.log(postData.attributes.id);
+        for (let i = 0; i < req.files.length; i++) {
+          console.log(req.files[i].originalname)
+        }
         res.json({ success: true });
       })
       .catch(function (err) {
