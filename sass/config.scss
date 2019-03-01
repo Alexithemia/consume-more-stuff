@@ -8,6 +8,8 @@ $overlay-background-color: rgba(0, 0, 80, 0.1);
 $primary-font-color: white;
 $contrast-font-color: black;
 
+$green-hover-color: #7faf4d;
+
 // font configuration
 $primary-font: 'Montserrat';
 $font-type: monospace;
@@ -18,5 +20,12 @@ $header-height: 4em;
 $header-box-shadow: 0em 0.2em 2em 0.3em #aaa;
 $header-padding: 0.5em;
 $distance-from-border: 2.5%;
+
+$subsection-gap: 1em;
+$subsection-padding: 0.5em;
+
+$nav-text-padding: 0.35em;
+$nav-text-margin: 0.35em;
+$nav-text-font-size: 1.2em;
 
 $search-border-radius: 0.6em;
