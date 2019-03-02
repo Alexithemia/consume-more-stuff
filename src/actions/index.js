@@ -5,6 +5,7 @@ export const REGISTER_USER = 'REGISTER_USER';
 export const LOGIN_USER = 'LOGIN_USER';
 export const LOGOUT_USER = 'LOGOUT_USER';
 export const LOAD_CATEGORIES = 'LOAD_CATEGORIES';
+export const LOAD_CONDITIONS = 'LOAD_CONDITIONS';
 export const ADD_POST = 'ADD_POST';
 
 /** Action Creators*/
@@ -91,27 +92,58 @@ export const logout = () => {
 
 export const loadCategories = () => {
   return (dispatch) => {
-    return dispatch({
-      type: LOAD_CATEGORIES,
-      payload: [
-        { id: 1, name: 'Vehicles' },
-        { id: 2, name: 'Computers' },
-        { id: 3, name: 'Appliances' },
-        { id: 4, name: 'Pet Products' },
-        { id: 5, name: 'Health' }
-      ]
-    });
+    return fetch('/api/category')
+      .then(response => {
+        return response.json();
+      })
+      .then(body => {
+        return dispatch({
+          type : LOAD_CATEGORIES,
+          payload : body
+        });
+      });
+  }
+}
+
+export const loadConditions = () => {
+  return (dispatch) => {
+    return fetch('/api/posts/condition')
+      .then(response => {
+        return response.json();
+      })
+      .then(body => {
+        return dispatch({
+          type : LOAD_CONDITIONS,
+          payload : body
+        });
+      });
   }
 }
 
 export const addPost = (newPost) => {
   return (dispatch) => {
+    const formData = new FormData();
+
+    for (let key in newPost) {
+      console.log(newPost[key]);
+
+      // if (key === 'photos') {
+      //   const photosObject = newPost[key];
+
+      //   for (let photo in photosObject) {
+      //     formData.append(key, photo)
+      //   }
+      // } else {
+      // }
+
+      formData.append(key, newPost[key])
+    }
+
+    formData.append('photos', newPost.photos[0]);
+
     return fetch('api/posts', {
       method : 'POST',
-      body : newPost,
-      // headers : {
-      //   'Content-Type' : 'multipart/form-data'
-      // }
+      body : formData
     })
       .then(response => {
         return response.json();

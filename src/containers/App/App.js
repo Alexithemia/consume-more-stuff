@@ -26,10 +26,10 @@ class App extends Component {
       <div className="App">
         <Router>
           <>
-            <Header title={"CMS"} isLoggedIn={this.props.isLoggedIn} username={this.props.username} />
+            <Header title={"CMS"} isLoggedIn={ this.props.isLoggedIn } username={ this.props.username } />
 
             <div className="mainContainer">
-              <Navigation categories={this.props.categories} isLoggedIn={ this.props.isLoggedIn } />
+              <Navigation categories={ this.props.categories } isLoggedIn={ this.props.isLoggedIn } />
               <Switch>
                 <Route path='/register' component={Register} />
                 <Route path='/login' component={Login} />

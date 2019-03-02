@@ -23,7 +23,7 @@ const Navigation = (props) => {
       </div>
 
       <ul className="navMenu">
-        {categoryList}
+        { categoryList }
       </ul>
 
       { props.isLoggedIn ? 
@@ -46,7 +46,7 @@ const Navigation = (props) => {
             </li>
           </ul>
 
-          <NewPost />
+          <NewPost categories={ props.categories } />
         </>
       : null
     }

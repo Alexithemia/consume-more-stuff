@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './AddPost.scss';
 
+import CategoryList from '../../components/utilities/CategoryList';
+import ConditionList from '../../components/utilities/ConditionList';
 import { addPost } from '../../actions';
 
 class AddPost extends Component {
@@ -16,7 +18,9 @@ class AddPost extends Component {
       manufacturer : '',
       model : '',
       dimensions : '',
-      notes : ''
+      notes : '',
+      category_id : null,
+      condition_id : null
     };
 
     this.handleTitleOnChange = this.handleTitleOnChange.bind(this);
@@ -27,70 +31,75 @@ class AddPost extends Component {
     this.handleDimensionsOnChange = this.handleDimensionsOnChange.bind(this);
     this.handleNotesOnChange = this.handleNotesOnChange.bind(this);
     this.handleFileChosenOnChange = this.handleFileChosenOnChange.bind(this);
+    this.handleCategoryOnChange = this.handleCategoryOnChange.bind(this);
+    this.handleConditionOnChange = this.handleConditionOnChange.bind(this);
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
   }
 
   handleTitleOnChange(e) {
     const value = e.target.value;
-    this.setState({
-      title : value
-    })
+
+    this.setState({ title : value })
   }
 
   handleDescriptionOnChange(e) {
     const value = e.target.value;
-    this.setState({
-      description : value
-    })
+
+    this.setState({ description : value })
   }
 
   handlePriceOnChange(e) {
     const value = e.target.value;
-    this.setState({
-      price : value
-    })
+
+    this.setState({ price : value })
   }
 
   handleManufacturerOnChange(e) {
     const value = e.target.value;
-    this.setState({
-      manufacturer : value
-    })
+
+    this.setState({ manufacturer : value })
   }
 
   handleModelOnChange(e) {
     const value = e.target.value;
-    this.setState({
-      model : value
-    })
+
+    this.setState({ model : value })
   }
 
   handleDimensionsOnChange(e) {
     const value = e.target.value;
-    this.setState({
-      dimensions : value
-    })
+
+    this.setState({ dimensions : value })
   }
 
   handleNotesOnChange(e) {
     const value = e.target.value;
-    this.setState({
-      notes : value
-    })
+
+    this.setState({ notes : value })
   }
 
   handleFileChosenOnChange(e) {
     const files = e.target.files;
 
-    this.setState({
-      photos : files
-    });
+    this.setState({ photos : files });
+  }
+
+  handleCategoryOnChange(e) {
+    const value = e.target.value;
+
+    this.setState({ category_id : value });
+  }
+
+  handleConditionOnChange(e) {
+    const value = e.target.value;
+      
+    this.setState({ condition_id : value });
   }
 
   handleOnSubmit(e) {
     e.preventDefault();
 
-    const { title, description, price, photos, manufacturer, model, dimensions, notes } = this.state;
+    const { title, description, price, photos, manufacturer, model, dimensions, notes, category_id, condition_id } = this.state;
 
     this.props.onAdd({
       title : title,
@@ -100,7 +109,9 @@ class AddPost extends Component {
       manufacturer : manufacturer,
       model : model,
       dimensions : dimensions,
-      notes : notes
+      notes : notes,
+      category_id : category_id,
+      post_condition_id : condition_id
     })
 
     // clear input
@@ -113,6 +124,8 @@ class AddPost extends Component {
       model : '',
       dimensions : '',
       notes : '',
+      category_id : category_id,
+      condition_id : condition_id
     })
   }
 
@@ -121,7 +134,7 @@ class AddPost extends Component {
 
     return (
       <div className="form-wrap">
-        <form id="add-post-form">
+        <form id="add-post-form" encType="multipart/form-data">
           <div className="left-half">
             <input onChange={ this.handleTitleOnChange } type="text" value={ title } placeholder="Title" />
             <textarea onChange={ this.handleDescriptionOnChange } name="description" value={ description } placeholder="Describe your post" cols="30" rows="10"></textarea>
@@ -137,8 +150,15 @@ class AddPost extends Component {
             <img src="https://i.imgur.com/cFxAsBo.png" alt="file not specified" />
             <input onChange={ this.handleFileChosenOnChange } type="file" form="add-post-form" multiple />
 
-            <select name="category_id" id="select-category">
-              
+            {/* DISABLE SUBMIT BUTTON IF THE VALUE OF SELECT TAG IS "" */}
+            <select onChange={ this.handleCategoryOnChange } name="category_id" id="select-category">
+              <option value="">Choose a Category</option>
+              <CategoryList categories={ this.props.categories } />
+            </select>
+
+            <select onChange={ this.handleConditionOnChange } name="condition_id" id="select-conditions">
+              <option value="">Choose a Condition</option>
+              <ConditionList postConditions={ this.props.postConditions } />
             </select>
           </div>
         </form>
@@ -152,7 +172,9 @@ class AddPost extends Component {
 }
 
 const mapStateToProps = (state) => {
-  return {};
+  return {
+    postConditions : state.postConditions
+  };
 }
 
 const mapDispatchToProps = (dispatch) => {

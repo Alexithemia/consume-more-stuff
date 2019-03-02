@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactModal from 'react-modal';
 import { connect } from 'react-redux';
 import './NewPost.scss';
+import { loadConditions } from '../../actions';
 
 import AddPost from '../AddPost';
 
@@ -22,6 +23,10 @@ class NewPost extends Component {
     });
   }
 
+  componentWillMount() {
+    return this.props.loadFormData();
+  }
+
   render() {
     return (
       <div className="newPostWrap">
@@ -40,7 +45,7 @@ class NewPost extends Component {
             <div className="headerContainer">
               <span className="headerText">MAKE A NEW POST</span>
             </div>
-            <AddPost />
+            <AddPost categories={ this.props.categories } postConditions={ this.props.postConditions } />
           </ReactModal>
 
       </div>
@@ -53,7 +58,13 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return {};
+  return {
+    loadFormData : () => {
+      const actionObject = loadConditions();
+
+      dispatch(actionObject);
+    }
+  };
 }
 
 NewPost = connect(
