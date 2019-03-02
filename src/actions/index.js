@@ -109,9 +109,9 @@ export const addPost = (newPost) => {
     return fetch('api/posts', {
       method : 'POST',
       body : newPost,
-      headers : {
-        'Content-Type' : 'multipart/form-data'
-      }
+      // headers : {
+      //   'Content-Type' : 'multipart/form-data'
+      // }
     })
       .then(response => {
         return response.json();

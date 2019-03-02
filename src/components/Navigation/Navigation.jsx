@@ -45,11 +45,11 @@ const Navigation = (props) => {
               <Link to="/dashboard/settings" className="text">Settings</Link>
             </li>
           </ul>
+
+          <NewPost />
         </>
       : null
     }
-
-    <NewPost />
     </div> 
   );
 }

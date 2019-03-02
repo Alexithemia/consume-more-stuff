@@ -12,7 +12,7 @@ class AddPost extends Component {
       title : '',
       description : '',
       price : '',
-      images : [],
+      photos : [],
       manufacturer : '',
       model : '',
       dimensions : '',
@@ -83,20 +83,20 @@ class AddPost extends Component {
     const files = e.target.files;
 
     this.setState({
-      images : files
+      photos : files
     });
   }
 
   handleOnSubmit(e) {
     e.preventDefault();
 
-    const { title, description, price, images, manufacturer, model, dimensions, notes } = this.state;
+    const { title, description, price, photos, manufacturer, model, dimensions, notes } = this.state;
 
     this.props.onAdd({
       title : title,
       description : description,
       price : price,
-      images : images,
+      photos : photos,
       manufacturer : manufacturer,
       model : model,
       dimensions : dimensions,
@@ -108,7 +108,7 @@ class AddPost extends Component {
       title : '',
       description : '',
       price : '',
-      images : [],
+      photos : [],
       manufacturer : '',
       model : '',
       dimensions : '',
@@ -136,6 +136,10 @@ class AddPost extends Component {
             <span className="text">Upload an image</span>
             <img src="https://i.imgur.com/cFxAsBo.png" alt="file not specified" />
             <input onChange={ this.handleFileChosenOnChange } type="file" form="add-post-form" multiple />
+
+            <select name="category_id" id="select-category">
+              
+            </select>
           </div>
         </form>
 
