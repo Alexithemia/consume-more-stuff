@@ -7,11 +7,11 @@ import { loadConditions } from '../../actions';
 import AddPost from '../AddPost';
 
 class NewPost extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
 
     this.state = {
-      showModal : true
+      showModal: false
     };
 
     this.handleToggleModal = this.handleToggleModal.bind(this);
@@ -19,7 +19,7 @@ class NewPost extends Component {
 
   handleToggleModal() {
     return this.setState({
-      showModal : !this.state.showModal
+      showModal: !this.state.showModal
     });
   }
 
@@ -30,23 +30,24 @@ class NewPost extends Component {
   render() {
     return (
       <div className="newPostWrap">
-        <div onClick={ this.handleToggleModal } className="textWrap">
+        <div onClick={this.handleToggleModal} className="textWrap">
           <span className="text">+ New Post</span>
         </div>
 
-          <ReactModal
-            isOpen={ this.state.showModal } 
-            contentLabel="modal" 
-            onRequestClose={ this.handleToggleModal }
-            className="modal" 
-            overlayClassName="overlay"
-            shouldCloseOnOverlayClick={ true }
-          >
-            <div className="headerContainer">
-              <span className="headerText">MAKE A NEW POST</span>
-            </div>
-            <AddPost categories={ this.props.categories } postConditions={ this.props.postConditions } />
-          </ReactModal>
+        <ReactModal
+          isOpen={this.state.showModal}
+          contentLabel="modal"
+          onRequestClose={this.handleToggleModal}
+          className="modal"
+          overlayClassName="overlay"
+          shouldCloseOnOverlayClick={true}
+          ariaHideApp={false}
+        >
+          <div className="headerContainer">
+            <span className="headerText">MAKE A NEW POST</span>
+          </div>
+          <AddPost categories={this.props.categories} postConditions={this.props.postConditions} />
+        </ReactModal>
 
       </div>
     );
@@ -59,7 +60,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loadFormData : () => {
+    loadFormData: () => {
       const actionObject = loadConditions();
 
       dispatch(actionObject);

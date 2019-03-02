@@ -98,8 +98,8 @@ export const loadCategories = () => {
       })
       .then(body => {
         return dispatch({
-          type : LOAD_CATEGORIES,
-          payload : body
+          type: LOAD_CATEGORIES,
+          payload: body
         });
       });
   }
@@ -113,8 +113,8 @@ export const loadConditions = () => {
       })
       .then(body => {
         return dispatch({
-          type : LOAD_CONDITIONS,
-          payload : body
+          type: LOAD_CONDITIONS,
+          payload: body
         });
       });
   }
@@ -125,33 +125,24 @@ export const addPost = (newPost) => {
     const formData = new FormData();
 
     for (let key in newPost) {
-      console.log(newPost[key]);
-
-      // if (key === 'photos') {
-      //   const photosObject = newPost[key];
-
-      //   for (let photo in photosObject) {
-      //     formData.append(key, photo)
-      //   }
-      // } else {
-      // }
-
       formData.append(key, newPost[key])
     }
+    for (let i = 0; i < newPost.photos.length; i++) {
+      formData.append('photos', newPost.photos[i]);
+    }
 
-    formData.append('photos', newPost.photos[0]);
 
     return fetch('api/posts', {
-      method : 'POST',
-      body : formData
+      method: 'POST',
+      body: formData
     })
       .then(response => {
         return response.json();
       })
       .then(body => {
         dispatch({
-          type : ADD_POST,
-          payload : body
+          type: ADD_POST,
+          payload: body
         });
       });
   }
