@@ -34,7 +34,6 @@ function isAuthenticated(req, res, next) {
 router.route('/')
   .get(function (req, res) {
     Post.forge().orderBy('title', 'ASC').fetchAll({
-      columns: ['id', 'category_id', 'user_id', 'post_status_id', 'post_condition_id', 'title', 'description', 'image', 'price', 'manufacturer', 'model', 'dimensions', 'notes', 'views'],
       withRelated: [{
         'category': function (x) {
           x.column('id', 'name');
@@ -140,13 +139,12 @@ router.route('/search/:term')
 router.route('/:id')
   .get(function (req, res) {
     Post.where('id', req.params.id).fetch({
-      columns: ['id', 'category_id', 'user_id', 'post_status_id', 'post_condition_id', 'title', 'description', 'image', 'price', 'manufacturer', 'model', 'dimensions', 'notes', 'views'],
       withRelated: [{
         'category': function (x) {
           x.column('id', 'name');
         },
         'user': function (x) {
-          x.column('id', 'first_name', 'last_name');
+          x.column('id', 'username');
         },
         'postStatus': function (x) {
           x.column('id', 'name');

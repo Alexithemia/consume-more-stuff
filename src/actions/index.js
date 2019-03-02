@@ -126,10 +126,9 @@ export const loadPosts = () => {
 
 export const loadPost = (id) => {
   return (dispatch) => {
-    return fetch(`/api/posts/1`, {
+    return fetch(`/api/posts/${id}`, {
     })
       .then((response) => {
-        console.log(response)
         if (!response.ok) {
           throw Error(response.statusText)
         }

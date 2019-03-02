@@ -3,6 +3,7 @@ import { LOAD_CATEGORIES, LOAD_POSTS, LOAD_POST } from '../actions';
 
 const initialState = {
   posts: [],
+  selectedPost: {},
   categories: [],
   postConditions: [],
   messages: [],
@@ -23,7 +24,7 @@ const cmsReducer = (state = initialState, action) => {
     case LOAD_POSTS:
       return Object.assign({}, state, { posts: [...action.payload] });
     case LOAD_POST:
-      return Object.assign({}, state, { posts: [...action.payload] })
+      return Object.assign({}, state, { selectedPost: action.payload });
     default:
       return state;
   }
