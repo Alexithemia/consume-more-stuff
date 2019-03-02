@@ -16,7 +16,6 @@ class ItemDetailView extends Component {
     selectedImg: ""
   }
 
-
   componentWillMount() {
     this.props.loadPost(this.props.match.params.id)
   }
@@ -33,8 +32,6 @@ class ItemDetailView extends Component {
 
   render() {
     const { category, description, dimensions, image, manufacturer, model, title, price, postCondition, postStatus, user, notes, views, created_at, updated_at } = this.props.selectedPost;
-
-
 
     return (
       <div className="itemDetailViewContainer">
