@@ -1,4 +1,5 @@
 const AWS = require('aws-sdk');
+const fs = require('fs');
 
 //configuring the AWS environment
 AWS.config.update({
@@ -7,29 +8,22 @@ AWS.config.update({
 });
 
 function uploadImage(file, title) {
-  console.log(file);
-
   let s3 = new AWS.S3();
 
   //configuring parameters
   let params = {
     Bucket: process.env.AWS_BUCKET_NAME,
-    Body: file.path,
-    Key: `${title}/${Date.now()}_${file.originalname}` // todo
+    Body: fs.createReadStream(`./server/uploads/${file.filename}`),
+    Key: `${title}/${Date.now()}_${file.originalname}`
   };
 
   return new Promise(
     (resolve, reject) => {
       s3.upload(params, function (err, data) {
-        //handle error
         if (err) {
           reject(err);
         }
-
-        //success
         if (data) {
-          console.log('returning');
-
           resolve(data.Location);
         }
       });

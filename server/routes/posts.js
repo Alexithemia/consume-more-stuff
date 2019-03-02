@@ -5,7 +5,7 @@ const Image = require('../../database/models/Image');
 const PostStatus = require('../../database/models/PostStatus');
 const PostCondition = require('../../database/models/PostCondition');
 const multer = require('multer');
-const upload = multer({ dest: 'uploads/' });
+const upload = multer({ dest: 'server/uploads/' });
 const uploadImage = require('../s3handler');
 
 function isAuthenticated(req, res, next) {
@@ -38,7 +38,7 @@ function isAuthenticated(req, res, next) {
 router.route('/')
   .get(function (req, res) {
     Post.forge().orderBy('title', 'ASC').fetchAll({
-      columns: ['id', 'category_id', 'user_id', 'post_status_id', 'post_condition_id', 'title', 'content', 'views'],
+      columns: ['id', 'category_id', 'user_id', 'post_status_id', 'post_condition_id', 'title', 'description', 'price', 'manufacturer', 'model', 'dimensions', 'notes', 'views'],
       withRelated: [{
         'category': function (x) {
           x.column('id', 'name');
@@ -51,7 +51,10 @@ router.route('/')
         },
         'postCondition': function (x) {
           x.column('id', 'name');
-        }
+        },
+        'image': function (x) {
+          x.column('post_id', 'url');
+        },
       }]
     })
       .then(function (postList) {
@@ -76,24 +79,23 @@ router.route('/')
       notes: req.body.notes,
     }).save()
       .then(function (postData) {
-        console.log(postData.attributes.id);
+        let error = false
         for (let i = 0; i < req.files.length; i++) {
           uploadImage(req.files[i], req.body.title)
             .then(function (url) {
-              console.log(url)
               Image.forge({
                 url: url,
                 post_id: postData.attributes.id
               }).save()
-                .then(function () {
-                  res.json({ success: true });
-                })
                 .catch(function (err) {
                   i = req.files.length;
-                  res.json({ success: false, error: err });
+                  error = err;
                 })
             })
         }
+        if (error) {
+          res.json({ success: false, error: error });
+        } else { res.json({ success: true }); }
       })
       .catch(function (err) {
         res.json({ success: false, error: err })
@@ -133,7 +135,7 @@ router.route('/search/:term')
       search.whereRaw('LOWER(title) LIKE ?', term)
         .orWhereRaw('LOWER(content) LIKE ?', term);
     }).orderBy('title', 'ASC').fetchAll({
-      columns: ['id', 'category_id', 'user_id', 'post_status_id', 'post_condition_id', 'title', 'content'],
+      columns: ['id', 'category_id', 'user_id', 'post_status_id', 'post_condition_id', 'title', 'description', 'price', 'manufacturer', 'model', 'dimensions', 'notes', 'views'],
       withRelated: [{
         'category': function (x) {
           x.column('id', 'name');
@@ -146,7 +148,10 @@ router.route('/search/:term')
         },
         'postCondition': function (x) {
           x.column('id', 'name');
-        }
+        },
+        'image': function (x) {
+          x.column('post_id', 'url');
+        },
       }]
     })
       .then(function (postList) {
