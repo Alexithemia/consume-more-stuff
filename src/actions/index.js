@@ -5,6 +5,7 @@ export const REGISTER_USER = 'REGISTER_USER';
 export const LOGIN_USER = 'LOGIN_USER';
 export const LOGOUT_USER = 'LOGOUT_USER';
 export const LOAD_CATEGORIES = 'LOAD_CATEGORIES';
+export const ADD_POST = 'ADD_POST';
 
 /** Action Creators*/
 
@@ -100,5 +101,26 @@ export const loadCategories = () => {
         { id: 5, name: 'Health' }
       ]
     });
+  }
+}
+
+export const addPost = (newPost) => {
+  return (dispatch) => {
+    return fetch('api/posts', {
+      method : 'POST',
+      body : newPost,
+      headers : {
+        'Content-Type' : 'multipart/form-data'
+      }
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(body => {
+        dispatch({
+          type : ADD_POST,
+          payload : body
+        });
+      });
   }
 }

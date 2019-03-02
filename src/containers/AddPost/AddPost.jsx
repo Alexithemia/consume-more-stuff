@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './AddPost.scss';
 
+import { addPost } from '../../actions';
+
 class AddPost extends Component {
   constructor (props) {
     super(props);
@@ -24,6 +26,8 @@ class AddPost extends Component {
     this.handleModelOnChange = this.handleModelOnChange.bind(this);
     this.handleDimensionsOnChange = this.handleDimensionsOnChange.bind(this);
     this.handleNotesOnChange = this.handleNotesOnChange.bind(this);
+    this.handleFileChosenOnChange = this.handleFileChosenOnChange.bind(this);
+    this.handleOnSubmit = this.handleOnSubmit.bind(this);
   }
 
   handleTitleOnChange(e) {
@@ -75,8 +79,41 @@ class AddPost extends Component {
     })
   }
 
+  handleFileChosenOnChange(e) {
+    const files = e.target.files;
+
+    this.setState({
+      images : files
+    });
+  }
+
   handleOnSubmit(e) {
     e.preventDefault();
+
+    const { title, description, price, images, manufacturer, model, dimensions, notes } = this.state;
+
+    this.props.onAdd({
+      title : title,
+      description : description,
+      price : price,
+      images : images,
+      manufacturer : manufacturer,
+      model : model,
+      dimensions : dimensions,
+      notes : notes
+    })
+
+    // clear input
+    this.setState({
+      title : '',
+      description : '',
+      price : '',
+      images : [],
+      manufacturer : '',
+      model : '',
+      dimensions : '',
+      notes : '',
+    })
   }
 
   render() {
@@ -98,12 +135,12 @@ class AddPost extends Component {
           <div className="right-half">
             <span className="text">Upload an image</span>
             <img src="https://i.imgur.com/cFxAsBo.png" alt="file not specified" />
-            <input type="file" form="add-post-form" multiple />
+            <input onChange={ this.handleFileChosenOnChange } type="file" form="add-post-form" multiple />
           </div>
         </form>
 
         <div className="submit-wrap">
-          <input type="submit" value="SUBMIT" form="add-post-form" />
+          <input onClick={ this.handleOnSubmit } type="submit" value="SUBMIT" form="add-post-form" />
         </div>
       </div>
     );
@@ -115,7 +152,14 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return {};
+  return {
+    onAdd : (newPost) => {
+      // ADD_POST object with a payload of `newPost`
+      const actionObject = addPost(newPost);
+
+      dispatch(actionObject);
+    }
+  };
 }
 
 AddPost = connect(
