@@ -1,5 +1,5 @@
 import { LOGIN_USER, LOGOUT_USER } from '../actions';
-import { LOAD_CATEGORIES } from '../actions';
+import { LOAD_CATEGORIES, LOAD_POSTS, LOAD_POST } from '../actions';
 
 const initialState = {
   posts: [],
@@ -11,6 +11,7 @@ const initialState = {
   loggedIn: localStorage.getItem('loggedIn')
 }
 
+
 const cmsReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOGIN_USER:
@@ -19,8 +20,10 @@ const cmsReducer = (state = initialState, action) => {
       return Object.assign({}, state, { loggedIn: false, username: '' });
     case LOAD_CATEGORIES:
       return Object.assign({}, state, { categories: [...state.categories, ...action.payload] });
-    // case LOAD_POSTS:
-    //   return Object.assign({}, state, { posts: [...state.posts], ...action.payload });
+    case LOAD_POSTS:
+      return Object.assign({}, state, { posts: [...action.payload] });
+    case LOAD_POST:
+      return Object.assign({}, state, { posts: [...action.payload] })
     default:
       return state;
   }
