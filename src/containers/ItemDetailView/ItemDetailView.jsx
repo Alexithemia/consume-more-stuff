@@ -16,8 +16,6 @@ class ItemDetailView extends Component {
     console.log(this.props.selectedPost);
     const { category, description, dimensions, image, manufacturer, model, title, price, postCondition, postStatus, user, notes, views, created_at, updated_at } = this.props.selectedPost;
 
-
-
     return (
       <div className="itemDetailViewContainer">
         {this.props.selectedPost.user && (
