@@ -21,6 +21,12 @@ class ItemDetailView extends Component {
     this.props.loadPost(this.props.match.params.id)
   }
 
+  componentDidUpdate() {
+    if (this.state.selectedImg === "" && this.props.selectedPost.image) {
+      this.setState({ selectedImg: this.props.selectedPost.image[0].url })
+    }
+  }
+
   changePhoto(e) {
     this.setState({ selectedImg: e.target.src })
   }
@@ -28,9 +34,7 @@ class ItemDetailView extends Component {
   render() {
     const { category, description, dimensions, image, manufacturer, model, title, price, postCondition, postStatus, user, notes, views, created_at, updated_at } = this.props.selectedPost;
 
-    if (this.state.selectedImg === "" && image) {
-      this.setState({ selectedImg: image[0].url })
-    }
+
 
     return (
       <div className="itemDetailViewContainer">
