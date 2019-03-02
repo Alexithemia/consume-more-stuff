@@ -6,16 +6,15 @@ import { loadPost } from '../../actions';
 
 class ItemDetailView extends Component {
 
-
   componentWillMount() {
     this.props.loadPost(this.props.match.params.id)
-
   }
 
   render() {
-    console.log(this.props.selectedPost);
     const { category, description, dimensions, image, manufacturer, model, title, price, postCondition, postStatus, user, notes, views, created_at, updated_at } = this.props.selectedPost;
-
+    if (image) {
+      console.log(image[0].url);
+    }
     return (
       <div className="itemDetailViewContainer">
         {this.props.selectedPost.user && (
@@ -24,17 +23,19 @@ class ItemDetailView extends Component {
 
               <div className="imgNavBar">
                 <a href="#img">
-                  <img src={image} alt="Thumbnail View 1:" className="navImg" />
+                  <img src={image[0].url} alt="Thumbnail View 1:" className="navImg" />
                 </a>
                 <a href="#img">
-                  <img src={image} alt="Thumbnail View 2:" className="navImg" />
+                  <img src={image[1].url} alt="Thumbnail View 2:" className="navImg" />
                 </a>
-                <img src={image} alt="Thumbnail View 3:" className="navImg" />
-                <img src={image} alt="Thumbnail View 4:" className="navImg" />
-                <img src={image} alt="Thumbnail View 5:" className="navImg" />
+                <img src={image[2].url} alt="Thumbnail View 3:" className="navImg" />
+                <img src={image[3].url} alt="Thumbnail View 4:" className="navImg" />
+                <img src={image[4].url} alt="Thumbnail View 5:" className="navImg" />
                 <img src={image} alt="Thumbnail View 6:" className="navImg" />
               </div>
-              <img id="img" className="img" src={image} alt="Thumbnail View 1:" />
+              <div className="imgBox">
+                <img id="img" className="img" src={image[0].url} alt="Thumbnail View 1:" />
+              </div>
               <div className="titleContainer">
                 <h1 className="title">{title}: {postStatus.name}</h1>
                 <div className="user">by {user.username}</div>
