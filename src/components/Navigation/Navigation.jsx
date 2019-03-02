@@ -23,7 +23,30 @@ const Navigation = (props) => {
       <ul className="navMenu">
         {categoryList}
       </ul>
-    </div>
+
+      { props.isLoggedIn ? 
+      <>
+        <div className="navTitle">
+          <span className="text">Dashboard</span>
+        </div>
+
+        <ul className="navMenu">
+          <li className="navItem">
+            <Link to="/dashboard/your-posts" className="text">Your Posts</Link>
+          </li>
+
+          <li className="navItem">
+            <Link to="/dashboard/messages" className="text">Messages</Link>
+          </li>
+
+          <li className="navItem">
+            <Link to="/dashboard/settings" className="text">Settings</Link>
+          </li>
+        </ul>
+      </>
+    : null
+    }
+    </div> 
   );
 }
 
