@@ -52,7 +52,7 @@ router.route('/')
           x.column('id', 'name');
         },
         'image': function (x) {
-          x.column('post_id', 'url');
+          x.column('id', 'post_id', 'url');
         },
       }]
     })
@@ -148,7 +148,7 @@ router.route('/search/:term')
           x.column('id', 'name');
         },
         'image': function (x) {
-          x.column('post_id', 'url');
+          x.column('id', 'post_id', 'url');
         },
       }]
     })
@@ -177,7 +177,7 @@ router.route('/:id')
           x.column('id', 'name');
         },
         'image': function (x) {
-          x.column('post_id', 'url');
+          x.column('id', 'post_id', 'url');
         },
       }]
     })

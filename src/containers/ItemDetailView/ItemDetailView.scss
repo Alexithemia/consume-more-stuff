@@ -22,15 +22,21 @@
    
   .mainContainer{
     display: flex;
-    width: 80%;
+    width: 100%;
 
     .imgBox{
-      max-width: 500px;
-      max-height: 400px;
+      width: 450px;
+      height: 400px;
       box-shadow: 5px 10px 18px #888888;
       display: flex;
+      justify-content: center;
       align-items: center;  
       margin-left: 1em;
+    }
+
+    .img{
+      max-width: 450px;
+      max-height: 400px;
     }
     }
 

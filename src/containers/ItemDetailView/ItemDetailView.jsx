@@ -3,38 +3,45 @@ import { connect } from 'react-redux';
 // import { Link } from 'react-router-dom';
 import './ItemDetailView.scss';
 import { loadPost } from '../../actions';
+import ImageList from '../../components/ImageList';
 
 class ItemDetailView extends Component {
+  constructor(props) {
+    super(props)
+
+    this.changePhoto = this.changePhoto.bind(this);
+  }
+
+  state = {
+    selectedImg: ""
+  }
+
 
   componentWillMount() {
     this.props.loadPost(this.props.match.params.id)
   }
 
+  changePhoto(e) {
+    this.setState({ selectedImg: e.target.src })
+  }
+
   render() {
     const { category, description, dimensions, image, manufacturer, model, title, price, postCondition, postStatus, user, notes, views, created_at, updated_at } = this.props.selectedPost;
-    if (image) {
-      console.log(image[0].url);
+
+    if (this.state.selectedImg === "" && image) {
+      this.setState({ selectedImg: image[0].url })
     }
+
     return (
       <div className="itemDetailViewContainer">
         {this.props.selectedPost.user && (
           <div>
             <div className="mainContainer">
-
               <div className="imgNavBar">
-                <a href="#img">
-                  <img src={image[0].url} alt="Thumbnail View 1:" className="navImg" />
-                </a>
-                <a href="#img">
-                  <img src={image[1].url} alt="Thumbnail View 2:" className="navImg" />
-                </a>
-                <img src={image[2].url} alt="Thumbnail View 3:" className="navImg" />
-                <img src={image[3].url} alt="Thumbnail View 4:" className="navImg" />
-                <img src={image[4].url} alt="Thumbnail View 5:" className="navImg" />
-                <img src={image} alt="Thumbnail View 6:" className="navImg" />
+                <ImageList images={image} changePhoto={this.changePhoto}></ImageList>
               </div>
               <div className="imgBox">
-                <img id="img" className="img" src={image[0].url} alt="Thumbnail View 1:" />
+                <img id="img" className="img" src={this.state.selectedImg} alt="" />
               </div>
               <div className="titleContainer">
                 <h1 className="title">{title}: {postStatus.name}</h1>
@@ -77,8 +84,6 @@ class ItemDetailView extends Component {
     )
   }
 }
-
-
 
 const mapStateToProps = (state) => {
   return {
