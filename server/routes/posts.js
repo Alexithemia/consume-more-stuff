@@ -38,7 +38,6 @@ function isAuthenticated(req, res, next) {
 router.route('/')
   .get(function (req, res) {
     Post.forge().orderBy('title', 'ASC').fetchAll({
-      columns: ['id', 'category_id', 'user_id', 'post_status_id', 'post_condition_id', 'title', 'description', 'price', 'manufacturer', 'model', 'dimensions', 'notes', 'views'],
       withRelated: [{
         'category': function (x) {
           x.column('id', 'name');
@@ -53,7 +52,7 @@ router.route('/')
           x.column('id', 'name');
         },
         'image': function (x) {
-          x.column('post_id', 'url');
+          x.column('id', 'post_id', 'url');
         },
       }]
     })
@@ -77,7 +76,7 @@ router.route('/')
       manufacturer: req.body.manufacturer,
       model: req.body.model,
       dimensions: req.body.dimensions,
-      notes: req.body.notes,
+      notes: req.body.notes
     }).save()
       .then(function (postData) {
         let error = false;
@@ -136,7 +135,6 @@ router.route('/search/:term')
       search.whereRaw('LOWER(title) LIKE ?', term)
         .orWhereRaw('LOWER(content) LIKE ?', term);
     }).orderBy('title', 'ASC').fetchAll({
-      columns: ['id', 'category_id', 'user_id', 'post_status_id', 'post_condition_id', 'title', 'description', 'price', 'manufacturer', 'model', 'dimensions', 'notes', 'views'],
       withRelated: [{
         'category': function (x) {
           x.column('id', 'name');
@@ -151,7 +149,7 @@ router.route('/search/:term')
           x.column('id', 'name');
         },
         'image': function (x) {
-          x.column('post_id', 'url');
+          x.column('id', 'post_id', 'url');
         },
       }]
     })
@@ -166,13 +164,12 @@ router.route('/search/:term')
 router.route('/:id')
   .get(function (req, res) {
     Post.where('id', req.params.id).fetch({
-      columns: ['id', 'category_id', 'user_id', 'post_status_id', 'post_condition_id', 'title', 'description', 'price', 'manufacturer', 'model', 'dimensions', 'notes', 'views'],
       withRelated: [{
         'category': function (x) {
           x.column('id', 'name');
         },
         'user': function (x) {
-          x.column('id', 'first_name', 'last_name');
+          x.column('id', 'username');
         },
         'postStatus': function (x) {
           x.column('id', 'name');
@@ -181,7 +178,7 @@ router.route('/:id')
           x.column('id', 'name');
         },
         'image': function (x) {
-          x.column('post_id', 'url');
+          x.column('id', 'post_id', 'url');
         },
       }]
     })
@@ -206,7 +203,13 @@ router.route('/:id')
     if (req.body.post_status_id) { tempObj.post_status_id = req.body.post_status_id };
     if (req.body.post_condition_id) { tempObj.post_condition_id = req.body.post_condition_id };
     if (req.body.title) { tempObj.title = req.body.title };
-    if (req.body.content) { tempObj.content = req.body.content };
+    if (req.body.description) { tempObj.description = req.body.description };
+    if (req.body.image) { tempObj.image = req.body.image };
+    if (req.body.price) { tempObj.price = req.body.price };
+    if (req.body.manufacturer) { tempObj.manufacturer = req.body.manufacturer };
+    if (req.body.model) { tempObj.model = req.body.model };
+    if (req.body.dimensions) { tempObj.dimensions = req.body.dimensions };
+    if (req.body.notes) { tempObj.notes = req.body.notes }
 
     Post.where('id', req.params.id).save(tempObj, { patch: true })
       .then(function () {
