@@ -20,6 +20,11 @@ function uploadImage(file, title) {
   return new Promise(
     (resolve, reject) => {
       s3.upload(params, function (err, data) {
+        fs.unlink(`./server/uploads/${file.filename}`, function (err) {
+          if (err) {
+            console.error(err);
+          }
+        });
         if (err) {
           reject(err);
         }
