@@ -37,3 +37,42 @@
     }
   }
 }
+
+.modal {
+  position: fixed;
+  top: 10em;
+  border-radius: $modal-border-radius;
+  background-color: $modal-background-color-2;
+  height: 40em; width: 40em;
+  overflow: hidden;
+  .headerContainer {
+    border-radius: $modal-border-radius $modal-border-radius 0 0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: $modal-background-color;
+    height: 3.5em;
+    .headerText {
+      border-radius: $modal-border-radius;
+      font-family: $primary-font, $font-type;
+      font-weight: 500;
+      font-size: 1.2em;
+      color: white;
+      letter-spacing: $letter-spacing;
+      position: relative;
+      left: 1em;
+    }
+  }
+}
+
+.overlay {
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: $modal-overlay-color;
+}

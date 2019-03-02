@@ -1,0 +1,73 @@
+@import '../../../sass/config';
+
+.form-wrap {
+  #add-post-form {
+    display: flex;
+
+    .left-half {
+      flex-basis: 46%;
+      position: relative;
+      left: 4%;
+
+      input, textarea {
+        font-family: $primary-font, $font-type;
+        font-size: 0.9em;
+        letter-spacing: 0.02em;
+        width: 90%;
+        margin-top: 1em;
+        padding-bottom: 0.4em;
+        outline: none;
+        border: none;
+        border-bottom: 0.05em solid $border-gray-color;
+
+        &:first-child { margin-top: 2em; }
+      }
+
+      textarea { resize: none; }
+    }
+
+    .right-half {
+      display: flex;
+      flex-direction: column;
+      flex-basis: 46%;
+      position: relative;
+      left: 4%;
+
+      .text {
+        font-family: $primary-font, $font-type;
+        font-size: 0.9em;
+        margin-top: 2em;
+        margin-bottom: 1em;
+      }
+
+      img {
+        height: 180px;
+        width: 180px;
+        border-radius: 0.5em;
+        box-shadow: 0px 5px 10px 0px rgb(200, 200, 200);
+        margin-bottom: 1.25em;
+      }
+    }
+  }
+
+  .submit-wrap {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 9.2em;
+  
+    input {
+      background-color: $modal-background-color;
+      color: $primary-font-color;
+      letter-spacing: $letter-spacing;
+      font-family: $primary-font, $font-type;
+      font-size: 0.9em;
+      font-weight: 500;
+      height: 3em;
+      width: 80%;
+      border: none;
+      border-radius: 0.5em;
+    }
+  }
+}
