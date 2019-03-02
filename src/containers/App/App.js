@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './App.css';
 import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
+import { loadCategories } from '../../actions';
 
 import Header from '../../components/Header';
 import Navigation from '../../components/Navigation';
-import { loadCategories } from '../../actions';
 import Home from '../../components/Home';
 import Login from '../../components/Login';
 import Register from '../../components/Register';
+import ItemDetailView from '../../containers/ItemDetailView';
 
 class App extends Component {
   constructor(props) {
@@ -30,9 +31,10 @@ class App extends Component {
             <div className="mainContainer">
               <Navigation categories={this.props.categories} isLoggedIn={ this.props.isLoggedIn } />
               <Switch>
-                <Route path='/register' component={Register} />
-                <Route path='/login' component={Login} />
-                <Route path='/' component={Home} />
+                <Route exact={true} path='/register' component={Register} />
+                <Route exact={true} path='/login' component={Login} />
+                <Route exact={true} path='/' component={Home} />
+                <Route exact={true} path='/item/:id' component={ItemDetailView} />
               </Switch>
             </div>
           </>
