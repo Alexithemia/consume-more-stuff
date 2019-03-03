@@ -7,7 +7,11 @@ const Post = (props) => {
 
   return (
     <Link to={`/item/${props.postData.id}`} className="postContainer">
-      <img src={props.postData.image[0].url || "https://s3-us-west-2.amazonaws.com/alexithemia-cms-imagestore/no-image.jpg"} alt="" className="img" />
+      {props.postData.image[0] ?
+        <img src={props.postData.image[0].url} alt="" className="img" />
+        :
+        <img src="https://s3-us-west-2.amazonaws.com/alexithemia-cms-imagestore/no-image.jpg" alt="" className="img" />
+      }
       <h2 className="title"> {props.postData.title} - {props.postData.postStatus.name}</h2>
       <div className="price">${props.postData.price}</div>
       <div className="updatedAt">{date.toUTCString()}</div>

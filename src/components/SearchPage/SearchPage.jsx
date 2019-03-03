@@ -9,6 +9,7 @@ class SearchPage extends Component {
       <div className="searchContainer">
 
 
+
       </div>
     )
   }
