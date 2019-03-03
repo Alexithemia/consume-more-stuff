@@ -54,7 +54,7 @@ router.route('/')
 
 router.route('/:id')
   .get(function (req, res) {
-    Post.where('category_id', req.params.id).orderBy('title', 'ASC').fetchAll({
+    Post.where('category_id', req.params.id).orderBy('created_at', 'ASC').fetchAll({
       columns: ['id', 'category_id', 'user_id', 'post_status_id', 'post_condition_id', 'title', 'content'],
       withRelated: [{
         'category': function (x) {
