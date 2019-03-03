@@ -164,10 +164,10 @@ export const loadPosts = () => {
         }
         return response.json()
       })
-      .then((posts) => {
+      .then((body) => {
         return dispatch({
           type: LOAD_POSTS,
-          payload: posts
+          payload: body
         })
       })
   }
