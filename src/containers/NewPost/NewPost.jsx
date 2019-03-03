@@ -46,7 +46,7 @@ class NewPost extends Component {
           <div className="headerContainer">
             <span className="headerText">MAKE A NEW POST</span>
           </div>
-          <AddPost categories={this.props.categories} postConditions={this.props.postConditions} />
+          <AddPost closeModal={this.handleToggleModal} categories={this.props.categories} postConditions={this.props.postConditions} />
         </ReactModal>
 
       </div>

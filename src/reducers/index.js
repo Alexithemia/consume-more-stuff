@@ -10,14 +10,16 @@ const initialState = {
   messages: [],
   users: [],
   username: localStorage.getItem('username'),
-  loggedIn: localStorage.getItem('loggedIn')
+  loggedIn: localStorage.getItem('loggedIn'),
+  id: parseInt(localStorage.getItem('id')),
+  isAdmin: localStorage.getItem('isadmin')
 }
 
 
 const cmsReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOGIN_USER:
-      return Object.assign({}, state, { loggedIn: true, username: action.payload.username });
+      return Object.assign({}, state, { loggedIn: true, username: action.payload.username, id: action.payload.id, isAdmin: action.payload.is_admin });
     case LOGOUT_USER:
       return Object.assign({}, state, { loggedIn: false, username: '' });
     case LOAD_CATEGORIES:
