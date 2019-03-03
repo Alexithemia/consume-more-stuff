@@ -3,6 +3,11 @@ import './SearchPage.scss';
 
 class SearchPage extends Component {
 
+
+  componentWillMount() {
+
+  }
+
   render() {
 
     return (
@@ -14,5 +19,18 @@ class SearchPage extends Component {
     )
   }
 }
+
+const mapStateToProps = (state) => {
+  return {};
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {};
+}
+
+SearchPage = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SearchPage);
 
 export default SearchPage;

@@ -23,7 +23,13 @@ class ItemDetailView extends Component {
 
   componentDidUpdate() {
     if (this.state.selectedImg === "" && this.props.selectedPost.image) {
-      this.setState({ selectedImg: this.props.selectedPost.image[0].url })
+      if (this.props.selectedPost.image[0]) {
+        this.setState({ selectedImg: this.props.selectedPost.image[0].url })
+
+      } else {
+        this.setState({ selectedImg: "https://s3-us-west-2.amazonaws.com/alexithemia-cms-imagestore/no-image.jpg" })
+
+      }
     }
   }
 

@@ -37,7 +37,7 @@ function isAuthenticated(req, res, next) {
 
 router.route('/')
   .get(function (req, res) {
-    Post.forge().orderBy('title', 'ASC').fetchAll({
+    Post.forge().orderBy('views', 'DESC').fetchAll({
       withRelated: [{
         'category': function (x) {
           x.column('id', 'name');
