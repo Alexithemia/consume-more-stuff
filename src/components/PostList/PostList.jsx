@@ -1,9 +1,9 @@
 import React from 'react';
 import Post from '../Post'
 
-const TrendingList = (props) => {
+const PostList = (props) => {
   console.log(props)
-  const trendingList = props.posts.map(post => {
+  const postList = props.posts.map(post => {
 
     return (
       <Post key={post.id}
@@ -15,9 +15,9 @@ const TrendingList = (props) => {
 
   return (
     <>
-      {trendingList}
+      {postList}
     </>
   )
 }
 
-export default TrendingList;
+export default PostList;
