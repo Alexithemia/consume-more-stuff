@@ -1,13 +1,14 @@
 import React, { Component, createRef } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 import './SearchBar.scss';
 
 class SearchBar extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
 
     this.state = {
-      searchInput : ''
+      searchInput: ''
     }
 
     // reference to focus the search bar
@@ -20,11 +21,12 @@ class SearchBar extends Component {
   handleSearchOnChange(e) {
     const value = e.target.value;
 
-    this.setState({ searchInput : value });
+    this.setState({ searchInput: value });
   }
 
-  handleOnSearchClick() {
-    this.setState({ searchInput : '' });
+  handleOnSearchClick(e) {
+    e.preventDefault();
+    this.props.history.push(`/search/${this.state.searchInput}`)
   }
 
   componentDidMount() {
@@ -34,13 +36,11 @@ class SearchBar extends Component {
   render() {
     return (
       <div className="searchWrap">
-        <div className="searchTemplate"></div>
         <form className="searchBar">
-          <input ref={ this.searchRef } onChange={ this.handleSearchOnChange } data-type="searchInput" type="text" value={ this.state.searchInput } placeholder="Start typing..." className="search" />
+          <input ref={this.searchRef} onChange={this.handleSearchOnChange} data-type="searchInput" type="text" value={this.state.searchInput} placeholder="Search..." className="search" />
+          <input onClick={this.handleOnSearchClick} type="submit" className="submitButton" value=""></input>
         </form>
-        <div className="searchIcon">
-          <img onClick={ this.handleOnSearchClick } src="https://image.flaticon.com/icons/svg/126/126474.svg" alt="search icon" srcSet=""/>
-        </div>
+
       </div>
     );
   }
@@ -59,4 +59,4 @@ SearchBar = connect(
   mapDispatchToProps
 )(SearchBar);
 
-export default SearchBar;
+export default withRouter(SearchBar);

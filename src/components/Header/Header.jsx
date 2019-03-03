@@ -40,7 +40,6 @@ class Header extends Component {
           <SearchBar />
 
           <div className="loginStatusWrap">
-            {/* If user authenticated, then display: "Hello, { user.username } <a href="/">Log out</a> */}
             {isLoggedIn ?
               <div className="loginStatus">
                 Welcome back, {username}! <span onClick={this.onLogout} className="refLogin">Logout</span>
