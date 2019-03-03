@@ -1,57 +1,74 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import './Home.scss';
+import { loadPosts } from '../../actions';
+import TrendingList from '../../components/TrendingList';
 
 class Home extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      category: "",
+      description: "",
+      notes: "",
+      title: "",
+      price: "",
+      postCondition: "",
+      postStatus: "",
+      user: "",
+      image: "",
+      views: ""
+    }
+  }
+
+  componentWillMount() {
+    return this.props.loadPosts();
+  }
 
   render() {
-    const category = this.props.category;
+    // const { category, photo, description, notes, title, price, postCondition, postStatus, user, views } = this.props.viewPosts;
+    console.log(this.props.posts)
+
+    const posts = this.props.posts;
+
 
     return (
       <div className="homeContainer">
 
         <div className="categoryContainer">
           <div className="itemTitle">
-            <h1 className="title">Top X Items in ... {category}</h1>
+            < h1 className="title" > Trending </h1 >
           </div>
 
           <div className="itemContainer">
-            <div className="itemContent">
-              <div className="photo"> photo sample
-            {/* <img src="" alt=""/> */}
-              </div>
-              <div className="message">
-                message sample
-            </div>
-            </div>
-            <div className="itemContent">
-              <div className="photo"> photo sample
-            {/* <img src="" alt=""/> */}
-              </div>
-              <div className="message">
-                message sample
-            </div>
-            </div>
-            <div className="itemContent">
-              <div className="photo"> photo sample
-            {/* <img src="" alt=""/> */}
-              </div>
-              <div className="message">
-                message sample
-            </div>
-            </div>
-            <div className="itemContent">
-              <div className="photo"> photo sample
-            {/* <img src="" alt=""/> */}
-              </div>
-              <div className="message">
-                message sample
-            </div>
-            </div>
+            <TrendingList posts={posts}></TrendingList>
           </div>
         </div>
       </div>
     )
   }
 }
+
+
+const mapStateToProps = (state) => {
+  return {
+    posts: state.posts
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    loadPosts: () => {
+      const actionObject = loadPosts();
+      return dispatch(actionObject);
+    }
+  }
+}
+
+Home = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Home);
 
 export default Home;

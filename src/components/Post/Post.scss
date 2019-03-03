@@ -1,0 +1,16 @@
+@import '../../../sass/config';
+
+.postContainer{
+  width: 300px;
+  height: 300px;
+  border: 1px solid black;
+  margin: 10px;
+  box-shadow: $header-box-shadow;
+  border-radius: 8px;
+
+  .img{
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+  
+}
