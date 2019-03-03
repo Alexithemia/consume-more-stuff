@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './ItemDetailView.scss';
 import { loadPost } from '../../actions';
 import ImageList from '../../components/ImageList';
@@ -10,6 +10,7 @@ class ItemDetailView extends Component {
     super(props)
 
     this.changePhoto = this.changePhoto.bind(this);
+    this.deletePost = this.deletePost.bind(this);
   }
 
   state = {
@@ -30,9 +31,12 @@ class ItemDetailView extends Component {
     this.setState({ selectedImg: e.target.src })
   }
 
-  render() {
-    const { category, description, dimensions, image, manufacturer, model, title, price, postCondition, postStatus, user, notes, views, created_at, updated_at } = this.props.selectedPost;
+  deletePost() {
+    console.log(this.props.selectedPost.id);
+  }
 
+  render() {
+    const { id, category, description, dimensions, image, manufacturer, model, title, price, postCondition, postStatus, user, notes, views, created_at, updated_at, user_id } = this.props.selectedPost;
     return (
       <div className="itemDetailViewContainer">
         {this.props.selectedPost.user && (
@@ -55,10 +59,16 @@ class ItemDetailView extends Component {
                   <div className="updated">Last updated: {updated_at}</div>
                   <div className="notes">Note: {notes}</div>
                   <div className="views">Viewed: {views}</div>
-                  <div className="messageContainer"> Message Me
-              {/* <Link className="MessageLink">Message Me</Link> */}
-
-                  </div>
+                  {this.props.selectedPost.user_id === this.props.id || this.props.isAdmin ?
+                    <div className="options">
+                      <Link to={`/edit/${id}`} className="editPost">Edit</Link>
+                      <div className="deletePost" onClick={this.deletePost}>Delete</div>
+                    </div>
+                    :
+                    <div className="options">
+                      <Link to={`/message/${user_id}/${id}`} className="messagePoster">Message Me</Link>
+                    </div>
+                  }
                 </div>
               </div>
             </div>
@@ -88,7 +98,9 @@ class ItemDetailView extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    selectedPost: state.selectedPost
+    selectedPost: state.selectedPost,
+    id: state.id,
+    isAdmin: state.isAdmin
   }
 }
 

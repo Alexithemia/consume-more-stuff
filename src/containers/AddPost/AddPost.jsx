@@ -143,20 +143,15 @@ class AddPost extends Component {
       category_id: category_id,
       post_condition_id: condition_id
     })
+      .then((err) => {
+        this.props.closeModal();
+      })
+      .catch((err) => {
+        console.log(err);
+      })
 
-    // clear input
-    this.setState({
-      title: '',
-      description: '',
-      price: '',
-      photos: [],
-      manufacturer: '',
-      model: '',
-      dimensions: '',
-      notes: '',
-      category_id: category_id,
-      condition_id: condition_id
-    })
+
+
   }
 
   render() {
@@ -214,10 +209,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onAdd: (newPost) => {
-      // ADD_POST object with a payload of `newPost`
       const actionObject = addPost(newPost);
 
-      dispatch(actionObject);
+      return dispatch(actionObject);
     }
   };
 }
