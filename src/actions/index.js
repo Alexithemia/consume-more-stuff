@@ -54,8 +54,10 @@ export const login = (user) => {
         return response.json()
       })
       .then((user) => {
-        localStorage.setItem('loggedIn', true)
-        localStorage.setItem('username', user.username)
+        localStorage.setItem('loggedIn', true);
+        localStorage.setItem('username', user.username);
+        localStorage.setItem('id', user.id);
+        localStorage.setItem('isadmin', user.is_admin);
         return dispatch({
           type: LOGIN_USER,
           payload: user
@@ -78,8 +80,10 @@ export const logout = () => {
         return response.json()
       })
       .then((user) => {
-        localStorage.removeItem('loggedIn')
-        localStorage.removeItem('username')
+        localStorage.removeItem('loggedIn');
+        localStorage.removeItem('username');
+        localStorage.removeItem('id');
+        localStorage.removeItem('isadmin');
         return dispatch({
           type: LOGOUT_USER,
           payload: user
@@ -134,7 +138,7 @@ export const addPost = (newPost) => {
     }
 
 
-    return fetch('api/posts', {
+    return fetch('/api/posts', {
       method: 'POST',
       body: formData
     })
