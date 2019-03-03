@@ -4,6 +4,8 @@ export const REGISTER_USER = 'REGISTER_USER';
 export const LOGIN_USER = 'LOGIN_USER';
 export const LOGOUT_USER = 'LOGOUT_USER';
 export const LOAD_CATEGORIES = 'LOAD_CATEGORIES';
+export const LOAD_CONDITIONS = 'LOAD_CONDITIONS';
+export const ADD_POST = 'ADD_POST';
 export const LOAD_POSTS = 'LOAD_POSTS';
 export const LOAD_POST = 'LOAD_POST';
 
@@ -92,16 +94,59 @@ export const logout = () => {
 export const loadCategories = () => {
 
   return (dispatch) => {
-    return dispatch({
-      type: LOAD_CATEGORIES,
-      payload: [
-        { id: 1, name: 'Vehicles' },
-        { id: 2, name: 'Computers' },
-        { id: 3, name: 'Appliances' },
-        { id: 4, name: 'Pet Products' },
-        { id: 5, name: 'Health' }
-      ]
-    });
+    return fetch('/api/category')
+      .then(response => {
+        return response.json();
+      })
+      .then(body => {
+        return dispatch({
+          type: LOAD_CATEGORIES,
+          payload: body
+        });
+      });
+  }
+}
+
+export const loadConditions = () => {
+  return (dispatch) => {
+    return fetch('/api/posts/condition')
+      .then(response => {
+        return response.json();
+      })
+      .then(body => {
+        return dispatch({
+          type: LOAD_CONDITIONS,
+          payload: body
+        });
+      });
+  }
+}
+
+export const addPost = (newPost) => {
+  return (dispatch) => {
+    const formData = new FormData();
+
+    for (let key in newPost) {
+      formData.append(key, newPost[key])
+    }
+    for (let i = 0; i < newPost.photos.length; i++) {
+      formData.append('photos', newPost.photos[i]);
+    }
+
+
+    return fetch('api/posts', {
+      method: 'POST',
+      body: formData
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(body => {
+        dispatch({
+          type: ADD_POST,
+          payload: body
+        });
+      });
   }
 }
 

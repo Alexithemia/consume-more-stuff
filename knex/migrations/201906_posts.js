@@ -3,7 +3,7 @@ exports.up = function (knex, Promise) {
     table.increments().unique().notNullable();
     table.integer('category_id').references('id').inTable('categories').notNullable();
     table.integer('user_id').references('id').inTable('users').notNullable();
-    table.integer('post_status_id').references('id').inTable('postStatus').notNullable();
+    table.integer('post_status_id').references('id').inTable('postStatus').notNullable().defaultTo(2);
     table.integer('post_condition_id').references('id').inTable('postConditions').notNullable();
     table.string('title').notNullable();
     table.string('description', 5000);

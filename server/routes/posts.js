@@ -64,6 +64,7 @@ router.route('/')
       });
   })
   .post(isAuthenticated, upload.array('photos', 6), function (req, res) {
+    console.log(req.files);
     Post.forge({
       category_id: req.body.category_id,
       user_id: req.user.id,
@@ -78,7 +79,7 @@ router.route('/')
       notes: req.body.notes
     }).save()
       .then(function (postData) {
-        let error = false
+        let error = false;
         for (let i = 0; i < req.files.length; i++) {
           uploadImage(req.files[i], req.body.title)
             .then(function (url) {

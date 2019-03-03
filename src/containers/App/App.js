@@ -28,6 +28,7 @@ class App extends Component {
         <Router>
           <>
             <Header title={"CMS"} isLoggedIn={this.props.isLoggedIn} username={this.props.username} />
+
             <div className="mainContainer">
               <Navigation categories={this.props.categories} isLoggedIn={this.props.isLoggedIn} />
               <Switch>
