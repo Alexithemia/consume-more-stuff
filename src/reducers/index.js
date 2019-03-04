@@ -1,5 +1,5 @@
 import { LOGIN_USER, LOGOUT_USER } from '../actions';
-import { LOAD_CATEGORIES, LOAD_CONDITIONS, ADD_POST, LOAD_POSTS, LOAD_POST } from '../actions';
+import { LOAD_CATEGORIES, LOAD_CONDITIONS, ADD_POST, LOAD_POSTS, LOAD_POST, SEARCH_POST } from '../actions';
 
 
 const initialState = {
@@ -32,6 +32,8 @@ const cmsReducer = (state = initialState, action) => {
       return Object.assign({}, state, { posts: [...action.payload] });
     case LOAD_POST:
       return Object.assign({}, state, { selectedPost: action.payload });
+    case SEARCH_POST:
+      return Object.assign({}, state, { posts: [...action.payload] });
     default:
       return state;
   }

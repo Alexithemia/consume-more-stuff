@@ -64,7 +64,6 @@ router.route('/')
       });
   })
   .post(isAuthenticated, upload.array('photos', 6), function (req, res) {
-    console.log(req.files);
     Post.forge({
       category_id: req.body.category_id,
       user_id: req.user.id,
@@ -133,8 +132,8 @@ router.route('/search/:term')
     Post.query(function (search) {
       let term = `%${req.params.term}%`;
       search.whereRaw('LOWER(title) LIKE ?', term)
-        .orWhereRaw('LOWER(content) LIKE ?', term);
-    }).orderBy('title', 'ASC').fetchAll({
+        .orWhereRaw('LOWER(description) LIKE ?', term);
+    }).orderBy('created_at', 'DESC').fetchAll({
       withRelated: [{
         'category': function (x) {
           x.column('id', 'name');

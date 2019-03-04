@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './Home.scss';
 import { loadPosts } from '../../actions';
-import TrendingList from '../../components/TrendingList';
+import PostList from '../../components/PostList';
 
 class Home extends Component {
   constructor(props) {
@@ -42,7 +42,7 @@ class Home extends Component {
           </div>
 
           <div className="itemContainer">
-            <TrendingList posts={posts}></TrendingList>
+            <PostList posts={posts}></PostList>
           </div>
         </div>
       </div>
