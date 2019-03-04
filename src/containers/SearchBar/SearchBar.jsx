@@ -1,6 +1,7 @@
 import React, { Component, createRef } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+import { searchPost } from '../../actions';
 import './SearchBar.scss';
 
 class SearchBar extends Component {
@@ -26,6 +27,8 @@ class SearchBar extends Component {
 
   handleOnSearchClick(e) {
     e.preventDefault();
+
+    this.props.searchPost(this.state.searchInput)
     this.props.history.push(`/search/${this.state.searchInput}`)
   }
 
@@ -51,8 +54,14 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return {};
-}
+  return {
+    searchPost: (term) => {
+      const actionObject = searchPost(term);
+      return dispatch(actionObject);
+    }
+  }
+};
+
 
 SearchBar = connect(
   mapStateToProps,

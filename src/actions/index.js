@@ -8,6 +8,7 @@ export const LOAD_CONDITIONS = 'LOAD_CONDITIONS';
 export const ADD_POST = 'ADD_POST';
 export const LOAD_POSTS = 'LOAD_POSTS';
 export const LOAD_POST = 'LOAD_POST';
+export const SEARCH_POST = 'SEARCH_POST';
 
 /** Action Creators*/
 
@@ -187,6 +188,25 @@ export const loadPost = (id) => {
         return dispatch({
           type: LOAD_POST,
           payload: post
+        })
+      })
+  }
+}
+
+export const searchPost = (term) => {
+  return (dispatch) => {
+    return fetch(`/api/posts/search/${term}`, {
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw Error(response.statusText)
+        }
+        return response.json()
+      })
+      .then((posts) => {
+        return dispatch({
+          type: SEARCH_POST,
+          payload: posts
         })
       })
   }
