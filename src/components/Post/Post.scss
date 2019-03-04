@@ -1,0 +1,65 @@
+@import '../../../sass/config';
+
+.postContainer{
+  width: 300px;
+  height: 300px;
+  border: 1px solid black;
+  margin: 15px;
+  box-shadow: $header-box-shadow;
+  border-radius: 8px;
+  text-decoration: none;
+  color: black;
+  font-family: $primary-font;
+
+
+  .imgContainer{
+    width: 300px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    background-color: lightgray;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+
+  .img{
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    max-width: 300px;
+    max-height: 200px;
+  }
+
+  .noImg{
+    max-width: 300px;
+    max-height: 200px;
+   
+   
+  }
+  .title{
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+
+  }
+
+  .textContainer{
+    margin: 5px;
+    text-align: center;
+    
+    .price{
+      margin-bottom: 5px;
+    }
+
+    .updatedAt{
+      font-size: 10px;
+    }
+  }
+
+  .viewContainer{
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+    margin-right: 5px;
+  }
+  
+}

@@ -76,7 +76,7 @@ router.post('/register', (req, res) => {
 });
 
 router.post('/login', passport.authenticate('local'), function (req, res) {
-  res.json({ success: true, username: req.user.username });
+  res.json({ success: true, username: req.user.username, id: req.user.id, is_admin: req.user.is_admin });
 });
 
 router.get('/logout', (req, res) => {

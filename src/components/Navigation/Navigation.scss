@@ -3,8 +3,9 @@
 
 .navigation {
   background-color: $overlay-background-color;
-  width: 16em;
-  height: 100vh;
+  width: 20%;
+  min-width: 250px;
+  height: 100%;
   font-family: $primary-font, $font-type;
   // position: absolute;
   z-index: 1;

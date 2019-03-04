@@ -1,3 +1,5 @@
+@import '../../../sass/config';
+
 .itemDetailViewContainer{
   margin-top: 2em;
   margin-left: 4em;
@@ -96,4 +98,23 @@
         justify-content: space-between;
       }
     }
+}
+
+.options{
+  display: flex;
+  justify-content: space-around;
+  color: $contrast-background-color;
+  font-family: $primary-font;
+  font-size: 25px;
+}
+.editPost{
+  text-decoration: none;
+  color: $contrast-background-color;
+}
+.deletePost{
+  cursor:pointer;
+}
+.messagePoster{
+  text-decoration: none;
+  color: $contrast-background-color;
 }

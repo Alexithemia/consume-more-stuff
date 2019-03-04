@@ -8,6 +8,7 @@ export const LOAD_CONDITIONS = 'LOAD_CONDITIONS';
 export const ADD_POST = 'ADD_POST';
 export const LOAD_POSTS = 'LOAD_POSTS';
 export const LOAD_POST = 'LOAD_POST';
+export const SEARCH_POST = 'SEARCH_POST';
 
 /** Action Creators*/
 
@@ -54,8 +55,10 @@ export const login = (user) => {
         return response.json()
       })
       .then((user) => {
-        localStorage.setItem('loggedIn', true)
-        localStorage.setItem('username', user.username)
+        localStorage.setItem('loggedIn', true);
+        localStorage.setItem('username', user.username);
+        localStorage.setItem('id', user.id);
+        localStorage.setItem('isadmin', user.is_admin);
         return dispatch({
           type: LOGIN_USER,
           payload: user
@@ -78,8 +81,10 @@ export const logout = () => {
         return response.json()
       })
       .then((user) => {
-        localStorage.removeItem('loggedIn')
-        localStorage.removeItem('username')
+        localStorage.removeItem('loggedIn');
+        localStorage.removeItem('username');
+        localStorage.removeItem('id');
+        localStorage.removeItem('isadmin');
         return dispatch({
           type: LOGOUT_USER,
           payload: user
@@ -134,7 +139,8 @@ export const addPost = (newPost) => {
       formData.append('photos', newPost.photos[i]);
     }
 
-    return fetch('api/posts', {
+
+    return fetch('/api/posts', {
       method: 'POST',
       body: formData
     })
@@ -161,10 +167,10 @@ export const loadPosts = () => {
         }
         return response.json()
       })
-      .then((posts) => {
+      .then((body) => {
         return dispatch({
           type: LOAD_POSTS,
-          payload: posts
+          payload: body
         })
       })
   }
@@ -184,6 +190,25 @@ export const loadPost = (id) => {
         return dispatch({
           type: LOAD_POST,
           payload: post
+        })
+      })
+  }
+}
+
+export const searchPost = (term) => {
+  return (dispatch) => {
+    return fetch(`/api/posts/search/${term}`, {
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw Error(response.statusText)
+        }
+        return response.json()
+      })
+      .then((posts) => {
+        return dispatch({
+          type: SEARCH_POST,
+          payload: posts
         })
       })
   }

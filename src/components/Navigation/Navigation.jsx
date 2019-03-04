@@ -19,14 +19,14 @@ const Navigation = (props) => {
   return (
     <div className="navigation">
       <div className="navTitle">
-        <span className="text">Home</span>
+        <span className="text">Categories</span>
       </div>
 
       <ul className="navMenu">
-        { categoryList }
+        {categoryList}
       </ul>
 
-      { props.isLoggedIn ? 
+      {props.isLoggedIn ?
         <>
           <div className="navTitle">
             <span className="text">Dashboard</span>
@@ -46,11 +46,11 @@ const Navigation = (props) => {
             </li>
           </ul>
 
-          <NewPost categories={ props.categories } />
+          <NewPost categories={props.categories} />
         </>
-      : null
-    }
-    </div> 
+        : null
+      }
+    </div>
   );
 }
 

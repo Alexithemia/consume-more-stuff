@@ -4,7 +4,6 @@ import Image from '../Image';
 const ImageList = (props) => {
 
   const imageList = props.images.map(image => {
-
     return (
       <Image key={image.id}
         url={image.url}
@@ -18,9 +17,6 @@ const ImageList = (props) => {
       {imageList}
     </>
   )
-
-
 }
-
 
 export default ImageList;

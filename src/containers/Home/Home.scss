@@ -3,7 +3,9 @@
 .homeContainer{
 display: flex;
 flex: 1;
+width: 100%;
 justify-content: center;
+text-decoration: none;
  
   .categoryContainer{
     display: flex;
@@ -23,9 +25,9 @@ justify-content: center;
 
     .itemContainer{
       display: flex;
-      flex-direction: row;
-      justify-content: space-evenly;
-      
+      width: 100%;
+      justify-content: center;
+      flex-wrap: wrap;
     }
     
   }  
