@@ -33,7 +33,7 @@ class ItemSendMessage extends Component {
       <div className="message-wrap">
         <div className="message-header-wrap">
           <div className="form-header-wrap">
-            <div className="form-header">Send a Message: <span className="accent-text">We hear you.</span></div>
+            <div className="form-header">Send a Message: <span className="accent-text">Start a conversation.</span></div>
             <div className="text">Are you interested in purchasing this product? Let's talk!</div>
           </div>
         </div>
