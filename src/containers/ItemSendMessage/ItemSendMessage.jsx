@@ -6,8 +6,26 @@ class ItemSendMessage extends Component {
     super(props);
 
     this.state = {
-
+      name : '',
+      email : '',
+      comment : ''
     }
+
+    this.updateInput = this.updateInput.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  updateInput(e) {
+    const value = e.target.value;
+    const field = e.target.dataset.field;
+
+    this.setState({ [field] : value });
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+
+    this.props.toggleModal();
   }
 
   render() {
@@ -23,22 +41,22 @@ class ItemSendMessage extends Component {
         <form id="form-message">
           <div className="form-name">
             <span className="title">NAME</span>
-            <input type="text" value={ this.state.name } placeholder="Jane Doe" />
+            <input onChange={ this.updateInput } data-field="name" type="text" value={ this.state.name } placeholder="Jane Doe" />
           </div>
 
           <div className="form-email">
             <span className="title">EMAIL</span>
-            <input type="text" value={ this.state.email } placeholder="name@example.com" />
+            <input onChange={ this.updateInput } data-field="email" type="text" value={ this.state.email } placeholder="name@example.com" />
           </div>
 
           <div className="form-comment">
             <span className="title">HOW'S IT GOING?</span>
-            <textarea name="comment" cols="30" rows="10" placeholder="Hey, I'm looking to buy your product. Where can we meet?"></textarea>
+            <textarea onChange={ this.updateInput } data-field="comment" value={ this.state.comment } name="comment" cols="30" rows="10" placeholder="Hey, I'm looking to buy your product. Where can we meet?"></textarea>
           </div>
 
           <div className="form-submit-options">
-            <input className="submit-send" type="submit" value="Send Message" />
-            <button className="submit-close">Close</button>
+            <input onClick={ this.handleSubmit } className="submit-send" type="submit" value="Send Message" />
+            <button onClick={ this.props.toggleModal } className="submit-close">Close</button>
           </div>
         </form>
       </div>

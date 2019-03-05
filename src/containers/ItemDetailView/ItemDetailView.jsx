@@ -121,7 +121,7 @@ class ItemDetailView extends Component {
                           shouldCloseOnOverlayClick={ true }
                           ariaHideApp={ false }
                         >
-                          <ItemSendMessage />
+                          <ItemSendMessage showModal={ this.state.showModal } toggleModal={ this.toggleModal } />
                         </ReactModal>
                       </div>
                     </div>
