@@ -18,17 +18,10 @@ class App extends Component {
     super(props);
 
     this.state = {};
-
-    this.refreshPage = this.refreshPage.bind(this);
   }
 
   componentDidMount() {
     return this.props.onLoad();
-  }
-
-  refreshPage(e) {
-    console.log("Clicked");
-    window.location.reload();
   }
 
   render() {
@@ -44,7 +37,7 @@ class App extends Component {
                 <Route exact={true} path='/register' component={Register} />
                 <Route exact={true} path='/login' component={Login} />
                 <Route exact={true} path='/' component={Home} />
-                <Route exact={true} path='/category/:id' onClick={this.refreshPage} component={CategoryView} />
+                <Route exact={true} path='/category/:id' component={CategoryView} />
                 <Route exact={true} path='/item/:id' component={ItemDetailView} />
                 <Route exact={true} path='/search/:term' component={SearchPage} />
               </Switch>

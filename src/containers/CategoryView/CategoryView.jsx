@@ -2,13 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { loadCategory } from '../../actions';
 import PostList from '../../components/PostList';
-import CategoryTitle from '../../components/CategoryTitle';
 import './CategoryView.scss';
 
 class CategoryView extends Component {
-  // constructor(props) {
-  //   super(props)
-  // }
 
   componentDidMount() {
     this.props.loadCategory(this.props.match.params.id)
@@ -23,17 +19,21 @@ class CategoryView extends Component {
 
   render() {
     const selectedCategory = this.props.selectedCategory;
-    console.log('RENDER SELECTEDCATEGORY', selectedCategory)
-    const categoryTitle = this.props.selectedCategory
-      .filter(title => {
-        return title.category.name
-      })
+
+    let categoryTitle = ''
+    for (var i = 0; i < this.props.categories.length; i++) {
+      if (this.props.categories[i].id !== 0) {
+        if (this.props.categories[i].id === parseInt(this.props.match.params.id)) {
+          categoryTitle = this.props.categories[i].name
+        }
+      }
+    }
 
     return (
       <div className="homeContainer">
         <div className="categoryContainer">
           <div className="itemTitle">
-            <CategoryTitle categoryTitle={categoryTitle}></CategoryTitle>
+            <h1 className="title">{categoryTitle}</h1>
           </div>
           <div className="itemContainer">
             <PostList selectedCategory={selectedCategory}></PostList>
@@ -46,7 +46,8 @@ class CategoryView extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    selectedCategory: state.selectedCategory
+    selectedCategory: state.selectedCategory,
+    categories: state.categories
   }
 }
 
