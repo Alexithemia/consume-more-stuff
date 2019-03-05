@@ -3,11 +3,10 @@
 
 .navigation {
   background-color: $overlay-background-color;
-  width: 20%;
+  width: 16%;
   min-width: 250px;
-  height: 100%;
+  height: 360em;
   font-family: $primary-font, $font-type;
-  // position: absolute;
   z-index: 1;
 
   .navTitle {

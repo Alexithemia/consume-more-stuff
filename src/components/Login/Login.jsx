@@ -65,10 +65,10 @@ class Login extends Component {
             <input type="password" name="password" value={this.state.passwordInput} onChange={this.handleInputChange} />
           </div>
           <div className="btnContainer">
-            <button className="btn" onClick={this.handleSubmit}>Login</button>
+            <button className="btn" onClick={this.handleSubmit}>LOGIN</button>
           </div>
           <div className="registerLink">
-            <Link to='/register' className="link" >Need a Account?</Link>
+            <Link to='/register' className="link" >Need an account?</Link>
           </div>
         </form>
       </div>
