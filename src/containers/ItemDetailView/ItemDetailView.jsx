@@ -1,36 +1,47 @@
 import React, { Component } from 'react';
+import ReactModal from 'react-modal';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import './ItemDetailView.scss';
+
 import { loadPost } from '../../actions';
+import ItemSendMessage from '../ItemSendMessage';
 import ImageList from '../../components/ImageList';
 
 class ItemDetailView extends Component {
   constructor(props) {
     super(props)
 
+    this.state = {
+      showModal : true,
+      selectedImg: ""
+    };
+
+    this.toggleModal = this.toggleModal.bind(this);
     this.changePhoto = this.changePhoto.bind(this);
     this.deletePost = this.deletePost.bind(this);
-  }
-
-  state = {
-    selectedImg: ""
   }
 
   componentWillMount() {
     this.props.loadPost(this.props.match.params.id)
   }
-
+  
   componentDidUpdate() {
     if (this.state.selectedImg === "" && this.props.selectedPost.image) {
       if (this.props.selectedPost.image[0]) {
         this.setState({ selectedImg: this.props.selectedPost.image[0].url })
-
+        
       } else {
         this.setState({ selectedImg: "https://s3-us-west-2.amazonaws.com/alexithemia-cms-imagestore/no-image.jpg" })
-
+        
       }
     }
+  }
+  
+  toggleModal() {
+    return this.setState({
+      showModal : !this.state.showModal
+    });
   }
 
   changePhoto(e) {
@@ -43,6 +54,7 @@ class ItemDetailView extends Component {
 
   render() {
     const { id, category, description, dimensions, image, manufacturer, model, title, price, postCondition, postStatus, user, notes, views, created_at, updated_at, user_id } = this.props.selectedPost;
+
     return (
       <div className="itemDetailViewContainer">
         {this.props.selectedPost.user && (
@@ -72,7 +84,23 @@ class ItemDetailView extends Component {
                     </div>
                     :
                     <div className="options">
-                      <Link to={`/message/${user_id}/${id}`} className="messagePoster">Message Me</Link>
+                      {/* <Link to={`/message/${ user }/${ id }`} className="messagePoster">Message Me</Link> */}
+                      <div className="messagePosterContainer">
+                        <button onClick={ this.toggleModal } className="messagePoster">
+                          Message Me
+                        </button>
+
+                        <ReactModal
+                          isOpen={ this.state.showModal }
+                          onRequestClose={ this.toggleModal }
+                          className="modal"
+                          overlayClassName="overlay"
+                          shouldCloseOnOverlayClick={ true }
+                          ariaHideApp={ false }
+                        >
+                          <ItemSendMessage />
+                        </ReactModal>
+                      </div>
                     </div>
                   }
                 </div>

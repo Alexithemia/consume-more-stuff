@@ -114,14 +114,24 @@
   font-family: $primary-font;
   font-size: 25px;
 }
+
 .editPost{
   text-decoration: none;
   color: $contrast-background-color;
 }
+
 .deletePost{
   cursor:pointer;
 }
-.messagePoster{
-  text-decoration: none;
-  color: $contrast-background-color;
+
+.messagePosterContainer {
+    .messagePoster{
+    text-decoration: none;
+    background-color: $light-background-color;
+    color: $contrast-background-color;
+    font-family: $primary-font, $font-type;
+    font-size: 1em;
+    letter-spacing: $letter-spacing / 2;
+    border: none;
+  }
 }

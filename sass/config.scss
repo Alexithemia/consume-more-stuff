@@ -1,19 +1,26 @@
 // color palette
 $primary-background-color: #0E3899;
 $secondary-background-color: #c15700;
-$contrast-background-color: #E46700;
+$contrast-background-color: #ff9100;
 $light-background-color: white;
 $overlay-background-color: rgba(0, 0, 80, 0.1);
 
 $primary-font-color: white;
-$contrast-font-color: black;
+$gray-font-color: #929bac;
+$light-font-color: lightgray;
+$contrast-font-color: #3c455b;
+$orange-font-color: #ff9100;
 
-$border-black-color: #282828;
-$border-gray-color: #939393;
+$border-black-color: #3c455b;
+$border-gray-color: #bfc6d2;
+$border-light-color: lightgray;
 
 $modal-background-color: #0c2251;
 $modal-background-color-2: white;
 $modal-overlay-color: rgba(28, 28, 32, 0.78);
+
+// hover colors
+$contrast-hover-color: #db7c00;
 
 $green-hover-color: #7faf4d;
 
@@ -37,3 +44,4 @@ $nav-text-font-size: 1.2em;
 
 $search-border-radius: 0.6em;
 $modal-border-radius: 5px;
+$modal-message-border-radius: 3px;
