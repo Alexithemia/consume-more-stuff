@@ -13,7 +13,7 @@ class ItemDetailView extends Component {
     super(props)
 
     this.state = {
-      showModal : true,
+      showModal : false,
       selectedImg: ""
     };
 
@@ -63,20 +63,43 @@ class ItemDetailView extends Component {
               <div className="imgNavBar">
                 <ImageList images={image} changePhoto={this.changePhoto}></ImageList>
               </div>
+
               <div className="imgBox">
                 <img id="img" className="img" src={this.state.selectedImg} alt="" />
               </div>
+
               <div className="titleContainer">
                 <h1 className="title">{title}: {postStatus.name}</h1>
                 <div className="user">by {user.username}</div>
                 <div className="descriptionContainer">
-                  <div className="price">Price: ${price}</div>
-                  <div className="category">Category: {category.name}</div>
-                  <div className="description">{description}</div>
-                  <div className="posted">Posted: {created_at}</div>
-                  <div className="updated">Last updated: {updated_at}</div>
-                  <div className="notes">Note: {notes}</div>
-                  <div className="views">Viewed: {views}</div>
+                  <div className="price">
+                    Price: <span className="dynamic-data">${ price }</span>
+                  </div>
+
+                  <div className="category">
+                    Category: <span className="dynamic-data">{ category.name }</span>
+                  </div>
+
+                  <div className="description">
+                    Description: <span className="dynamic-data">{ description }</span>
+                  </div>
+
+                  <div className="posted">
+                    Posted: <span className="dynamic-data">{ created_at }</span>
+                  </div>
+
+                  <div className="updated">
+                    Last updated: <span className="dynamic-data">{ updated_at }</span>
+                  </div>
+
+                  <div className="notes">
+                    Note: <span className="dynamic-data">{ notes }</span>
+                  </div>
+
+                  <div className="views">
+                    Viewed: <span className="dynamic-data">{ views } times</span>
+                  </div>
+
                   {this.props.selectedPost.user_id === this.props.id || this.props.isAdmin ?
                     <div className="options">
                       <Link to={`/edit/${id}`} className="editPost">Edit</Link>
@@ -107,19 +130,23 @@ class ItemDetailView extends Component {
               </div>
             </div>
             <div className="secondContainer">
-              <h2 className="descriptionTitle">Product description</h2>
+              <h2 className="descriptionTitle">Product Description</h2>
+
               <div className="productDescription">
                 <div className="condition">
-                  Condition: {postCondition.name}
+                  Condition: <span className="dynamic-data">{ postCondition.name }</span>
                 </div>
+
                 <div className="manufacturer">
-                  Manufacturer: {manufacturer}
+                  Manufacturer: <span className="dynamic-data">{ manufacturer }</span>
                 </div>
+
                 <div className="model">
-                  Model: {model}
+                  Model: <span className="dynamic-data">{ model }</span>
                 </div>
+
                 <div className="dimension">
-                  Dimensions: {dimensions}
+                  Dimensions: <span className="dynamic-data">{ dimensions }</span>
                 </div>
               </div>
             </div>

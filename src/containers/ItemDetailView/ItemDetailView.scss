@@ -1,8 +1,8 @@
 @import '../../../sass/config';
 
 .itemDetailViewContainer{
-  margin-top: 2em;
-  margin-left: 4em;
+  margin-top: 2.4em;
+  margin-left: 2em;
   width: 100%;
 
   .imgNavBar{
@@ -55,7 +55,16 @@
       width: 80%;
     
       div{
+        font-family: $primary-font, $font-type;
+        font-size: 1em;
+        font-weight: 500;
+        color: $contrast-font-color;
         margin-bottom: 5px;
+
+        .dynamic-data {
+          font-weight: 400;
+          color: $gray-font-color;
+        }
       }
 
       .descriptionContainer{
@@ -69,6 +78,7 @@
       .title{
         font-weight: bold;
         font-size: 26px;
+        color: $contrast-font-color;
         margin-bottom: 10px;
       }
       
@@ -92,10 +102,12 @@
       margin-top: 1.5em;
 
       .descriptionTitle{
-        font-size: 20px;
-        color: $primary-background-color;
-        margin-bottom: 5px;
-        font-weight: bold;
+        font-family: $primary-font, $font-type;
+        font-size: 1.4em;
+        color: $contrast-font-color;
+        margin-top: 0.5em;
+        margin-bottom: 1em;
+        font-weight: 600;
       }
      
       .productDescription{
@@ -103,6 +115,18 @@
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: space-between;
+
+        div {
+          font-family: $primary-font, $font-type;
+          font-weight: 500;
+          font-size: 1em;
+          color: $contrast-font-color;
+
+          .dynamic-data {
+            font-weight: 400;
+            color: $gray-font-color;
+          }
+        }
       }
     }
 }
@@ -112,7 +136,7 @@
   justify-content: space-around;
   color: $contrast-background-color;
   font-family: $primary-font;
-  font-size: 25px;
+  font-size: 3em;
 }
 
 .editPost{
@@ -130,7 +154,7 @@
     background-color: $light-background-color;
     color: $contrast-background-color;
     font-family: $primary-font, $font-type;
-    font-size: 1em;
+    font-size: 1.5em;
     letter-spacing: $letter-spacing / 2;
     border: none;
   }
