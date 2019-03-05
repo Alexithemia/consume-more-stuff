@@ -12,6 +12,7 @@ import Register from '../../components/Register';
 import SearchPage from '../../components/SearchPage';
 import ItemDetailView from '../../containers/ItemDetailView';
 import CategoryView from '../../containers/CategoryView';
+import YourPosts from '../../containers/YourPosts';
 
 class App extends Component {
   constructor(props) {
@@ -40,6 +41,7 @@ class App extends Component {
                 <Route exact={true} path='/category/:id' component={CategoryView} />
                 <Route exact={true} path='/item/:id' component={ItemDetailView} />
                 <Route exact={true} path='/search/:term' component={SearchPage} />
+                <Route exact={true} path='/dashboard/your-posts' component={YourPosts} />
               </Switch>
             </div>
           </>
