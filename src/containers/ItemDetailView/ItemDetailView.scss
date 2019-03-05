@@ -51,7 +51,7 @@
 
     .titleContainer{
       margin-left: 4em;
-      border-bottom: 1px solid lightgray;
+      border-bottom: 1px solid $border-gray-color;
       width: 80%;
     
       div{
@@ -76,16 +76,17 @@
       }
       
       .title{
-        font-weight: bold;
-        font-size: 26px;
+        font-family: $primary-font, $font-type;
+        font-size: 1.7em;
+        font-weight: 700;
         color: $contrast-font-color;
         margin-bottom: 10px;
       }
       
       .user{
         margin-bottom: 20px;
-        border-bottom: 1px solid lightgray;
-        padding-bottom: 5px;
+        border-bottom: 1px solid $border-gray-color;
+        padding-bottom: 1em;
       }
 
       .messageContainer{
@@ -157,5 +158,6 @@
     font-size: 1.5em;
     letter-spacing: $letter-spacing / 2;
     border: none;
+    margin-bottom: 0.6em;
   }
 }
