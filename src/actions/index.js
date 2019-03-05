@@ -134,6 +134,7 @@ export const addPost = (newPost) => {
     for (let key in newPost) {
       formData.append(key, newPost[key])
     }
+
     for (let i = 0; i < newPost.photos.length; i++) {
       formData.append('photos', newPost.photos[i]);
     }
@@ -160,6 +161,7 @@ export const loadPosts = () => {
     return fetch('/api/posts', {
     })
       .then((response) => {
+        console.log(`response is`); console.log(response);
         if (!response.ok) {
           throw Error(response.statusText)
         }
