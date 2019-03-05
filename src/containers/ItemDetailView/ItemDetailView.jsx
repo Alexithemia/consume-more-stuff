@@ -119,7 +119,7 @@ class ItemDetailView extends Component {
                         <ReactModal
                           isOpen={ this.state.showModal }
                           onRequestClose={ this.toggleModal }
-                          className="modal"
+                          className="message-modal"
                           overlayClassName="overlay"
                           shouldCloseOnOverlayClick={ true }
                           ariaHideApp={ false }
