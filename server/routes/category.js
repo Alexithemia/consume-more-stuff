@@ -55,7 +55,7 @@ router.route('/')
 router.route('/:id')
   .get(function (req, res) {
     Post.where('category_id', req.params.id).orderBy('created_at', 'ASC').fetchAll({
-      columns: ['id', 'category_id', 'user_id', 'post_status_id', 'post_condition_id', 'title', 'content'],
+      // columns: ['id', 'category_id', 'user_id', 'post_status_id', 'post_condition_id', 'title', 'description'],
       withRelated: [{
         'category': function (x) {
           x.column('id', 'name');
@@ -68,7 +68,10 @@ router.route('/:id')
         },
         'postCondition': function (x) {
           x.column('id', 'name');
-        }
+        },
+        'image': function (x) {
+          x.column('id', 'post_id', 'url');
+        },
       }]
     })
       .then(function (postList) {

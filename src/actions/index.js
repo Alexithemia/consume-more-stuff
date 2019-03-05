@@ -3,6 +3,7 @@
 export const REGISTER_USER = 'REGISTER_USER';
 export const LOGIN_USER = 'LOGIN_USER';
 export const LOGOUT_USER = 'LOGOUT_USER';
+export const LOAD_CATEGORY = 'LOAD_CATEGORY';
 export const LOAD_CATEGORIES = 'LOAD_CATEGORIES';
 export const LOAD_CONDITIONS = 'LOAD_CONDITIONS';
 export const ADD_POST = 'ADD_POST';
@@ -109,6 +110,25 @@ export const loadCategories = () => {
           payload: body
         });
       });
+  }
+}
+
+export const loadCategory = (id) => {
+  return (dispatch) => {
+    return fetch(`/api/category/${id}`, {
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw Error(response.statusText)
+        }
+        return response.json()
+      })
+      .then((body) => {
+        return dispatch({
+          type: LOAD_CATEGORY,
+          payload: body
+        })
+      })
   }
 }
 
