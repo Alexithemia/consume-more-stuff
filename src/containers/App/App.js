@@ -23,7 +23,7 @@ class App extends Component {
   componentDidMount() {
     return this.props.onLoad();
   }
-
+  
   render() {
     return (
       <div className="App">

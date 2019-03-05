@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { register } from '../../actions';
+import { Link } from "react-router-dom";
 import './Register.scss';
 
 class Register extends Component {
@@ -96,9 +97,14 @@ class Register extends Component {
           </div>
 
           <div className="btnContainer">
-            <button className="btn" onClick={this.handleSubmit}>Register</button>
+            <button className="btn" onClick={this.handleSubmit}>REGISTER</button>
+          </div>
+          
+          <div className="loginLink">
+            <Link to='/login' className="link" >Already have an account?</Link>
           </div>
         </form>
+
       </div>
     )
   }

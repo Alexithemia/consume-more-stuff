@@ -52,7 +52,8 @@ const Navigation = (props) => {
 
           <NewPost categories={props.categories} />
         </>
-        : null
+        :
+        <div className="navTitle">Log in for more!</div>
       }
     </div>
   );

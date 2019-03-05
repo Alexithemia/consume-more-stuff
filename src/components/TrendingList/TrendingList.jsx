@@ -20,7 +20,7 @@ const TrendingList = (props) => {
     <>
       {trendingList}
     </>
-  )
+  );
 }
 
 export default TrendingList;

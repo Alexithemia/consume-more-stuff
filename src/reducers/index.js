@@ -32,7 +32,7 @@ const cmsReducer = (state = initialState, action) => {
     case ADD_POST:
       return Object.assign({}, state, { posts: [...state.posts, action.payload] });
     case LOAD_POSTS:
-      return Object.assign({}, state, { posts: [...action.payload] });
+      return Object.assign({}, state, { posts: [...state.posts, ...action.payload] });
     case LOAD_POST:
       return Object.assign({}, state, { selectedPost: action.payload });
     case SEARCH_POST:
