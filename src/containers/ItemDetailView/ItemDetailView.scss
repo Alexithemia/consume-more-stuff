@@ -1,8 +1,8 @@
 @import '../../../sass/config';
 
 .itemDetailViewContainer{
-  margin-top: 2.4em;
-  margin-left: 2em;
+  margin-top: 2em;
+  margin-left: 4em;
   width: 100%;
 
   .imgNavBar{
@@ -17,7 +17,7 @@
       width: 55px;
       border: 1.5px solid lightgrey;
     }
-    &:hover {
+    .navImg:hover {
       box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
   }
 }
@@ -27,35 +27,18 @@
     width: 100%;
 
     .imgBox{
-<<<<<<< HEAD
       width: 450px;
       height: 400px;
       box-shadow: $post-box-shadow;
-      display: relative;
-      // justify-content: center;
-      // align-items: center;  
+      display: flex;
+      justify-content: center;
+      align-items: center;  
       margin-left: 1em;
       transition: all .2s ease-in-out;
     }
 
     .imgBox:hover{
       transform: scale(1.1);
-=======
-      display: flex;
-      justify-content: center;
-      align-items: center;  
-      transition: all 250ms ease-out;
-      border-radius: 2%;
-      box-shadow: 0px 0px 0px 0.05em rgb(202, 202, 202);
-      width: 450px;
-      height: 400px;
-      margin-left: 1em;
-      
-      &:hover {
-        box-shadow: 0px 10px 20px 0 #bbb;
-        transform: translateY(-0.05em);
-      }
->>>>>>> development
     }
 
     .img{
@@ -66,20 +49,11 @@
 
     .titleContainer{
       margin-left: 4em;
-      border-bottom: 1px solid $border-gray-color;
+      border-bottom: 1px solid lightgray;
       width: 80%;
     
       div{
-        font-family: $primary-font, $font-type;
-        font-size: 1em;
-        font-weight: 500;
-        color: $contrast-font-color;
         margin-bottom: 5px;
-
-        .dynamic-data {
-          font-weight: 400;
-          color: $gray-font-color;
-        }
       }
 
       .descriptionContainer{
@@ -91,17 +65,15 @@
       }
       
       .title{
-        font-family: $primary-font, $font-type;
-        font-size: 1.7em;
-        font-weight: 700;
-        color: $contrast-font-color;
+        font-weight: bold;
+        font-size: 26px;
         margin-bottom: 10px;
       }
       
       .user{
         margin-bottom: 20px;
-        border-bottom: 1px solid $border-gray-color;
-        padding-bottom: 1em;
+        border-bottom: 1px solid lightgray;
+        padding-bottom: 5px;
       }
 
       .messageContainer{
@@ -118,12 +90,10 @@
       margin-top: 1.5em;
 
       .descriptionTitle{
-        font-family: $primary-font, $font-type;
-        font-size: 1.4em;
-        color: $contrast-font-color;
-        margin-top: 0.5em;
-        margin-bottom: 1em;
-        font-weight: 600;
+        font-size: 20px;
+        color: darkblue;
+        margin-bottom: 5px;
+        font-weight: bold;
       }
      
       .productDescription{
@@ -131,18 +101,6 @@
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: space-between;
-
-        div {
-          font-family: $primary-font, $font-type;
-          font-weight: 500;
-          font-size: 1em;
-          color: $contrast-font-color;
-
-          .dynamic-data {
-            font-weight: 400;
-            color: $gray-font-color;
-          }
-        }
       }
     }
 }
@@ -152,27 +110,16 @@
   justify-content: space-around;
   color: $contrast-background-color;
   font-family: $primary-font;
-  font-size: 3em;
+  font-size: 25px;
 }
-
 .editPost{
   text-decoration: none;
   color: $contrast-background-color;
 }
-
 .deletePost{
   cursor:pointer;
 }
-
-.messagePosterContainer {
-    .messagePoster{
-    text-decoration: none;
-    background-color: $light-background-color;
-    color: $contrast-background-color;
-    font-family: $primary-font, $font-type;
-    font-size: 1.5em;
-    letter-spacing: $letter-spacing / 2;
-    border: none;
-    margin-bottom: 0.6em;
-  }
+.messagePoster{
+  text-decoration: none;
+  color: $contrast-background-color;
 }
