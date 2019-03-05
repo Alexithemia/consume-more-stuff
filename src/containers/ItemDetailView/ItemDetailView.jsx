@@ -22,7 +22,11 @@ class ItemDetailView extends Component {
     this.deletePost = this.deletePost.bind(this);
   }
 
-  componentWillMount() {
+  state = {
+    selectedImg: ""
+  }
+
+  componentDidMount() {
     this.props.loadPost(this.props.match.params.id)
   }
   
@@ -33,7 +37,6 @@ class ItemDetailView extends Component {
         
       } else {
         this.setState({ selectedImg: "https://s3-us-west-2.amazonaws.com/alexithemia-cms-imagestore/no-image.jpg" })
-        
       }
     }
   }

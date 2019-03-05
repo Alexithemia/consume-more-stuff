@@ -1,15 +1,13 @@
 import React from 'react';
-import Post from '../Post'
+import Post from '../Post';
 
 const PostList = (props) => {
-  console.log(props)
-  const postList = props.posts.map(post => {
+  const postList = props.selectedCategory.map(post => {
 
     return (
       <Post key={post.id}
         postData={post}
       />
-
     )
   })
 
