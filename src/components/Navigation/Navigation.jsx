@@ -6,14 +6,18 @@ import NewPost from '../../containers/NewPost';
 
 const Navigation = (props) => {
 
+
   const categoryList = props.categories.map(current => {
     const { id, name } = current;
+
+
 
     return (
       <li key={id} className="navItem">
         <Link to={`/category/${id}`} className="text">{name}</Link>
       </li>
     );
+
   });
 
   return (
@@ -52,6 +56,9 @@ const Navigation = (props) => {
       }
     </div>
   );
+
+
 }
+
 
 export default Navigation;

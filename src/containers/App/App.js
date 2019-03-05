@@ -11,16 +11,24 @@ import Login from '../../components/Login';
 import Register from '../../components/Register';
 import SearchPage from '../../components/SearchPage';
 import ItemDetailView from '../../containers/ItemDetailView';
+import CategoryView from '../../containers/CategoryView';
 
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {};
+
+    this.refreshPage = this.refreshPage.bind(this);
   }
 
   componentDidMount() {
     return this.props.onLoad();
+  }
+
+  refreshPage(e) {
+    console.log("Clicked");
+    window.location.reload();
   }
 
   render() {
@@ -36,6 +44,7 @@ class App extends Component {
                 <Route exact={true} path='/register' component={Register} />
                 <Route exact={true} path='/login' component={Login} />
                 <Route exact={true} path='/' component={Home} />
+                <Route exact={true} path='/category/:id' onClick={this.refreshPage} component={CategoryView} />
                 <Route exact={true} path='/item/:id' component={ItemDetailView} />
                 <Route exact={true} path='/search/:term' component={SearchPage} />
               </Switch>
