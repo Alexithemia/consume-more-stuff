@@ -1,14 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import ReactModal from 'react-modal';
 import './ItemDetailView.scss';
 import { loadPost } from '../../actions';
 import ImageList from '../../components/ImageList';
+import EditPost from '../../containers/EditPost';
 
 class ItemDetailView extends Component {
   constructor(props) {
     super(props)
 
+    this.state = {
+      showModal: false
+    };
+
+    this.handleToggleModal = this.handleToggleModal.bind(this);
     this.changePhoto = this.changePhoto.bind(this);
     this.deletePost = this.deletePost.bind(this);
   }
@@ -33,6 +39,10 @@ class ItemDetailView extends Component {
     }
   }
 
+  handleToggleModal() {
+    this.setState({ showModal: !this.state.showModal });
+  }
+
   changePhoto(e) {
     this.setState({ selectedImg: e.target.src })
   }
@@ -42,7 +52,7 @@ class ItemDetailView extends Component {
   }
 
   render() {
-    const { id, category, description, dimensions, image, manufacturer, model, title, price, postCondition, postStatus, user, notes, views, created_at, updated_at, user_id } = this.props.selectedPost;
+    const { category, description, dimensions, image, manufacturer, model, title, price, postCondition, postStatus, user, notes, views, created_at, updated_at, user_id } = this.props.selectedPost;
     return (
       <div className="itemDetailViewContainer">
         {this.props.selectedPost.user && (
@@ -65,14 +75,29 @@ class ItemDetailView extends Component {
                   <div className="updated">Last updated: {updated_at}</div>
                   <div className="notes">Note: {notes}</div>
                   <div className="views">Viewed: {views}</div>
-                  {this.props.selectedPost.user_id === this.props.id || this.props.isAdmin ?
+                  {user_id === this.props.id || this.props.isAdmin ?
                     <div className="options">
-                      <Link to={`/edit/${id}`} className="editPost">Edit</Link>
+                      <div onClick={this.handleToggleModal} className="editPost">Edit</div>
+                      <ReactModal
+                        isOpen={this.state.showModal}
+                        contentLabel="modal"
+                        onRequestClose={this.handleToggleModal}
+                        className="modal"
+                        overlayClassName="overlay"
+                        shouldCloseOnOverlayClick={true}
+                        ariaHideApp={false}
+                      >
+                        <div className="headerContainer">
+                          <span className="headerText">EDIT POST</span>
+                        </div>
+                        <EditPost closeModal={this.handleToggleModal} post={this.props.selectedPost} />
+                      </ReactModal>
                       <div className="deletePost" onClick={this.deletePost}>Delete</div>
                     </div>
                     :
                     <div className="options">
-                      <Link to={`/message/${user_id}/${id}`} className="messagePoster">Message Me</Link>
+                      <div onClick={this.handleToggleModal} className="messagePoster">Message Me</div>
+
                     </div>
                   }
                 </div>
@@ -106,7 +131,8 @@ const mapStateToProps = (state) => {
   return {
     selectedPost: state.selectedPost,
     id: state.id,
-    isAdmin: state.isAdmin
+    isAdmin: state.isAdmin,
+
   }
 }
 

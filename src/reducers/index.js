@@ -1,5 +1,5 @@
 import { LOGIN_USER, LOGOUT_USER } from '../actions';
-import { LOAD_CATEGORIES, LOAD_CONDITIONS, ADD_POST, LOAD_POSTS, LOAD_POST, SEARCH_POST } from '../actions';
+import { LOAD_CATEGORIES, LOAD_STATUSES, LOAD_CONDITIONS, ADD_POST, LOAD_POSTS, LOAD_POST, SEARCH_POST } from '../actions';
 
 
 const initialState = {
@@ -7,6 +7,7 @@ const initialState = {
   selectedPost: {},
   categories: [],
   postConditions: [],
+  postStatuses: [],
   messages: [],
   users: [],
   username: localStorage.getItem('username'),
@@ -25,7 +26,9 @@ const cmsReducer = (state = initialState, action) => {
     case LOAD_CATEGORIES:
       return Object.assign({}, state, { categories: [...state.categories, ...action.payload] });
     case LOAD_CONDITIONS:
-      return Object.assign({}, state, { postConditions: [...state.postConditions, ...action.payload] });
+      return Object.assign({}, state, { postConditions: [...action.payload] });
+    case LOAD_STATUSES:
+      return Object.assign({}, state, { postStatuses: [...action.payload] });
     case ADD_POST:
       return Object.assign({}, state, { posts: [...state.posts, action.payload] });
     case LOAD_POSTS:

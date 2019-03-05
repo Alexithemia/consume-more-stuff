@@ -1,10 +1,10 @@
 import React from 'react';
 
 const Condition = (props) => {
-  const { id, name } =props;
+  const { id, name } = props;
 
   return (
-    <option value={ id }>{ name }</option>
+    <option value={id}>Condition - {name}</option>
   );
 }
 
