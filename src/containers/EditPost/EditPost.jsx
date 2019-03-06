@@ -5,6 +5,7 @@ import './EditPost.scss';
 import CategoryList from '../../components/utilities/CategoryList';
 import ConditionList from '../../components/utilities/ConditionList';
 import StatusList from '../../components/utilities/StatusList';
+import EditImageList from '../../components/EditImageList';
 import { loadStatuses } from '../../actions';
 
 class EditPost extends Component {
@@ -25,7 +26,8 @@ class EditPost extends Component {
       post_status_id: this.props.post.post_status_id,
       isTitleInvalid: false,
       isCategoryInvalid: false,
-      isConditionInvalid: false
+      isConditionInvalid: false,
+      deleteImages: []
     };
 
     this.handleTitleOnChange = this.handleTitleOnChange.bind(this);
@@ -40,6 +42,7 @@ class EditPost extends Component {
     this.handleConditionOnChange = this.handleConditionOnChange.bind(this);
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
     this.checkTitleValid = this.checkTitleValid.bind(this);
+    this.handleImageClick = this.handleImageClick.bind(this);
   }
 
   componentWillMount() {
@@ -133,6 +136,20 @@ class EditPost extends Component {
     this.setState({ post_status_id: value })
   }
 
+  handleImageClick(e) {
+    let value = e.target.dataset.id;
+    let target = e.target
+    if (this.state.deleteImages.indexOf(value) === -1) {
+      this.setState({ deleteImages: [...this.state.deleteImages, value] }, () => {
+        target.classList.add('removed');
+      })
+
+    } else {
+      this.state.deleteImages.splice(this.state.deleteImages.indexOf(value), 1);
+      target.classList.remove('removed')
+    }
+  }
+
   handleOnSubmit(e) {
     e.preventDefault();
 
@@ -162,7 +179,6 @@ class EditPost extends Component {
   }
 
   render() {
-    console.log(this.props)
     const { title, description, price, manufacturer, model, dimensions, notes, isTitleInvalid, isCategoryInvalid, isConditionInvalid } = this.state;
 
     return (
@@ -179,9 +195,14 @@ class EditPost extends Component {
           </div>
 
           <div className="right-half">
-            <span className="text">Upload an image (max 6)</span>
-            <img src="https://i.imgur.com/cFxAsBo.png" alt="file not specified" />
-            <input onChange={this.handleFileChosenOnChange} type="file" form="add-post-form" multiple />
+            <div className="imgEditBox">
+              <EditImageList images={this.props.post.image} deleteImg={this.handleImageClick}></EditImageList>
+              <div className="uploadImg">
+                <span className="text">Upload an image (max 6)</span>
+                <img className="sampleImg" src="https://i.imgur.com/cFxAsBo.png" alt="file not specified" />
+                <input onChange={this.handleFileChosenOnChange} type="file" form="add-post-form" multiple />
+              </div>
+            </div>
 
             {/* DISABLE SUBMIT BUTTON IF THE VALUE OF SELECT TAG IS "" */}
             <select onChange={this.handleCategoryOnChange} name="category_id" id="select-category" defaultValue={this.props.post.category_id}>

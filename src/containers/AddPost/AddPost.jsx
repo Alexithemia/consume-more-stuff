@@ -172,7 +172,7 @@ class AddPost extends Component {
 
           <div className="right-half">
             <span className="text">Upload an image (max 6)</span>
-            <img src="https://i.imgur.com/cFxAsBo.png" alt="file not specified" />
+            <img className="sampleImg" src="https://i.imgur.com/cFxAsBo.png" alt="file not specified" />
             <input onChange={this.handleFileChosenOnChange} type="file" form="add-post-form" multiple />
 
             {/* DISABLE SUBMIT BUTTON IF THE VALUE OF SELECT TAG IS "" */}
