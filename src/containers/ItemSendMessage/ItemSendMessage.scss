@@ -1,0 +1,198 @@
+@import '../../../sass/config';
+
+/*
+  <form id="form-message">
+  <div className="form-name">
+    <span className="title">NAME</span>
+    <input type="text" value={ this.state.name } placeholder="Jane Doe" />
+  </div>
+
+  <div className="form-email">
+    <span className="title">EMAIL</span>
+    <input type="text" value={ this.state.email } placeholder="name@example.com" />
+  </div>
+
+  <div className="form-comment">
+    <span className="title">HOW'S IT GOING?</span>
+    <textarea name="comment" cols="30" rows="10"></textarea>
+  </div>
+  </form>
+*/
+
+.message-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+
+  .message-header-wrap {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 20%;
+    width: 100%;
+    font-family: $primary-font, $font-type;
+
+    .form-header-wrap {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      align-items: center;
+      border-bottom: 0.05em solid $border-gray-color;
+      padding-bottom: 0.3em;
+      height: 5em;
+      width: 85%;
+
+      .form-header, .text {
+        font-family: inherit;
+        letter-spacing: $letter-spacing / 6;
+      }
+  
+      .form-header {
+        font-weight: 700;
+        font-size: 1.6em;
+        color: $contrast-font-color;
+
+        .accent-text {
+          color: $orange-font-color;
+        }
+      }
+  
+      .text {
+        font-weight: 500;
+        color: $gray-font-color;
+      }
+    }
+  }
+
+  #form-message {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 85%;
+
+    .form-name {
+      display: flex;
+      flex-direction: column;
+      margin-top: 0.5em;
+      width: 100%;
+
+      .title {
+        font-family: $primary-font, $font-type;
+        font-weight: 600;
+        font-size: 0.8em;
+        color: $contrast-font-color;
+        letter-spacing: $letter-spacing / 2;
+        margin-bottom: 0.5em;
+      }
+
+      input {
+        font-size: 1em;
+        letter-spacing: 0.03em;
+        border: 0.05em solid $border-gray-color;
+        border-radius: $modal-message-border-radius;
+        padding: 0.5em;
+
+        &::placeholder {
+          color: $gray-font-color;
+        }
+      }
+    }
+
+    .form-email {
+      display: flex;
+      flex-direction: column;
+      margin-top: 2em;
+      width: 100%;
+
+      .title {
+        font-family: $primary-font, $font-type;
+        font-weight: 600;
+        font-size: 0.8em;
+        color: $contrast-font-color;
+        letter-spacing: $letter-spacing / 2;
+        margin-bottom: 0.5em;
+      }
+
+      input {
+        font-size: 1em;
+        letter-spacing: 0.03em;
+        border: 0.05em solid $border-gray-color;
+        border-radius: $modal-message-border-radius;
+        padding: 0.5em;
+
+        &::placeholder {
+          color: $gray-font-color;
+        }
+      }
+    }
+
+    .form-comment {
+      display: flex;
+      flex-direction: column;
+      margin-top: 2em;
+      width: 100%;
+
+      .title {
+        font-family: $primary-font, $font-type;
+        font-weight: 600;
+        font-size: 0.8em;
+        color: $contrast-font-color;
+        letter-spacing: $letter-spacing / 2;
+        margin-bottom: 0.5em;
+      }
+
+      textarea {
+        font-family: $primary-font, $font-type;
+        font-size: 0.93em;
+        letter-spacing: 0.03em;
+        border: 0.05em solid $border-gray-color;
+        border-radius: $modal-message-border-radius;
+        padding: 0.5em;
+        resize: none;
+
+        &::placeholder {
+          color: $gray-font-color;
+        }
+      }
+    }
+
+    .form-submit-options {
+      margin-top: 2.4em;
+      width: 85%;
+
+      .submit-send {
+        font-size: 1.1em;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        transition: all 250ms ease-out;
+        background-color: $contrast-background-color;
+        color: white;
+        border-radius: $modal-message-border-radius;
+        border: none;
+        height: 2.4em;
+        width: 45%;
+
+        &:hover {
+          background-color: $contrast-hover-color;
+        }
+      }
+
+      .submit-close {
+        font-size: 1em;
+        background-color: $light-background-color;
+        border: none;
+        margin-left: 2em;
+      }
+    }
+  }
+}
+
+.message-modal {
+  background-color: white;
+  position: fixed;
+  top: 10em;
+  height: 40em;
+  width: 50em;
+}

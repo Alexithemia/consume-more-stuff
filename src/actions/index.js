@@ -3,6 +3,7 @@
 export const REGISTER_USER = 'REGISTER_USER';
 export const LOGIN_USER = 'LOGIN_USER';
 export const LOGOUT_USER = 'LOGOUT_USER';
+export const LOAD_CATEGORY = 'LOAD_CATEGORY';
 export const LOAD_CATEGORIES = 'LOAD_CATEGORIES';
 export const LOAD_CONDITIONS = 'LOAD_CONDITIONS';
 export const LOAD_STATUSES = 'LOAD_STATUSES';
@@ -114,6 +115,25 @@ export const loadCategories = () => {
   }
 }
 
+export const loadCategory = (id) => {
+  return (dispatch) => {
+    return fetch(`/api/category/${id}`, {
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw Error(response.statusText)
+        }
+        return response.json()
+      })
+      .then((body) => {
+        return dispatch({
+          type: LOAD_CATEGORY,
+          payload: body
+        })
+      })
+  }
+}
+
 export const loadConditions = () => {
   return (dispatch) => {
     return fetch('/api/posts/condition')
@@ -151,6 +171,7 @@ export const addPost = (newPost) => {
     for (let key in newPost) {
       formData.append(key, newPost[key])
     }
+
     for (let i = 0; i < newPost.photos.length; i++) {
       formData.append('photos', newPost.photos[i]);
     }
@@ -208,6 +229,7 @@ export const loadPosts = () => {
     return fetch('/api/posts', {
     })
       .then((response) => {
+        console.log(`response is`); console.log(response);
         if (!response.ok) {
           throw Error(response.statusText)
         }
