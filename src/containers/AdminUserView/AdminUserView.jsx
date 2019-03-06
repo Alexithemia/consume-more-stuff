@@ -11,12 +11,7 @@ class AdminUserView extends Component {
   }
 
   render() {
-    console.log(this.props.users)
     const users = this.props.users;
-    const itemCount = this.props.users.filter((items) => {
-      console.log(items.postByUser.length)
-      return items.postByUser.length;
-    })
 
     return (
       <div className="mainContainer">
