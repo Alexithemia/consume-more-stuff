@@ -229,7 +229,6 @@ export const loadPosts = () => {
     return fetch('/api/posts', {
     })
       .then((response) => {
-        console.log(`response is`); console.log(response);
         if (!response.ok) {
           throw Error(response.statusText)
         }

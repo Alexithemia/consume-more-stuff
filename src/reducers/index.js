@@ -24,9 +24,9 @@ const cmsReducer = (state = initialState, action) => {
     case LOGOUT_USER:
       return Object.assign({}, state, { loggedIn: false, username: '' });
     case LOAD_CATEGORIES:
-      return Object.assign({}, state, { categories: [...state.categories, ...action.payload] });
+      return Object.assign({}, state, { categories: [...action.payload] });
     case LOAD_CATEGORY:
-      return Object.assign({}, state, { selectedCategory: [...action.payload] });
+      return Object.assign({}, state, { posts: [...action.payload] });
     case LOAD_CONDITIONS:
       return Object.assign({}, state, { postConditions: [...action.payload] });
     case LOAD_STATUSES:
@@ -34,7 +34,7 @@ const cmsReducer = (state = initialState, action) => {
     case ADD_POST:
       return Object.assign({}, state, { posts: [...state.posts, action.payload] });
     case LOAD_POSTS:
-      return Object.assign({}, state, { posts: [...state.posts, ...action.payload] });
+      return Object.assign({}, state, { posts: [...action.payload] });
     case LOAD_POST:
       return Object.assign({}, state, { selectedPost: action.payload });
     case SEARCH_POST:
