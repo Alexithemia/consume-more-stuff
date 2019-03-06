@@ -1,29 +1,34 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import './AddPost.scss';
+import { withRouter } from 'react-router';
+import './EditPost.scss';
 
 import CategoryList from '../../components/utilities/CategoryList';
 import ConditionList from '../../components/utilities/ConditionList';
-import { addPost } from '../../actions';
+import StatusList from '../../components/utilities/StatusList';
+import EditImageList from '../../components/EditImageList';
+import { loadStatuses, editPost } from '../../actions';
 
-class AddPost extends Component {
+class EditPost extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      title: '',
-      description: '',
-      price: '',
+      title: this.props.post.title,
+      description: this.props.post.decsription,
+      price: this.props.post.price,
       photos: [],
-      manufacturer: '',
-      model: '',
-      dimensions: '',
-      notes: '',
-      category_id: '',
-      condition_id: '',
-      isTitleInvalid: true,
-      isCategoryInvalid: true,
-      isConditionInvalid: true
+      manufacturer: this.props.post.manufacturer,
+      model: this.props.post.model,
+      dimensions: this.props.post.dimensions,
+      notes: this.props.post.notes,
+      category_id: this.props.post.category_id,
+      condition_id: this.props.post.post_condition_id,
+      post_status_id: this.props.post.post_status_id,
+      isTitleInvalid: false,
+      isCategoryInvalid: false,
+      isConditionInvalid: false,
+      deleteImages: []
     };
 
     this.handleTitleOnChange = this.handleTitleOnChange.bind(this);
@@ -38,6 +43,11 @@ class AddPost extends Component {
     this.handleConditionOnChange = this.handleConditionOnChange.bind(this);
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
     this.checkTitleValid = this.checkTitleValid.bind(this);
+    this.handleImageClick = this.handleImageClick.bind(this);
+  }
+
+  componentWillMount() {
+    return this.props.loadFormData();
   }
 
   handleTitleOnChange(e) {
@@ -52,7 +62,6 @@ class AddPost extends Component {
     } else {
       this.setState({ isTitleInvalid: false })
     }
-    console.log(this.state.isTitleInvalid);
   }
 
   handleDescriptionOnChange(e) {
@@ -106,10 +115,7 @@ class AddPost extends Component {
       } else {
         this.setState({ isCategoryInvalid: false })
       }
-      console.log(this.state.isCategoryInvalid);
     })
-
-
   }
 
   handleConditionOnChange(e) {
@@ -121,17 +127,37 @@ class AddPost extends Component {
       } else {
         this.setState({ isConditionInvalid: false })
       }
-      console.log(this.state.isConditionInvalid);
     });
 
+  }
+
+  handleStatusOnChange(e) {
+    const value = e.target.value;
+
+    this.setState({ post_status_id: value })
+  }
+
+  handleImageClick(e) {
+    let value = e.target.dataset.id;
+    let target = e.target
+    if (this.state.deleteImages.indexOf(value) === -1) {
+      this.setState({ deleteImages: [...this.state.deleteImages, value] }, () => {
+        target.classList.add('removed');
+      })
+
+    } else {
+      this.state.deleteImages.splice(this.state.deleteImages.indexOf(value), 1);
+      target.classList.remove('removed')
+    }
   }
 
   handleOnSubmit(e) {
     e.preventDefault();
 
-    const { title, description, price, photos, manufacturer, model, dimensions, notes, category_id, condition_id } = this.state;
+    const { title, description, price, photos, manufacturer, model, dimensions, notes, category_id, condition_id, post_status_id, deleteImages } = this.state;
 
-    this.props.onAdd({
+    this.props.onEdit({
+      id: this.props.post.id,
       title: title,
       description: description,
       price: price,
@@ -141,10 +167,13 @@ class AddPost extends Component {
       dimensions: dimensions,
       notes: notes,
       category_id: category_id,
-      post_condition_id: condition_id
+      post_condition_id: condition_id,
+      post_status_id: post_status_id,
+      deleteImages: deleteImages
     })
-      .then((err) => {
-        this.props.closeModal();
+      .then(() => {
+        this.props.history.push(`/`)
+        this.props.history.push(`/item/${this.props.post.id}`)
       })
       .catch((err) => {
         console.log(err);
@@ -171,26 +200,36 @@ class AddPost extends Component {
           </div>
 
           <div className="right-half">
-            <span className="addImgText">Upload an image (max 6)</span>
-            <img className="sampleImg" src="https://i.imgur.com/cFxAsBo.png" alt="file not specified" />
-            <input onChange={this.handleFileChosenOnChange} type="file" form="add-post-form" multiple />
+            <span className="text">Delete Images</span>
+            <div className="imgEditBox">
+              <EditImageList images={this.props.post.image} deleteImg={this.handleImageClick}></EditImageList>
+              <div className="uploadImg">
+                <span className="addImgText">Upload an image (max 6)</span>
+                <img className="sampleImg" src="https://i.imgur.com/cFxAsBo.png" alt="file not specified" />
+                <input onChange={this.handleFileChosenOnChange} type="file" form="add-post-form" multiple />
+              </div>
+            </div>
 
             {/* DISABLE SUBMIT BUTTON IF THE VALUE OF SELECT TAG IS "" */}
-            <select onChange={this.handleCategoryOnChange} name="category_id" id="select-category">
+            <select onChange={this.handleCategoryOnChange} name="category_id" id="select-category" defaultValue={this.props.post.category_id}>
               <option value="">Choose a Category</option>
               <CategoryList categories={this.props.categories} />
             </select>
 
-            <select onChange={this.handleConditionOnChange} name="condition_id" id="select-conditions">
-              <option value="">Choose a Condition</option>
+            <select onChange={this.handleConditionOnChange} name="condition_id" id="select-conditions" defaultValue={this.props.post.post_condition_id}>
+              <option value="" >Choose a Condition</option>
               <ConditionList postConditions={this.props.postConditions} />
+            </select>
+
+            <select onChange={this.handleStatusOnChange} name="status_id" id="select-conditions" defaultValue={this.props.post.post_status_id}>
+              <StatusList postStatuses={this.props.statuses} />
             </select>
           </div>
         </form>
 
         <div className="submit-wrap">
           {isCategoryInvalid || isConditionInvalid || isTitleInvalid ?
-            <input className="disabled" onClick={this.handleOnSubmit} type="submit" value="SUBMIT" form="add-post-form" disabled />
+            <input className="disabled" type="submit" value="SUBMIT" form="add-post-form" disabled />
             :
             <input onClick={this.handleOnSubmit} type="submit" value="SUBMIT" form="add-post-form" />
           }
@@ -202,23 +241,30 @@ class AddPost extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    postConditions: state.postConditions
+    postConditions: state.postConditions,
+    categories: state.categories,
+    statuses: state.postStatuses
   };
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onAdd: (newPost) => {
-      const actionObject = addPost(newPost);
+    loadFormData: () => {
+      const actionObject = loadStatuses();
+
+      return dispatch(actionObject);
+    },
+    onEdit: (editedPost) => {
+      const actionObject = editPost(editedPost);
 
       return dispatch(actionObject);
     }
   };
 }
 
-AddPost = connect(
+EditPost = connect(
   mapStateToProps,
   mapDispatchToProps
-)(AddPost);
+)(EditPost);
 
-export default AddPost;
+export default withRouter(EditPost);
