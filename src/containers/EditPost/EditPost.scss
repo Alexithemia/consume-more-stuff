@@ -29,19 +29,18 @@
     .right-half {
       display: flex;
       flex-direction: column;
-      flex-basis: 46%;
+      flex-basis: 50%;
       position: relative;
       left: 4%;
 
+      .text {
+        font-family: $primary-font, $font-type;
+        font-size: 0.9em;
+        margin-top: 5px;
+      }
       .imgEditBox{
         display: flex;
-        flex-flow: row nowrap;
-        .text {
-          font-family: $primary-font, $font-type;
-          font-size: 0.9em;
-          margin-top: 2em;
-          margin-bottom: 1em;
-        }
+        flex-flow: column nowrap;
 
         .sampleImg {
           height: 180px;

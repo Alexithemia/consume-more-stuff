@@ -27,9 +27,6 @@ class Home extends Component {
   }
 
   render() {
-    // const { category, photo, description, notes, title, price, postCondition, postStatus, user, views } = this.props.viewPosts;
-    console.log(this.props.posts)
-
     const posts = this.props.posts;
 
 

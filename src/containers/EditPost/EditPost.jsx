@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 import './EditPost.scss';
 
 import CategoryList from '../../components/utilities/CategoryList';
 import ConditionList from '../../components/utilities/ConditionList';
 import StatusList from '../../components/utilities/StatusList';
 import EditImageList from '../../components/EditImageList';
-import { loadStatuses } from '../../actions';
+import { loadStatuses, editPost } from '../../actions';
 
 class EditPost extends Component {
   constructor(props) {
@@ -153,26 +154,30 @@ class EditPost extends Component {
   handleOnSubmit(e) {
     e.preventDefault();
 
-    // const { title, description, price, photos, manufacturer, model, dimensions, notes, category_id, condition_id } = this.state;
+    const { title, description, price, photos, manufacturer, model, dimensions, notes, category_id, condition_id, post_status_id, deleteImages } = this.state;
 
-    // this.props.onAdd({
-    //   title: title,
-    //   description: description,
-    //   price: price,
-    //   photos: photos,
-    //   manufacturer: manufacturer,
-    //   model: model,
-    //   dimensions: dimensions,
-    //   notes: notes,
-    //   category_id: category_id,
-    //   post_condition_id: condition_id
-    // })
-    //   .then((err) => {
-    //     this.props.closeModal();
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   })
+    this.props.onEdit({
+      id: this.props.post.id,
+      title: title,
+      description: description,
+      price: price,
+      photos: photos,
+      manufacturer: manufacturer,
+      model: model,
+      dimensions: dimensions,
+      notes: notes,
+      category_id: category_id,
+      post_condition_id: condition_id,
+      post_status_id: post_status_id,
+      deleteImages: deleteImages
+    })
+      .then(() => {
+        this.props.history.push(`/`)
+        this.props.history.push(`/item/${this.props.post.id}`)
+      })
+      .catch((err) => {
+        console.log(err);
+      })
 
 
 
@@ -195,10 +200,11 @@ class EditPost extends Component {
           </div>
 
           <div className="right-half">
+            <span className="text">Delete Images</span>
             <div className="imgEditBox">
               <EditImageList images={this.props.post.image} deleteImg={this.handleImageClick}></EditImageList>
               <div className="uploadImg">
-                <span className="text">Upload an image (max 6)</span>
+                <span className="addImgText">Upload an image (max 6)</span>
                 <img className="sampleImg" src="https://i.imgur.com/cFxAsBo.png" alt="file not specified" />
                 <input onChange={this.handleFileChosenOnChange} type="file" form="add-post-form" multiple />
               </div>
@@ -246,7 +252,12 @@ const mapDispatchToProps = (dispatch) => {
     loadFormData: () => {
       const actionObject = loadStatuses();
 
-      dispatch(actionObject);
+      return dispatch(actionObject);
+    },
+    onEdit: (editedPost) => {
+      const actionObject = editPost(editedPost);
+
+      return dispatch(actionObject);
     }
   };
 }
@@ -256,4 +267,4 @@ EditPost = connect(
   mapDispatchToProps
 )(EditPost);
 
-export default EditPost;
+export default withRouter(EditPost);
