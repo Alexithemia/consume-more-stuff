@@ -11,15 +11,12 @@ class CategoryView extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    //Refreshes page if User clicks on another category link
-    if (prevProps.location.key !== this.props.location.key) {
-      window.location.reload();
+    if (this.props.match.params.id !== prevProps.match.params.id) {
+      this.props.loadCategory(this.props.match.params.id)
     }
   }
 
   render() {
-    const selectedCategory = this.props.selectedCategory;
-
     let categoryTitle = ''
     for (var i = 0; i < this.props.categories.length; i++) {
       if (this.props.categories[i].id !== 0) {
@@ -36,7 +33,7 @@ class CategoryView extends Component {
             <h1 className="title">{categoryTitle}</h1>
           </div>
           <div className="itemContainer">
-            <PostList selectedCategory={selectedCategory}></PostList>
+            <PostList posts={this.props.posts}></PostList>
           </div>
         </div>
       </div>
@@ -46,7 +43,7 @@ class CategoryView extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    selectedCategory: state.selectedCategory,
+    posts: state.posts,
     categories: state.categories
   }
 }

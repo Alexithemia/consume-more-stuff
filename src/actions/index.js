@@ -6,7 +6,9 @@ export const LOGOUT_USER = 'LOGOUT_USER';
 export const LOAD_CATEGORY = 'LOAD_CATEGORY';
 export const LOAD_CATEGORIES = 'LOAD_CATEGORIES';
 export const LOAD_CONDITIONS = 'LOAD_CONDITIONS';
+export const LOAD_STATUSES = 'LOAD_STATUSES';
 export const ADD_POST = 'ADD_POST';
+export const EDIT_POST = 'EDIT_POST';
 export const LOAD_POSTS = 'LOAD_POSTS';
 export const LOAD_POST = 'LOAD_POST';
 export const SEARCH_POST = 'SEARCH_POST';
@@ -147,6 +149,21 @@ export const loadConditions = () => {
   }
 }
 
+export const loadStatuses = () => {
+  return (dispatch) => {
+    return fetch('/api/posts/status')
+      .then(response => {
+        return response.json();
+      })
+      .then(body => {
+        return dispatch({
+          type: LOAD_STATUSES,
+          payload: body
+        });
+      });
+  }
+}
+
 export const addPost = (newPost) => {
   return (dispatch) => {
     const formData = new FormData();
@@ -177,12 +194,42 @@ export const addPost = (newPost) => {
   }
 }
 
+export const editPost = (newPost) => {
+  return (dispatch) => {
+    const formData = new FormData();
+
+    for (let key in newPost) {
+      formData.append(key, newPost[key])
+    }
+    for (let i = 0; i < newPost.photos.length; i++) {
+      formData.append('photos', newPost.photos[i]);
+    }
+    for (let i = 0; i < newPost.deleteImages.length; i++) {
+      formData.append('delete', newPost.deleteImages[i]);
+    }
+
+
+    return fetch(`/api/posts/${newPost.id}`, {
+      method: 'PUT',
+      body: formData
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(body => {
+        dispatch({
+          type: EDIT_POST,
+          payload: body
+        });
+      });
+  }
+}
+
 export const loadPosts = () => {
   return (dispatch) => {
     return fetch('/api/posts', {
     })
       .then((response) => {
-        console.log(`response is`); console.log(response);
         if (!response.ok) {
           throw Error(response.statusText);
         }

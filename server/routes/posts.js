@@ -220,7 +220,7 @@ router.route('/:id')
         res.json({ success: false, error: err })
       });
   })
-  .put(isAuthenticated, function (req, res) {
+  .put(isAuthenticated, upload.array('photos', 6), function (req, res) {
     let tempObj = {}
     if (req.body.category_id) { tempObj.category_id = req.body.category_id };
     if (req.body.user_id) { tempObj.user_id = req.body.user_id };
@@ -236,6 +236,26 @@ router.route('/:id')
     if (req.body.notes) { tempObj.notes = req.body.notes }
 
     Post.where('id', req.params.id).save(tempObj, { patch: true })
+      .then(function () {
+        for (let i = 0; i < req.files.length; i++) {
+          uploadImage(req.files[i], req.body.title)
+            .then(function (url) {
+              Image.forge({
+                url: url,
+                post_id: req.params.id
+              }).save()
+                .catch(function (err) {
+                  i = req.files.length;
+                  error = err;
+                })
+            })
+        }
+      })
+      .then(function () {
+        for (let i = 0; i < req.body.delete.length; i++) {
+          new Image({ id: parseInt(req.body.delete[i]) }).destroy();
+        }
+      })
       .then(function () {
         res.json({ success: true });
       })
