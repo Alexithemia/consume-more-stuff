@@ -196,3 +196,20 @@
   height: 40em;
   width: 50em;
 }
+
+.login-message-modal {
+  background-color: white;
+  position: fixed;
+  top: 6em;
+  height: 10em;
+  width: 30em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .loginLink{
+    text-decoration: none;
+    font-size: 1.5em;
+    font-family: $primary-font, $font-type;
+    color: $contrast-font-color;
+  }
+}

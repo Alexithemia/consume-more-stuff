@@ -1,4 +1,5 @@
 import { LOGIN_USER, LOGOUT_USER } from '../actions';
+import { castStringToBool } from './helper'
 import { LOAD_CATEGORIES, LOAD_STATUSES, LOAD_CATEGORY, LOAD_CONDITIONS, ADD_POST, LOAD_POSTS, LOAD_POST, SEARCH_POST } from '../actions';
 
 const initialState = {
@@ -13,16 +14,15 @@ const initialState = {
   username: localStorage.getItem('username'),
   loggedIn: localStorage.getItem('loggedIn'),
   id: parseInt(localStorage.getItem('id')),
-  isAdmin: localStorage.getItem('isadmin')
+  isAdmin: castStringToBool(localStorage.getItem('isadmin'))
 }
-
 
 const cmsReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOGIN_USER:
       return Object.assign({}, state, { loggedIn: true, username: action.payload.username, id: action.payload.id, isAdmin: action.payload.is_admin });
     case LOGOUT_USER:
-      return Object.assign({}, state, { loggedIn: false, username: '' });
+      return Object.assign({}, state, { loggedIn: false, username: '', isAdmin: false, id: null });
     case LOAD_CATEGORIES:
       return Object.assign({}, state, { categories: [...action.payload] });
     case LOAD_CATEGORY:
