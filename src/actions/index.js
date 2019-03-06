@@ -10,6 +10,7 @@ export const ADD_POST = 'ADD_POST';
 export const LOAD_POSTS = 'LOAD_POSTS';
 export const LOAD_POST = 'LOAD_POST';
 export const SEARCH_POST = 'SEARCH_POST';
+export const LOAD_POSTS_WITH_STATUS = 'LOAD_POSTS_WITH_STATUS';
 
 /** Action Creators*/
 
@@ -98,7 +99,6 @@ export const logout = () => {
 }
 
 export const loadCategories = () => {
-
   return (dispatch) => {
     return fetch('/api/category')
       .then(response => {
@@ -160,6 +160,7 @@ export const addPost = (newPost) => {
     }
 
 
+
     return fetch('/api/posts', {
       method: 'POST',
       body: formData
@@ -183,16 +184,16 @@ export const loadPosts = () => {
       .then((response) => {
         console.log(`response is`); console.log(response);
         if (!response.ok) {
-          throw Error(response.statusText)
+          throw Error(response.statusText);
         }
-        return response.json()
+        return response.json();
       })
       .then((body) => {
         return dispatch({
           type: LOAD_POSTS,
           payload: body
-        })
-      })
+        });
+      });
   }
 }
 
@@ -202,16 +203,16 @@ export const loadPost = (id) => {
     })
       .then((response) => {
         if (!response.ok) {
-          throw Error(response.statusText)
+          throw Error(response.statusText);
         }
-        return response.json()
+        return response.json();
       })
       .then((post) => {
         return dispatch({
           type: LOAD_POST,
           payload: post
-        })
-      })
+        });
+      });
   }
 }
 
@@ -221,15 +222,37 @@ export const searchPost = (term) => {
     })
       .then((response) => {
         if (!response.ok) {
-          throw Error(response.statusText)
+          throw Error(response.statusText);
         }
-        return response.json()
+
+        return response.json();
       })
       .then((posts) => {
         return dispatch({
           type: SEARCH_POST,
           payload: posts
-        })
+        });
+      });
+  }
+}
+
+export const loadPostsWithStatus = (status_id) => {
+  return (dispatch) => {
+    return fetch(`/api/posts/user-posts/${ status_id }`)
+      .then(response => {
+        if (!response.ok) {
+          throw Error(response.statusText);
+        }
+
+        return response.json();
       })
+      .then(posts => {
+        console.log(posts);
+
+        return dispatch({
+          type : LOAD_POSTS_WITH_STATUS,
+          payload : posts
+        });
+      });
   }
 }

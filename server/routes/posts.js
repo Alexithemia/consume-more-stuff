@@ -160,6 +160,31 @@ router.route('/search/:term')
       });
   })
 
+router.route('/user-posts/:status')
+  .get(isAuthenticated, function (req, res) {
+    const status_id = req.params.status;
+
+    Post.where('user_id', req.user.id)
+    .where('post_status_id', status_id)
+    .orderBy('created_at', 'DESC')
+    .fetchAll({
+      withRelated: [{
+        category      : (table) => table.column('id', 'name'),
+        user          : (table) => table.column('id', 'first_name', 'last_name'),
+        postStatus    : (table) => table.column('id', 'name'),
+        postCondition : (table) => table.column('id', 'name'),
+        image         : (table) => table.column('id', 'post_id', 'url')
+      }]
+    })
+      .then(function (postList) {
+        console.log(postList);
+        res.json(postList);
+      })
+      .catch(function (err) {
+        res.json(err);
+      });
+  });
+
 router.route('/:id')
   .get(function (req, res) {
     Post.where('id', req.params.id).fetch({
