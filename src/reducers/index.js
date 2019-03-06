@@ -1,6 +1,11 @@
+<<<<<<< HEAD
 import { LOGIN_USER, LOGOUT_USER, LOAD_USERS } from '../actions';
 import { LOAD_CATEGORIES, LOAD_CATEGORY, LOAD_CONDITIONS, ADD_POST, LOAD_POSTS, LOAD_POST, SEARCH_POST } from '../actions';
 
+=======
+import { LOGIN_USER, LOGOUT_USER } from '../actions';
+import { LOAD_CATEGORIES, LOAD_STATUSES, LOAD_CATEGORY, LOAD_CONDITIONS, ADD_POST, LOAD_POSTS, LOAD_POST, SEARCH_POST } from '../actions';
+>>>>>>> development
 
 const initialState = {
   posts: [],
@@ -8,6 +13,7 @@ const initialState = {
   categories: [],
   selectedCategory: [],
   postConditions: [],
+  postStatuses: [],
   messages: [],
   users: [],
   username: localStorage.getItem('username'),
@@ -26,15 +32,17 @@ const cmsReducer = (state = initialState, action) => {
     case LOAD_USERS:
       return Object.assign({}, state, { users: [...action.payload] });
     case LOAD_CATEGORIES:
-      return Object.assign({}, state, { categories: [...state.categories, ...action.payload] });
+      return Object.assign({}, state, { categories: [...action.payload] });
     case LOAD_CATEGORY:
-      return Object.assign({}, state, { selectedCategory: [...action.payload] });
+      return Object.assign({}, state, { posts: [...action.payload] });
     case LOAD_CONDITIONS:
-      return Object.assign({}, state, { postConditions: [...state.postConditions, ...action.payload] });
+      return Object.assign({}, state, { postConditions: [...action.payload] });
+    case LOAD_STATUSES:
+      return Object.assign({}, state, { postStatuses: [...action.payload] });
     case ADD_POST:
       return Object.assign({}, state, { posts: [...state.posts, action.payload] });
     case LOAD_POSTS:
-      return Object.assign({}, state, { posts: [...state.posts, ...action.payload] });
+      return Object.assign({}, state, { posts: [...action.payload] });
     case LOAD_POST:
       return Object.assign({}, state, { selectedPost: action.payload });
     case SEARCH_POST:

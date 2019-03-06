@@ -189,8 +189,10 @@
   }
 }
 
-.modal {
+.message-modal {
+  background-color: white;
   position: fixed;
+  top: 10em;
   height: 40em;
   width: 50em;
 }

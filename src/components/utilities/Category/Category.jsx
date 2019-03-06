@@ -4,7 +4,7 @@ const Category = (props) => {
   const { id, name } = props;
 
   return (
-    <option value={ id }>{ name }</option>
+    <option value={id}>Category - {name}</option>
   );
 }
 
