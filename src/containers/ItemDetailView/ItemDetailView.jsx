@@ -144,7 +144,7 @@ class ItemDetailView extends Component {
                             shouldCloseOnOverlayClick={true}
                             ariaHideApp={false}
                           >
-                            <ItemSendMessage />
+                            <ItemSendMessage toggleModal={this.toggleModal} />
                           </ReactModal>
                           :
                           <ReactModal
@@ -158,8 +158,6 @@ class ItemDetailView extends Component {
                             <Link to="/login" className="loginLink">Please log in to send a message</Link>
                           </ReactModal>
                         }
-
-
                       </div>
                     </div>
                   }

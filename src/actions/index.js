@@ -12,6 +12,7 @@ export const EDIT_POST = 'EDIT_POST';
 export const LOAD_POSTS = 'LOAD_POSTS';
 export const LOAD_POST = 'LOAD_POST';
 export const SEARCH_POST = 'SEARCH_POST';
+export const SEND_MESSAGE = 'SEND_MESSAGE';
 
 /** Action Creators*/
 
@@ -276,6 +277,32 @@ export const searchPost = (term) => {
         return dispatch({
           type: SEARCH_POST,
           payload: posts
+        })
+      })
+  }
+}
+
+export const sendMessage = (message) => {
+  console.log(message);
+
+  return (dispatch) => {
+    return fetch(`/api/messages`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(message)
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw Error(response.statusText)
+        }
+        return response.json()
+      })
+      .then((messages) => {
+        return dispatch({
+          type: SEND_MESSAGE,
+          payload: messages
         })
       })
   }

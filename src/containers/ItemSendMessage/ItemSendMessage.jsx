@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import './ItemSendMessage.scss';
 import { connect } from 'react-redux';
-// import { loadUsersWithMessages } from '../../actions'
+import { sendMessage } from '../../actions'
 
 class ItemSendMessage extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      name: '',
-      email: '',
-      comment: ''
+      to_user_id: this.props.selectedPost.user_id,
+      post_id: this.props.selectedPost.id,
+      body: ''
     }
 
     this.updateInput = this.updateInput.bind(this);
@@ -29,7 +29,15 @@ class ItemSendMessage extends Component {
   handleSubmit(e) {
     e.preventDefault();
 
-    this.props.toggleModal();
+    const close = this.props.toggleModal;
+    const { to_user_id, post_id, body } = this.state;
+    this.props.onSendMessage({
+      to_user_id: to_user_id,
+      post_id: post_id,
+      body: body
+    }).then(function () {
+      close();
+    })
   }
 
   render() {
@@ -41,28 +49,21 @@ class ItemSendMessage extends Component {
             <div className="text">Are you interested in purchasing this product? Let's talk!</div>
           </div>
         </div>
-
+        <div className="messageDetails">
+          <div className="detail">Message to: {this.props.selectedPost.user.username}</div>
+          <div className="detail">Concerning: {this.props.selectedPost.title}</div>
+        </div>
         <form id="form-message">
-          <div className="form-name">
-            <span className="title">NAME</span>
-            <input onChange={this.updateInput} data-field="name" type="text" value={this.state.name} placeholder="Jane Doe" />
-          </div>
-
-          <div className="form-email">
-            <span className="title">EMAIL</span>
-            <input onChange={this.updateInput} data-field="email" type="text" value={this.state.email} placeholder="name@example.com" />
-          </div>
-
           <div className="form-comment">
             <span className="title">HOW'S IT GOING?</span>
-            <textarea onChange={this.updateInput} data-field="comment" value={this.state.comment} name="comment" cols="30" rows="10" placeholder="Hey, I'm looking to buy your product. Where can we meet?"></textarea>
+            <textarea onChange={this.updateInput} data-field="body" value={this.state.body} name="comment" cols="30" rows="10" placeholder="Hey, I'm looking to buy your product. Where can we meet?"></textarea>
           </div>
 
           <div className="form-submit-options">
             <input onClick={this.handleSubmit} className="submit-send" type="submit" value="Send Message" />
-            <button onClick={this.props.toggleModal} className="submit-close">Close</button>
           </div>
         </form>
+        <button onClick={this.props.toggleModal} className="submit-close">Close</button>
       </div>
     );
   }
@@ -78,10 +79,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    // onLoadUsersWithMessages: () => {
-    //   const actionObject = loadUsersWithMessages();
-    //   return dispatch(actionObject);
-    // }
+    onSendMessage: (message) => {
+
+      const actionObject = sendMessage(message);
+      return dispatch(actionObject);
+    }
   }
 }
 

@@ -41,6 +41,8 @@ router.route('/')
       });
   })
   .post(isAuthenticated, function (req, res) {
+    console.log(req.body);
+
     Message.forge({
       to_user_id: req.body.to_user_id,
       from_user_id: req.user.id,
