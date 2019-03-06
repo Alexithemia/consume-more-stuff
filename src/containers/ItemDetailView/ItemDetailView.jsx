@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import ReactImageMagnify from 'react-image-magnify';
 import './ItemDetailView.scss';
 import { loadPost } from '../../actions';
 import ImageList from '../../components/ImageList';
@@ -20,15 +19,6 @@ class ItemDetailView extends Component {
 
   componentDidMount() {
     this.props.loadPost(this.props.match.params.id)
-
-    // const script = document.createElement("script");
-    // console.log(script)
-
-    // script.src = "../../magnify.js";
-    // script.body = ("myimage", 3)
-    // script.async = true;
-
-    // document.body.appendChild(script);
   }
 
   componentDidUpdate() {
