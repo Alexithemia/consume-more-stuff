@@ -1,7 +1,4 @@
 import { LOGIN_USER, LOGOUT_USER, LOAD_USERS } from '../actions';
-import { LOAD_CATEGORIES, LOAD_CATEGORY, LOAD_CONDITIONS, ADD_POST, LOAD_POSTS, LOAD_POST, SEARCH_POST } from '../actions';
-
-import { LOGIN_USER, LOGOUT_USER } from '../actions';
 import { LOAD_CATEGORIES, LOAD_STATUSES, LOAD_CATEGORY, LOAD_CONDITIONS, ADD_POST, LOAD_POSTS, LOAD_POST, SEARCH_POST } from '../actions';
 
 const initialState = {

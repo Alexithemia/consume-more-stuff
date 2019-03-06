@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import ReactImageMagnify from 'react-image-magnify';
+import ReactModal from 'react-modal';
 import './ItemDetailView.scss';
 import { loadPost } from '../../actions';
 import ImageList from '../../components/ImageList';
-import ReactImageMagnify from 'react-image-magnify';
 import EditPost from '../../containers/EditPost';
+import ItemSendMessage from '../../containers/ItemSendMessage';
 
 class ItemDetailView extends Component {
   constructor(props) {
