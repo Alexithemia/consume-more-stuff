@@ -1,0 +1,32 @@
+@import '../../../sass/config';
+
+.mainContainer {
+  width: 100%;
+  font-family: $primary-font;
+
+  .div{
+    width: 100%;
+      
+      .title{
+      font-size: 25px;
+      text-align: center;
+      margin-bottom: 2em;
+      margin-top: 1em;
+      color: $contrast-font-color;
+      }   
+
+li{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-bottom: 25px;
+  border-bottom: 0.5px solid $border-light-color;
+  color: $gray-font-color;
+
+  .content-data{
+    width: 15%;
+  }
+}
+}
+}

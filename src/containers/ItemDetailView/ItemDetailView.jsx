@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import './ItemDetailView.scss';
 import { loadPost } from '../../actions';
 import ImageList from '../../components/ImageList';
+import ReactImageMagnify from 'react-image-magnify';
 
 class ItemDetailView extends Component {
   constructor(props) {
@@ -50,8 +51,18 @@ class ItemDetailView extends Component {
                 <ImageList images={image} changePhoto={this.changePhoto}></ImageList>
               </div>
               <div className="imgBox">
-                <img id="img" className="img" src={this.state.selectedImg} alt="" />
-                <div id="myresult" className="img-zoom-result"></div>
+                <ReactImageMagnify  {...{
+                  smallImage: {
+                    alt: '',
+                    isFluidWidth: true,
+                    src: this.state.selectedImg,
+                  },
+                  largeImage: {
+                    src: this.state.selectedImg,
+                    width: 800,
+                    height: 400
+                  }
+                }} />
               </div>
               <div className="titleContainer">
                 <h1 className="title">{title}: {postStatus.name}</h1>
