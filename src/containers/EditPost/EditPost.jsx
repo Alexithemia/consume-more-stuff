@@ -41,6 +41,7 @@ class EditPost extends Component {
     this.handleFileChosenOnChange = this.handleFileChosenOnChange.bind(this);
     this.handleCategoryOnChange = this.handleCategoryOnChange.bind(this);
     this.handleConditionOnChange = this.handleConditionOnChange.bind(this);
+    this.handleStatusOnChange = this.handleStatusOnChange.bind(this);
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
     this.checkTitleValid = this.checkTitleValid.bind(this);
     this.handleImageClick = this.handleImageClick.bind(this);
