@@ -58,8 +58,10 @@ router.route('/')
 router.route('/:id')
   .get(isAuthenticated, function (req, res) {
     Message.query(function (x) {
-      x.where('to_user_id', req.user.id).andWhere('from_user_id', req.params.id)
-    }).fetchAll()
+      x.whereIn('to_user_id', [req.user.id, req.params.id]).andWhere(function (y) {
+        y.whereIn('from_user_id', [req.params.id, req.user.id])
+      })
+    }).orderBy('created_at', 'DESC').fetchAll()
       .then(function (messageList) {
         res.json(messageList)
       })

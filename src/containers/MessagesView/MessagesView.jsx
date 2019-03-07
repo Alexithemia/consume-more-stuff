@@ -5,14 +5,6 @@ import { loadUserMessages } from '../../actions';
 import UserMessageList from '../../components/UserMessageList'
 
 class MessagesView extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-
-    };
-
-  }
 
   componentWillMount() {
     this.props.loadYourMessages();
