@@ -113,7 +113,8 @@ router.route('/unblockuser/')
 router.route('/users/all')
   .get(isAdmin, function (req, res) {
     User.forge().orderBy('username', 'ASC').fetchAll({
-      columns: ['username', 'first_name', 'last_name', 'email', 'verified', 'status_id', 'is_admin']
+      columns: ['id', 'username', 'first_name', 'last_name', 'email', 'verified', 'status_id', 'is_admin', 'created_at'],
+      withRelated: ['postByUser', 'status']
     })
       .then(function (userList) {
         res.json({ users: userList });

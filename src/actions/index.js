@@ -3,6 +3,7 @@
 export const REGISTER_USER = 'REGISTER_USER';
 export const LOGIN_USER = 'LOGIN_USER';
 export const LOGOUT_USER = 'LOGOUT_USER';
+export const LOAD_USERS = 'LOAD_USER';
 export const LOAD_CATEGORY = 'LOAD_CATEGORY';
 export const LOAD_CATEGORIES = 'LOAD_CATEGORIES';
 export const LOAD_CONDITIONS = 'LOAD_CONDITIONS';
@@ -101,6 +102,22 @@ export const logout = () => {
       .catch((err) => {
         console.log(err)
       })
+  }
+}
+
+export const loadUsers = () => {
+
+  return (dispatch) => {
+    return fetch('/api/users/all')
+      .then(response => {
+        return response.json();
+      })
+      .then(user => {
+        return dispatch({
+          type: LOAD_USERS,
+          payload: user.users
+        });
+      });
   }
 }
 
