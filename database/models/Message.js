@@ -7,15 +7,15 @@ class Message extends bookshelf.Model {
   get timeStamps() { return true; }
 
   toUser() {
-    return this.belongsTo('User', 'id', 'to_user_id');
+    return this.belongsTo('User', 'to_user_id', 'id');
   }
 
   fromUser() {
-    return this.belongsTo('User', 'id', 'from_user_id');
+    return this.belongsTo('User', 'from_user_id', 'id');
   }
 
   post() {
-    return this.belongsTo('Post', 'id', 'post_id');
+    return this.belongsTo('Post', 'post_id', 'id');
   }
 }
 

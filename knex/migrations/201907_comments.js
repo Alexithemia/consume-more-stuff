@@ -6,6 +6,7 @@ exports.up = function (knex, Promise) {
     table.integer('post_id').references('id').inTable('posts');
     table.integer('title');
     table.string('body', 1000).notNullable();
+    table.boolean('unread').defaultTo(true);
     table.timestamps(true, true);
   })
 };

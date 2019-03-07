@@ -1,5 +1,5 @@
-import { LOGIN_USER, LOGOUT_USER } from '../actions';
-import { LOAD_CATEGORIES, LOAD_STATUSES, LOAD_CATEGORY, LOAD_CONDITIONS, ADD_POST, LOAD_POSTS, LOAD_POST, SEARCH_POST, LOAD_USER_POSTS } from '../actions';
+import { castStringToBool } from './helper'
+import { LOGIN_USER, LOGOUT_USER, DELETE_THREAD, LOAD_CATEGORIES, LOAD_STATUSES, LOAD_CATEGORY, LOAD_CONDITIONS, ADD_POST, LOAD_POSTS, LOAD_POST, SEARCH_POST, LOAD_USERMESSAGES, LOAD_CONVERSATION, SEND_MESSAGE, DELETE_MESSAGE, LOAD_USERS, LOAD_USER_POSTS } from '../actions';
 
 const initialState = {
   posts: [],
@@ -10,12 +10,13 @@ const initialState = {
   postStatuses: [],
   messages: [],
   users: [],
+  userMessages: [],
+  conversation: [],
   username: localStorage.getItem('username'),
   loggedIn: localStorage.getItem('loggedIn'),
   id: parseInt(localStorage.getItem('id')),
-  isAdmin: localStorage.getItem('isadmin')
+  isAdmin: castStringToBool(localStorage.getItem('isadmin'))
 }
-
 
 const cmsReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -23,6 +24,8 @@ const cmsReducer = (state = initialState, action) => {
       return Object.assign({}, state, { loggedIn: true, username: action.payload.username, id: action.payload.id, isAdmin: action.payload.is_admin });
     case LOGOUT_USER:
       return Object.assign({}, state, { loggedIn: false, username: '' });
+    case LOAD_USERS:
+      return Object.assign({}, state, { users: [...action.payload] });
     case LOAD_CATEGORIES:
       return Object.assign({}, state, { categories: [...action.payload] });
     case LOAD_CATEGORY:
@@ -41,6 +44,16 @@ const cmsReducer = (state = initialState, action) => {
       return Object.assign({}, state, { posts: [...action.payload] });
     case LOAD_USER_POSTS:
       return Object.assign({}, state, { posts: [...action.payload] });
+    case LOAD_USERMESSAGES:
+      return Object.assign({}, state, { userMessages: [...action.payload] });
+    case LOAD_CONVERSATION:
+      return Object.assign({}, state, { conversation: [...action.payload] });
+    case SEND_MESSAGE:
+      return Object.assign({}, state, { conversation: [...state.conversation, action.payload] });
+    case DELETE_MESSAGE:
+      return Object.assign({}, state, { conversation: [...action.payload] });
+    case DELETE_THREAD:
+      return Object.assign({}, state, { userMessages: [...action.payload] });
     default:
       return state;
   }

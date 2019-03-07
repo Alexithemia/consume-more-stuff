@@ -3,6 +3,7 @@
 export const REGISTER_USER = 'REGISTER_USER';
 export const LOGIN_USER = 'LOGIN_USER';
 export const LOGOUT_USER = 'LOGOUT_USER';
+export const LOAD_USERS = 'LOAD_USER';
 export const LOAD_CATEGORY = 'LOAD_CATEGORY';
 export const LOAD_CATEGORIES = 'LOAD_CATEGORIES';
 export const LOAD_CONDITIONS = 'LOAD_CONDITIONS';
@@ -13,6 +14,11 @@ export const LOAD_POSTS = 'LOAD_POSTS';
 export const LOAD_POST = 'LOAD_POST';
 export const SEARCH_POST = 'SEARCH_POST';
 export const LOAD_USER_POSTS = 'LOAD_USER_POSTS';
+export const SEND_MESSAGE = 'SEND_MESSAGE';
+export const LOAD_USERMESSAGES = 'LOAD_USERMESSAGES';
+export const LOAD_CONVERSATION = 'LOAD_CONVERSATION';
+export const DELETE_MESSAGE = 'DELETE_MESSAGE';
+export const DELETE_THREAD = 'DELETE_THREAD';
 
 /** Action Creators*/
 
@@ -97,6 +103,22 @@ export const logout = () => {
       .catch((err) => {
         console.log(err)
       })
+  }
+}
+
+export const loadUsers = () => {
+
+  return (dispatch) => {
+    return fetch('/api/users/all')
+      .then(response => {
+        return response.json();
+      })
+      .then(user => {
+        return dispatch({
+          type: LOAD_USERS,
+          payload: user.users
+        });
+      });
   }
 }
 
@@ -299,5 +321,114 @@ export const loadUserPosts = () => {
           payload : posts
         });
       });
+  }
+}
+
+export const sendMessage = (message) => {
+  return (dispatch) => {
+    return fetch(`/api/messages`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(message)
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw Error(response.statusText)
+        }
+        return response.json()
+      })
+      .then((response) => {
+        console.log(response);
+
+        return dispatch({
+          type: SEND_MESSAGE,
+          payload: response.message
+        })
+      })
+  }
+}
+
+export const loadUserMessages = () => {
+  return (dispatch) => {
+    return fetch(`/api/messages`)
+      .then((response) => {
+        if (!response.ok) {
+          throw Error(response.statusText)
+        }
+        return response.json()
+      })
+      .then((messages) => {
+        return dispatch({
+          type: LOAD_USERMESSAGES,
+          payload: messages
+        })
+      })
+  }
+}
+
+export const loadMessages = (id) => {
+  return (dispatch) => {
+    return fetch(`/api/messages/${id}`)
+      .then((response) => {
+        if (!response.ok) {
+          throw Error(response.statusText)
+        }
+        return response.json()
+      })
+      .then((messages) => {
+        return dispatch({
+          type: LOAD_CONVERSATION,
+          payload: messages
+        })
+      })
+  }
+}
+
+export const deleteMessage = (messageData) => {
+  return (dispatch) => {
+    return fetch(`/api/messages/delete/${messageData.messageId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(messageData)
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw Error(response.statusText)
+        }
+        return response.json()
+      })
+      .then((messages) => {
+        return dispatch({
+
+          type: DELETE_MESSAGE,
+          payload: messages
+        })
+      })
+  }
+}
+
+export const deleteThread = (id) => {
+  return (dispatch) => {
+    return fetch(`/api/messages/${id}`, {
+      method: 'DELETE'
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw Error(response.statusText)
+        }
+        return response.json()
+      })
+      .then((messages) => {
+        console.log(messages);
+
+        return dispatch({
+          type: DELETE_THREAD,
+          payload: messages
+        })
+      })
   }
 }

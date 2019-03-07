@@ -32,7 +32,7 @@ function isAuthenticated(req, res, next) {
 
 router.route('/')
   .get(isAuthenticated, function (req, res) {
-    knex.raw('SELECT from_user_id, users.username, max(messages.created_at) AS created_at FROM messages INNER JOIN users ON messages.from_user_id = users.id GROUP BY users.username, from_user_id ORDER BY created_at DESC')
+    knex.raw(`SELECT from_user_id, users.username, max(messages.created_at) AS created_at, bool_or(messages.unread) AS unread FROM messages INNER JOIN users ON messages.from_user_id = users.id WHERE to_user_id = ${req.user.id} GROUP BY users.username, from_user_id ORDER BY created_at DESC`)
       .then(function (messageUsers) {
         res.json(messageUsers.rows);
       })
@@ -47,8 +47,21 @@ router.route('/')
       post_id: req.body.post_id,
       body: req.body.body
     }).save()
-      .then(function () {
-        res.json({ success: true });
+      .then(function (newMessage) {
+        Message.where('id', newMessage.id).fetch({
+          withRelated: [{
+            'toUser': function (x) {
+              x.column('id', 'username');
+            },
+            'fromUser': function (x) {
+              x.column('id', 'username');
+            },
+            'post': function (x) { }
+          }]
+        })
+          .then(function (message) {
+            res.json({ success: true, message: message });
+          })
       })
       .catch(function (err) {
         res.json({ success: false, error: err })
@@ -58,21 +71,43 @@ router.route('/')
 router.route('/:id')
   .get(isAuthenticated, function (req, res) {
     Message.query(function (x) {
-      x.where('to_user_id', req.user.id).andWhere('from_user_id', req.params.id)
-    }).fetchAll()
+      x.whereIn('to_user_id', [req.user.id, req.params.id]).andWhere(function (y) {
+        y.whereIn('from_user_id', [req.params.id, req.user.id])
+      })
+    }).orderBy('created_at', 'ASC').fetchAll({
+      withRelated: [{
+        'toUser': function (x) {
+          x.column('id', 'username');
+        },
+        'fromUser': function (x) {
+          x.column('id', 'username');
+        },
+        'post': function (x) { }
+      }]
+    })
       .then(function (messageList) {
-        res.json(messageList)
+        Message.query(function (x) {
+          x.where('to_user_id', req.user.id).andWhere('from_user_id', req.params.id)
+        }).save({ unread: false }, { patch: true })
+          .then(function () {
+            res.json(messageList)
+          })
       })
       .catch(function (err) {
         res.json({ success: false, error: err })
-      });
+      })
   })
   .delete(isAuthenticated, function (req, res) {
     Message.query(function (x) {
-      x.where('to_user_id', req.user.id).andWhere('from_user_id', req.params.id)
+      x.whereIn('to_user_id', [req.user.id, req.params.id]).andWhere(function (y) {
+        y.whereIn('from_user_id', [req.params.id, req.user.id])
+      })
         .del()
         .then(function () {
-          res.json({ success: true });
+          knex.raw(`SELECT from_user_id, users.username, max(messages.created_at) AS created_at, bool_or(messages.unread) AS unread FROM messages INNER JOIN users ON messages.from_user_id = users.id WHERE to_user_id = ${req.user.id} GROUP BY users.username, from_user_id ORDER BY created_at DESC`)
+            .then(function (messageUsers) {
+              res.json(messageUsers.rows);
+            })
         })
         .catch(function (err) {
           res.status(500).json({ success: false, error: err });
@@ -84,7 +119,24 @@ router.route('/delete/:id')
   .delete(isAuthenticated, function (req, res) {
     new Message({ id: req.params.id }).destroy()
       .then(function () {
-        res.json({ success: true });
+        Message.query(function (x) {
+          x.whereIn('to_user_id', [req.user.id, req.body.id]).andWhere(function (y) {
+            y.whereIn('from_user_id', [req.body.id, req.user.id])
+          })
+        }).orderBy('created_at', 'ASC').fetchAll({
+          withRelated: [{
+            'toUser': function (x) {
+              x.column('id', 'username');
+            },
+            'fromUser': function (x) {
+              x.column('id', 'username');
+            },
+            'post': function (x) { }
+          }]
+        })
+          .then(function (messageList) {
+            res.json(messageList)
+          })
       })
       .catch(function (err) {
         res.status(500).json({ success: false, error: err });

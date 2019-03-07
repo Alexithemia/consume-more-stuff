@@ -52,7 +52,6 @@ class AddPost extends Component {
     } else {
       this.setState({ isTitleInvalid: false })
     }
-    console.log(this.state.isTitleInvalid);
   }
 
   handleDescriptionOnChange(e) {
@@ -106,7 +105,6 @@ class AddPost extends Component {
       } else {
         this.setState({ isCategoryInvalid: false })
       }
-      console.log(this.state.isCategoryInvalid);
     })
 
 
@@ -121,7 +119,6 @@ class AddPost extends Component {
       } else {
         this.setState({ isConditionInvalid: false })
       }
-      console.log(this.state.isConditionInvalid);
     });
 
   }
