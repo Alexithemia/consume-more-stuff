@@ -14,6 +14,7 @@ export const LOAD_POST = 'LOAD_POST';
 export const SEARCH_POST = 'SEARCH_POST';
 export const SEND_MESSAGE = 'SEND_MESSAGE';
 export const LOAD_USERMESSAGES = 'LOAD_USERMESSAGES';
+export const LOAD_CONVERSATION = 'LOAD_CONVERSATION';
 
 /** Action Creators*/
 
@@ -298,10 +299,12 @@ export const sendMessage = (message) => {
         }
         return response.json()
       })
-      .then((messages) => {
+      .then((response) => {
+        console.log(response);
+
         return dispatch({
           type: SEND_MESSAGE,
-          payload: messages
+          payload: response.message
         })
       })
   }
@@ -319,6 +322,24 @@ export const loadUserMessages = () => {
       .then((messages) => {
         return dispatch({
           type: LOAD_USERMESSAGES,
+          payload: messages
+        })
+      })
+  }
+}
+
+export const loadMessages = (id) => {
+  return (dispatch) => {
+    return fetch(`/api/messages/${id}`)
+      .then((response) => {
+        if (!response.ok) {
+          throw Error(response.statusText)
+        }
+        return response.json()
+      })
+      .then((messages) => {
+        return dispatch({
+          type: LOAD_CONVERSATION,
           payload: messages
         })
       })

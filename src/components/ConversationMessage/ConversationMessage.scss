@@ -1,0 +1,33 @@
+@import '../../../sass/config';
+
+.message{
+  width: 60%;
+  margin: 1em;
+  border: 1px solid $border-black-color;
+  border-radius: 8px;
+  background-color: $contrast-background-color;
+
+  div{
+    margin: 2px;
+  }
+}
+
+.messageHead{
+  display: flex;
+  justify-content: space-around;
+}
+.sent{
+  font-size: .8em;
+  text-align: center;
+}
+
+.yours{
+  background-color: $overlay-background-color;
+}
+
+.bodyWrap{
+  text-align: center;
+  div{
+    font-size: 1.5em;
+  }
+}

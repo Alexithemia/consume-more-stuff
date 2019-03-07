@@ -47,8 +47,21 @@ router.route('/')
       post_id: req.body.post_id,
       body: req.body.body
     }).save()
-      .then(function () {
-        res.json({ success: true });
+      .then(function (newMessage) {
+        Message.where('id', newMessage.id).fetch({
+          withRelated: [{
+            'toUser': function (x) {
+              x.column('id', 'username');
+            },
+            'fromUser': function (x) {
+              x.column('id', 'username');
+            },
+            'post': function (x) { }
+          }]
+        })
+          .then(function (message) {
+            res.json({ success: true, message: message });
+          })
       })
       .catch(function (err) {
         res.json({ success: false, error: err })
@@ -61,7 +74,17 @@ router.route('/:id')
       x.whereIn('to_user_id', [req.user.id, req.params.id]).andWhere(function (y) {
         y.whereIn('from_user_id', [req.params.id, req.user.id])
       })
-    }).orderBy('created_at', 'DESC').fetchAll()
+    }).orderBy('created_at', 'ASC').fetchAll({
+      withRelated: [{
+        'toUser': function (x) {
+          x.column('id', 'username');
+        },
+        'fromUser': function (x) {
+          x.column('id', 'username');
+        },
+        'post': function (x) { }
+      }]
+    })
       .then(function (messageList) {
         res.json(messageList)
       })
