@@ -15,6 +15,7 @@ import CategoryView from '../../containers/CategoryView';
 import MessagesView from '../../containers/MessagesView';
 import MessagesFromUserView from '../MessagesFromUserView';
 import AdminUserView from '../../containers/AdminUserView';
+import EditUserView from '../../containers/EditUserView';
 
 class App extends Component {
   constructor(props) {
@@ -44,6 +45,7 @@ class App extends Component {
                 <Route exact={true} path='/login' component={Login} />
                 <Route exact={true} path='/' component={Home} />
                 <Route exact={true} path='/dashboard/messages' component={MessagesView} />
+                <Route exact={true} path='/dashboard/settings' component={EditUserView} />
                 <Route exact={true} path='/dashboard/messages/:id' component={MessagesFromUserView} />
                 <Route exact={true} path='/category/:id' component={CategoryView} />
                 <Route exact={true} path='/item/:id' component={ItemDetailView} />
