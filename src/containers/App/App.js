@@ -12,18 +12,22 @@ import Register from '../../components/Register';
 import SearchPage from '../../components/SearchPage';
 import ItemDetailView from '../../containers/ItemDetailView';
 import CategoryView from '../../containers/CategoryView';
+import AdminUserView from '../../containers/AdminUserView';
 
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {};
+
   }
+
+
 
   componentDidMount() {
     return this.props.onLoad();
   }
-  
+
   render() {
     return (
       <div className="App">
@@ -40,6 +44,7 @@ class App extends Component {
                 <Route exact={true} path='/category/:id' component={CategoryView} />
                 <Route exact={true} path='/item/:id' component={ItemDetailView} />
                 <Route exact={true} path='/search/:term' component={SearchPage} />
+                <Route exact={true} path='/admin/users' component={AdminUserView} />
               </Switch>
             </div>
           </>

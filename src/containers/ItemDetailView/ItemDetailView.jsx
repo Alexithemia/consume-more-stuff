@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import ReactModal from 'react-modal';
 import { connect } from 'react-redux';
+import ReactImageMagnify from 'react-image-magnify';
+import ReactModal from 'react-modal';
 import './ItemDetailView.scss';
-
 import { loadPost } from '../../actions';
-import ItemSendMessage from '../ItemSendMessage';
 import ImageList from '../../components/ImageList';
 import EditPost from '../../containers/EditPost';
+import ItemSendMessage from '../../containers/ItemSendMessage';
 
 class ItemDetailView extends Component {
   constructor(props) {
@@ -33,7 +33,6 @@ class ItemDetailView extends Component {
     if (this.state.selectedImg === "" && this.props.selectedPost.image) {
       if (this.props.selectedPost.image[0]) {
         this.setState({ selectedImg: this.props.selectedPost.image[0].url })
-
       } else {
         this.setState({ selectedImg: "https://s3-us-west-2.amazonaws.com/alexithemia-cms-imagestore/no-image.jpg" })
       }
@@ -70,11 +69,20 @@ class ItemDetailView extends Component {
               <div className="imgNavBar">
                 <ImageList images={image} changePhoto={this.changePhoto}></ImageList>
               </div>
-
               <div className="imgBox">
-                <img id="img" className="img" src={this.state.selectedImg} alt="" />
+                <ReactImageMagnify  {...{
+                  smallImage: {
+                    alt: '',
+                    isFluidWidth: true,
+                    src: this.state.selectedImg,
+                  },
+                  largeImage: {
+                    src: this.state.selectedImg,
+                    width: 800,
+                    height: 400
+                  }
+                }} />
               </div>
-
               <div className="titleContainer">
                 <h1 className="title">{title}: {postStatus.name}</h1>
                 <div className="user">by {user.username}</div>
@@ -152,21 +160,17 @@ class ItemDetailView extends Component {
               </div>
             </div>
             <div className="secondContainer">
-              <h2 className="descriptionTitle">Product Description</h2>
-
+              <h2 className="descriptionTitle">Product description</h2>
               <div className="productDescription">
                 <div className="condition">
                   Condition: <span className="dynamic-data">{postCondition.name}</span>
                 </div>
-
                 <div className="manufacturer">
                   Manufacturer: <span className="dynamic-data">{manufacturer}</span>
                 </div>
-
                 <div className="model">
                   Model: <span className="dynamic-data">{model}</span>
                 </div>
-
                 <div className="dimension">
                   Dimensions: <span className="dynamic-data">{dimensions}</span>
                 </div>
