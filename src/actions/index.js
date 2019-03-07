@@ -12,7 +12,7 @@ export const EDIT_POST = 'EDIT_POST';
 export const LOAD_POSTS = 'LOAD_POSTS';
 export const LOAD_POST = 'LOAD_POST';
 export const SEARCH_POST = 'SEARCH_POST';
-export const LOAD_POSTS_WITH_STATUS = 'LOAD_POSTS_WITH_STATUS';
+export const LOAD_USER_POSTS = 'LOAD_USER_POSTS';
 
 /** Action Creators*/
 
@@ -283,9 +283,9 @@ export const searchPost = (term) => {
   }
 }
 
-export const loadPostsWithStatus = (status_id) => {
+export const loadUserPosts = () => {
   return (dispatch) => {
-    return fetch(`/api/posts/user-posts/${ status_id }`)
+    return fetch(`/api/posts/user-posts`)
       .then(response => {
         if (!response.ok) {
           throw Error(response.statusText);
@@ -294,10 +294,8 @@ export const loadPostsWithStatus = (status_id) => {
         return response.json();
       })
       .then(posts => {
-        console.log(posts);
-
         return dispatch({
-          type : LOAD_POSTS_WITH_STATUS,
+          type : LOAD_USER_POSTS,
           payload : posts
         });
       });

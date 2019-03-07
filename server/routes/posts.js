@@ -160,12 +160,11 @@ router.route('/search/:term')
       });
   })
 
-router.route('/user-posts/:status')
+router.route('/user-posts')
   .get(isAuthenticated, function (req, res) {
     const status_id = req.params.status;
 
     Post.where('user_id', req.user.id)
-    .where('post_status_id', status_id)
     .orderBy('created_at', 'DESC')
     .fetchAll({
       withRelated: [{
