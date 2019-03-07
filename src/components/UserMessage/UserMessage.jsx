@@ -4,21 +4,25 @@ import './UserMessage.scss';
 
 const UserMessage = (props) => {
   const { id, username, unread } = props;
-
   return (
     <>
       {unread ?
-        <Link to={`/dashboard/messages/${id}`} className="userMessageWrap unread">
-          <div>From: {username}</div>
-          <div>Latest Message: {Date(props.created_at)}</div>
-        </Link>
+        <div className="userMessageWrap unread">
+          <div onClick={props.delete} className="deleteThreadBtn" data-userid={id}>X</div>
+          <Link to={`/dashboard/messages/${id}`} className="userMessageDataWrap">
+            <div>From: {username}</div>
+            <div>Latest Message: {Date(props.created_at)}</div>
+          </Link>
+        </div>
         :
-        <Link to={`/dashboard/messages/${id}`} className="userMessageWrap">
-          <div>From: {username}</div>
-          <div>Latest Message: {Date(props.created_at)}</div>
-        </Link>
+        <div className="userMessageWrap">
+          <div onClick={props.delete} className="deleteThreadBtn">X</div>
+          <Link to={`/dashboard/messages/${id}`} className="userMessageDataWrap">
+            <div>From: {username}</div>
+            <div>Latest Message: {Date(props.created_at)}</div>
+          </Link>
+        </div>
       }
-
     </>
   );
 }

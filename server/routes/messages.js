@@ -99,7 +99,10 @@ router.route('/:id')
       })
         .del()
         .then(function () {
-          res.json({ success: true });
+          knex.raw(`SELECT from_user_id, users.username, max(messages.created_at) AS created_at, bool_or(messages.unread) AS unread FROM messages INNER JOIN users ON messages.from_user_id = users.id WHERE to_user_id = ${req.user.id} GROUP BY users.username, from_user_id ORDER BY created_at DESC`)
+            .then(function (messageUsers) {
+              res.json(messageUsers.rows);
+            })
         })
         .catch(function (err) {
           res.status(500).json({ success: false, error: err });
@@ -109,8 +112,6 @@ router.route('/:id')
 
 router.route('/delete/:id')
   .delete(isAuthenticated, function (req, res) {
-    console.log(typeof req.user.id, typeof req.body.id);
-
     new Message({ id: req.params.id }).destroy()
       .then(function () {
         Message.query(function (x) {

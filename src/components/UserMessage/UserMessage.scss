@@ -10,12 +10,27 @@
   margin: 8px;
   border-radius: 8px;
   border: 1px solid $border-black-color;
-  font-family: $primary-font;
   box-shadow: 3px 4px 8px #aaa;
-  text-decoration: none;
+  
+  .userMessageDataWrap{
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    font-family: $primary-font;
+    text-decoration: none;
+    color: $primary-font-color;
+    margin-bottom: 1em;
+  }
 
   &:hover{
     background-color: $contrast-hover-color;
+  }
+  .deleteThreadBtn{
+    position: relative;
+    left: 48.5%;
+    top: 5%;
+    cursor: pointer;
   }
 }
 

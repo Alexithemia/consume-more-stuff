@@ -28,8 +28,6 @@ class MessagesFromUserView extends Component {
   }
 
   deleteMessage(e) {
-    console.log(e.target);
-
     this.props.onDelete({
       messageId: e.target.dataset.messageid,
       id: parseInt(e.target.dataset.userid)
@@ -38,8 +36,6 @@ class MessagesFromUserView extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-
-    console.log(this.props);
 
     this.props.onSend({
       body: this.state.body,

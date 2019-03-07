@@ -16,6 +16,7 @@ export const SEND_MESSAGE = 'SEND_MESSAGE';
 export const LOAD_USERMESSAGES = 'LOAD_USERMESSAGES';
 export const LOAD_CONVERSATION = 'LOAD_CONVERSATION';
 export const DELETE_MESSAGE = 'DELETE_MESSAGE';
+export const DELETE_THREAD = 'DELETE_THREAD';
 
 /** Action Creators*/
 
@@ -363,10 +364,31 @@ export const deleteMessage = (messageData) => {
         return response.json()
       })
       .then((messages) => {
-        console.log(messages);
         return dispatch({
 
           type: DELETE_MESSAGE,
+          payload: messages
+        })
+      })
+  }
+}
+
+export const deleteThread = (id) => {
+  return (dispatch) => {
+    return fetch(`/api/messages/${id}`, {
+      method: 'DELETE'
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw Error(response.statusText)
+        }
+        return response.json()
+      })
+      .then((messages) => {
+        console.log(messages);
+
+        return dispatch({
+          type: DELETE_THREAD,
           payload: messages
         })
       })
