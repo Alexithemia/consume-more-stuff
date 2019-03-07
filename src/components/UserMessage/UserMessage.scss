@@ -1,0 +1,43 @@
+@import '../../../sass/config';
+
+.userMessageWrap{
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  width: 60%;
+  height: 4em;
+  margin: 8px;
+  border-radius: 8px;
+  border: 1px solid $border-black-color;
+  box-shadow: 3px 4px 8px #aaa;
+  
+  .userMessageDataWrap{
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    font-family: $primary-font;
+    text-decoration: none;
+    color: $contrast-font-color;
+    margin-bottom: 1em;
+  }
+  
+  .deleteThreadBtn{
+    position: relative;
+    left: 48.5%;
+    top: 5%;
+    cursor: pointer;
+  }
+  &:hover{
+    background-color: $contrast-hover-color;
+  }
+}
+
+.unread{
+  background-color: $primary-background-color;
+  color: white;
+  .userMessageDataWrap{
+    color: white;
+  }
+}

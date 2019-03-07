@@ -1,0 +1,36 @@
+@import '../../../sass/config';
+
+.message{
+  width: 60%;
+  margin: 1em;
+  border: 1px solid $border-black-color;
+  border-radius: 8px;
+  background-color: $contrast-background-color;
+
+  .deleteMessageButton{
+    position: relative;
+    left: 97.5%
+  }
+}
+
+.messageHead{
+  display: flex;
+  justify-content: space-around;
+}
+.sent{
+  font-size: .8em;
+  text-align: center;
+}
+
+.yours{
+  background-color: $overlay-background-color;
+}
+
+.bodyWrap{
+  text-align: center;
+  margin-top: 5px;
+  margin-bottom: 1em;
+  div{
+    font-size: 1.5em;
+  }
+}
