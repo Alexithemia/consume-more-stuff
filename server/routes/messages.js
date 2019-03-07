@@ -94,7 +94,9 @@ router.route('/:id')
   })
   .delete(isAuthenticated, function (req, res) {
     Message.query(function (x) {
-      x.where('to_user_id', req.user.id).andWhere('from_user_id', req.params.id)
+      x.whereIn('to_user_id', [req.user.id, req.params.id]).andWhere(function (y) {
+        y.whereIn('from_user_id', [req.params.id, req.user.id])
+      })
         .del()
         .then(function () {
           res.json({ success: true });
@@ -107,9 +109,28 @@ router.route('/:id')
 
 router.route('/delete/:id')
   .delete(isAuthenticated, function (req, res) {
+    console.log(typeof req.user.id, typeof req.body.id);
+
     new Message({ id: req.params.id }).destroy()
       .then(function () {
-        res.json({ success: true });
+        Message.query(function (x) {
+          x.whereIn('to_user_id', [req.user.id, req.body.id]).andWhere(function (y) {
+            y.whereIn('from_user_id', [req.body.id, req.user.id])
+          })
+        }).orderBy('created_at', 'ASC').fetchAll({
+          withRelated: [{
+            'toUser': function (x) {
+              x.column('id', 'username');
+            },
+            'fromUser': function (x) {
+              x.column('id', 'username');
+            },
+            'post': function (x) { }
+          }]
+        })
+          .then(function (messageList) {
+            res.json(messageList)
+          })
       })
       .catch(function (err) {
         res.status(500).json({ success: false, error: err });

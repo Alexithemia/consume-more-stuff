@@ -28,9 +28,12 @@ class MessagesFromUserView extends Component {
   }
 
   deleteMessage(e) {
-    console.log('delete');
+    console.log(e.target);
 
-    this.props.onDelete(e.target.dataset.id)
+    this.props.onDelete({
+      messageId: e.target.dataset.messageid,
+      id: parseInt(e.target.dataset.userid)
+    })
   }
 
   handleSubmit(e) {
@@ -78,8 +81,8 @@ const mapDispatchToProps = (dispatch) => {
       const actionObject = sendMessage(message);
       return dispatch(actionObject);
     },
-    onDelete: (messageId) => {
-      const actionObject = deleteMessage(messageId);
+    onDelete: (messageData) => {
+      const actionObject = deleteMessage(messageData);
       return dispatch(actionObject);
     },
   };

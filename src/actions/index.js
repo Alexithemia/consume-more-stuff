@@ -347,10 +347,14 @@ export const loadMessages = (id) => {
   }
 }
 
-export const deleteMessage = (id) => {
+export const deleteMessage = (messageData) => {
   return (dispatch) => {
-    return fetch(`/api/messages/delete/${id}`, {
-      method: 'DELETE'
+    return fetch(`/api/messages/delete/${messageData.messageId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(messageData)
     })
       .then((response) => {
         if (!response.ok) {
@@ -359,7 +363,9 @@ export const deleteMessage = (id) => {
         return response.json()
       })
       .then((messages) => {
+        console.log(messages);
         return dispatch({
+
           type: DELETE_MESSAGE,
           payload: messages
         })
