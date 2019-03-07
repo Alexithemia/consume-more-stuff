@@ -14,8 +14,19 @@ const SortedPosts = (props) => {
   });
   
   return (
-    <div className="sorted">{ props.title }
-      { postList }
+    <div className="sorted">
+
+      <div className="section-title">{ props.title }</div>
+
+      { postList.length === 0 ? 
+        <div className="no-items">
+          No items available.
+        </div>
+      :
+        <div className="posts">
+          { postList }
+        </div>
+      }
     </div>
   );
 }
