@@ -1,5 +1,5 @@
 import { castStringToBool } from './helper'
-import { LOGIN_USER, LOGOUT_USER, DELETE_THREAD, LOAD_CATEGORIES, LOAD_STATUSES, LOAD_CATEGORY, LOAD_CONDITIONS, ADD_POST, LOAD_POSTS, LOAD_POST, SEARCH_POST, LOAD_USERMESSAGES, LOAD_CONVERSATION, SEND_MESSAGE, DELETE_MESSAGE, LOAD_USERS } from '../actions';
+import { LOGIN_USER, LOGOUT_USER, DELETE_THREAD, LOAD_CATEGORIES, LOAD_STATUSES, LOAD_CATEGORY, LOAD_CONDITIONS, ADD_POST, LOAD_POSTS, LOAD_POST, SEARCH_POST, LOAD_USERMESSAGES, LOAD_CONVERSATION, SEND_MESSAGE, DELETE_MESSAGE, LOAD_USERS, LOAD_USER } from '../actions';
 
 const initialState = {
   posts: [],
@@ -10,6 +10,7 @@ const initialState = {
   postStatuses: [],
   messages: [],
   users: [],
+  user: {},
   userMessages: [],
   conversation: [],
   username: localStorage.getItem('username'),
@@ -24,6 +25,8 @@ const cmsReducer = (state = initialState, action) => {
       return Object.assign({}, state, { loggedIn: true, username: action.payload.username, id: action.payload.id, isAdmin: action.payload.is_admin });
     case LOGOUT_USER:
       return Object.assign({}, state, { loggedIn: false, username: '' });
+    case LOAD_USER:
+      return Object.assign({}, state, { user: action.payload });
     case LOAD_USERS:
       return Object.assign({}, state, { users: [...action.payload] });
     case LOAD_CATEGORIES:

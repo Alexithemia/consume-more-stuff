@@ -22,6 +22,7 @@ class MessagesView extends Component {
   render() {
     return (
       <div className="messages-wrap">
+        <h2>Messages</h2>
         <UserMessageList userList={this.props.userMessages} delete={this.deleteThread} />
       </div>
     );

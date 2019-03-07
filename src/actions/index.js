@@ -18,6 +18,8 @@ export const LOAD_USERMESSAGES = 'LOAD_USERMESSAGES';
 export const LOAD_CONVERSATION = 'LOAD_CONVERSATION';
 export const DELETE_MESSAGE = 'DELETE_MESSAGE';
 export const DELETE_THREAD = 'DELETE_THREAD';
+export const LOAD_USER = 'LOAD_USER';
+export const EDIT_USER = 'EDIT_USER';
 
 /** Action Creators*/
 
@@ -402,11 +404,51 @@ export const deleteThread = (id) => {
         return response.json()
       })
       .then((messages) => {
-        console.log(messages);
-
         return dispatch({
           type: DELETE_THREAD,
           payload: messages
+        })
+      })
+  }
+}
+
+export const loadUser = () => {
+  return (dispatch) => {
+    return fetch(`/api/users`)
+      .then((response) => {
+        if (!response.ok) {
+          throw Error(response.statusText)
+        }
+        return response.json()
+      })
+      .then((user) => {
+        return dispatch({
+          type: LOAD_USER,
+          payload: user
+        })
+      })
+  }
+}
+
+export const editUser = (editedUser) => {
+  return (dispatch) => {
+    return fetch(`/api/users`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(editedUser)
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw Error(response.statusText)
+        }
+        return response.json()
+      })
+      .then((user) => {
+        return dispatch({
+          type: EDIT_USER,
+          payload: user
         })
       })
   }
