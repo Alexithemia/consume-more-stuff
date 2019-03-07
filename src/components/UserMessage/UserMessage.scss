@@ -19,23 +19,25 @@
     align-items: center;
     font-family: $primary-font;
     text-decoration: none;
-    color: $primary-font-color;
+    color: $contrast-font-color;
     margin-bottom: 1em;
   }
-
-  &:hover{
-    background-color: $contrast-hover-color;
-  }
+  
   .deleteThreadBtn{
     position: relative;
     left: 48.5%;
     top: 5%;
     cursor: pointer;
   }
+  &:hover{
+    background-color: $contrast-hover-color;
+  }
 }
-
 
 .unread{
   background-color: $primary-background-color;
   color: white;
+  .userMessageDataWrap{
+    color: white;
+  }
 }

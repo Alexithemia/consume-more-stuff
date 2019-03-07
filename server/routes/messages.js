@@ -86,11 +86,16 @@ router.route('/:id')
       }]
     })
       .then(function (messageList) {
-        res.json(messageList)
+        Message.query(function (x) {
+          x.where('to_user_id', req.user.id).andWhere('from_user_id', req.params.id)
+        }).save({ unread: false }, { patch: true })
+          .then(function () {
+            res.json(messageList)
+          })
       })
       .catch(function (err) {
         res.json({ success: false, error: err })
-      });
+      })
   })
   .delete(isAuthenticated, function (req, res) {
     Message.query(function (x) {

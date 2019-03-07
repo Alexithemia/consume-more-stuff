@@ -16,7 +16,7 @@ const UserMessage = (props) => {
         </div>
         :
         <div className="userMessageWrap">
-          <div onClick={props.delete} className="deleteThreadBtn">X</div>
+          <div onClick={props.delete} className="deleteThreadBtn" data-userid={id}>X</div>
           <Link to={`/dashboard/messages/${id}`} className="userMessageDataWrap">
             <div>From: {username}</div>
             <div>Latest Message: {Date(props.created_at)}</div>

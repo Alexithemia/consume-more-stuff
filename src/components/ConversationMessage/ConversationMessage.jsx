@@ -21,7 +21,7 @@ const ConversationMessage = (props) => {
         </div>
         :
         <div className="message">
-          <div onClick={props.delete} className="deletePostButton" data-messageid={id} data-userid={from_user_id}>X</div>
+          <div onClick={props.delete} className="deleteMessageButton" data-messageid={id} data-userid={from_user_id}>X</div>
           <div className="messageHead">
             <div>TO: {props.message.toUser.username}</div>
             <div>Concerning Post: {title}</div>
