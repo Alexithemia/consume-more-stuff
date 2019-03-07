@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './MessagesFromUserView.scss';
-import { loadMessages, sendMessage } from '../../actions';
+import { loadMessages, sendMessage, deleteMessage } from '../../actions';
 import Conversation from '../../components/Conversation'
 
 class MessagesFromUserView extends Component {
@@ -14,6 +14,7 @@ class MessagesFromUserView extends Component {
 
     this.handleBodyOnChange = this.handleBodyOnChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.deleteMessage = this.deleteMessage.bind(this);
   }
 
   componentWillMount() {
@@ -26,6 +27,12 @@ class MessagesFromUserView extends Component {
     this.setState({ body: value })
   }
 
+  deleteMessage(e) {
+    console.log('delete');
+
+    this.props.onDelete(e.target.dataset.id)
+  }
+
   handleSubmit(e) {
     e.preventDefault();
 
@@ -36,15 +43,17 @@ class MessagesFromUserView extends Component {
       post_id: this.props.conversation[this.props.conversation.length - 1].post_id,
       to_user_id: this.props.match.params.id
     })
+
+    this.setState({ body: '' })
   }
 
   render() {
     return (
       <div className="conversation-wrap">
-        <Conversation conversation={this.props.conversation} userId={this.props.userId} />
+        <Conversation conversation={this.props.conversation} userId={this.props.userId} delete={this.deleteMessage} />
         <form className="replyForm">
           <div>Reply</div>
-          <textarea className="reply" onChange={this.handleBodyOnChange} name="body" cols="60" rows="10" value={this.state.body}></textarea>
+          <textarea className="reply" onChange={this.handleBodyOnChange} name="body" cols="60" rows="10" value={this.state.body} autoFocus></textarea>
           <input type="submit" className="sendButton" onClick={this.handleSubmit} value="Send"></input>
         </form>
       </div>
@@ -67,6 +76,10 @@ const mapDispatchToProps = (dispatch) => {
     },
     onSend: (message) => {
       const actionObject = sendMessage(message);
+      return dispatch(actionObject);
+    },
+    onDelete: (messageId) => {
+      const actionObject = deleteMessage(messageId);
       return dispatch(actionObject);
     },
   };

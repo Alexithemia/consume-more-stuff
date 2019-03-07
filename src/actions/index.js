@@ -15,6 +15,7 @@ export const SEARCH_POST = 'SEARCH_POST';
 export const SEND_MESSAGE = 'SEND_MESSAGE';
 export const LOAD_USERMESSAGES = 'LOAD_USERMESSAGES';
 export const LOAD_CONVERSATION = 'LOAD_CONVERSATION';
+export const DELETE_MESSAGE = 'DELETE_MESSAGE';
 
 /** Action Creators*/
 
@@ -340,6 +341,26 @@ export const loadMessages = (id) => {
       .then((messages) => {
         return dispatch({
           type: LOAD_CONVERSATION,
+          payload: messages
+        })
+      })
+  }
+}
+
+export const deleteMessage = (id) => {
+  return (dispatch) => {
+    return fetch(`/api/messages/delete/${id}`, {
+      method: 'DELETE'
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw Error(response.statusText)
+        }
+        return response.json()
+      })
+      .then((messages) => {
+        return dispatch({
+          type: DELETE_MESSAGE,
           payload: messages
         })
       })
