@@ -32,7 +32,7 @@ function isAuthenticated(req, res, next) {
 
 router.route('/')
   .get(isAuthenticated, function (req, res) {
-    knex.raw(`SELECT from_user_id, users.username, max(messages.created_at) AS created_at, bool_or(messages.unread) FROM messages INNER JOIN users ON messages.from_user_id = users.id WHERE to_user_id = ${req.user.id} GROUP BY users.username, from_user_id ORDER BY created_at DESC`)
+    knex.raw(`SELECT from_user_id, users.username, max(messages.created_at) AS created_at, bool_or(messages.unread) AS unread FROM messages INNER JOIN users ON messages.from_user_id = users.id WHERE to_user_id = ${req.user.id} GROUP BY users.username, from_user_id ORDER BY created_at DESC`)
       .then(function (messageUsers) {
         res.json(messageUsers.rows);
       })
@@ -41,8 +41,6 @@ router.route('/')
       });
   })
   .post(isAuthenticated, function (req, res) {
-    console.log(req.body);
-
     Message.forge({
       to_user_id: req.body.to_user_id,
       from_user_id: req.user.id,

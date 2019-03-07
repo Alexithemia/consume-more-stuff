@@ -13,6 +13,7 @@ export const LOAD_POSTS = 'LOAD_POSTS';
 export const LOAD_POST = 'LOAD_POST';
 export const SEARCH_POST = 'SEARCH_POST';
 export const SEND_MESSAGE = 'SEND_MESSAGE';
+export const LOAD_USERMESSAGES = 'LOAD_USERMESSAGES';
 
 /** Action Creators*/
 
@@ -283,8 +284,6 @@ export const searchPost = (term) => {
 }
 
 export const sendMessage = (message) => {
-  console.log(message);
-
   return (dispatch) => {
     return fetch(`/api/messages`, {
       method: 'POST',
@@ -302,6 +301,24 @@ export const sendMessage = (message) => {
       .then((messages) => {
         return dispatch({
           type: SEND_MESSAGE,
+          payload: messages
+        })
+      })
+  }
+}
+
+export const loadUserMessages = () => {
+  return (dispatch) => {
+    return fetch(`/api/messages`)
+      .then((response) => {
+        if (!response.ok) {
+          throw Error(response.statusText)
+        }
+        return response.json()
+      })
+      .then((messages) => {
+        return dispatch({
+          type: LOAD_USERMESSAGES,
           payload: messages
         })
       })

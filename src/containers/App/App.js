@@ -12,6 +12,7 @@ import Register from '../../components/Register';
 import SearchPage from '../../components/SearchPage';
 import ItemDetailView from '../../containers/ItemDetailView';
 import CategoryView from '../../containers/CategoryView';
+import MessagesView from '../../containers/MessagesView';
 
 class App extends Component {
   constructor(props) {
@@ -23,7 +24,7 @@ class App extends Component {
   componentDidMount() {
     return this.props.onLoad();
   }
-  
+
   render() {
     return (
       <div className="App">
@@ -37,6 +38,7 @@ class App extends Component {
                 <Route exact={true} path='/register' component={Register} />
                 <Route exact={true} path='/login' component={Login} />
                 <Route exact={true} path='/' component={Home} />
+                <Route exact={true} path='/dashboard/messages' component={MessagesView} />
                 <Route exact={true} path='/category/:id' component={CategoryView} />
                 <Route exact={true} path='/item/:id' component={ItemDetailView} />
                 <Route exact={true} path='/search/:term' component={SearchPage} />

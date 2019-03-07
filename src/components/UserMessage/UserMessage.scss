@@ -1,0 +1,26 @@
+@import '../../../sass/config';
+
+.userMessageWrap{
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  width: 60%;
+  height: 4em;
+  margin: 8px;
+  border-radius: 8px;
+  border: 1px solid $border-black-color;
+  font-family: $primary-font;
+  box-shadow: 3px 4px 8px #aaa;
+  text-decoration: none;
+
+  &:hover{
+    background-color: $contrast-hover-color;
+  }
+}
+
+
+.unread{
+  background-color: $primary-background-color;
+  color: white;
+}
