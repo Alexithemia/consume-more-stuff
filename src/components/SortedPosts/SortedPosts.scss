@@ -1,0 +1,32 @@
+@import '../../../sass/config';
+
+.sorted {
+  display: block;
+  font-size: 1.6em;
+  font-weight: 600;
+  margin-bottom: 1.5em;
+  width: 100%;
+
+  .section-title {
+    margin-top: 1em;
+    margin-left: 1em;
+  }
+
+  .no-items {
+    font-size: 0.8em;
+    font-weight: 400;
+    margin-top: 2em;
+    margin-left: 5em;
+  }
+
+  .posts {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    width: 93%;
+    margin-top: 2em;
+    margin-left: 7%;
+    font-size: 0.67em;
+    font-weight: 400;
+  }
+}

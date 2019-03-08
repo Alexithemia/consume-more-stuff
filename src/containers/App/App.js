@@ -12,6 +12,7 @@ import Register from '../../components/Register';
 import SearchPage from '../../components/SearchPage';
 import ItemDetailView from '../../containers/ItemDetailView';
 import CategoryView from '../../containers/CategoryView';
+import YourPosts from '../../containers/YourPosts';
 import MessagesView from '../../containers/MessagesView';
 import MessagesFromUserView from '../MessagesFromUserView';
 import AdminUserView from '../../containers/AdminUserView';
@@ -59,6 +60,7 @@ class App extends Component {
                 <Route exact={true} path='/category/:id' component={CategoryView} />
                 <Route exact={true} path='/item/:id' component={ItemDetailView} />
                 <Route exact={true} path='/search/:term' component={SearchPage} />
+                <Route exact={true} path='/dashboard/your-posts' component={YourPosts} />
                 <Route exact={true} path='/admin/users' component={AdminUserView} />
               </Switch>
             </div>
