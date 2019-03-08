@@ -37,7 +37,7 @@ function isAuthenticated(req, res, next) {
 
 router.route('/')
   .get(function (req, res) {
-    Post.forge().orderBy('views', 'DESC').fetchAll({
+    Post.where('deleted', false).orderBy('views', 'DESC').fetchAll({
       withRelated: [{
         'category': function (x) {
           x.column('id', 'name');
@@ -82,7 +82,6 @@ router.route('/')
         for (let i = 0; i < req.files.length; i++) {
           uploadImage(req.files[i], req.body.title)
             .then(function (url) {
-
               Image.forge({
                 url: url,
                 post_id: postData.attributes.id
@@ -132,8 +131,10 @@ router.route('/search/:term')
   .get(function (req, res) {
     Post.query(function (search) {
       let term = `%${req.params.term}%`;
-      search.whereRaw('LOWER(title) LIKE ?', term)
-        .orWhereRaw('LOWER(description) LIKE ?', term);
+      search.where('deleted', false).andWhere(function () {
+        this.whereRaw('LOWER(title) LIKE ?', term)
+          .orWhereRaw('LOWER(description) LIKE ?', term);
+      })
     }).orderBy('created_at', 'DESC').fetchAll({
       withRelated: [{
         'category': function (x) {
@@ -164,7 +165,7 @@ router.route('/search/:term')
 router.route('/user-posts')
   .get(isAuthenticated, function (req, res) {
 
-    Post.where('user_id', req.user.id)
+    Post.where({ user_id: req.user.id, deleted: false })
       .orderBy('created_at', 'DESC')
       .fetchAll({
         withRelated: [{
@@ -185,7 +186,7 @@ router.route('/user-posts')
 
 router.route('/:id')
   .get(function (req, res) {
-    Post.where('id', req.params.id).fetch({
+    Post.where({ id: req.params.id, deleted: false }).fetch({
       withRelated: [{
         'category': function (x) {
           x.column('id', 'name');
@@ -205,7 +206,10 @@ router.route('/:id')
       }]
     })
       .then(function (post) {
-        post.attributes.views += 1;
+        if (post.relations.user.id !== req.user.id) {
+          post.attributes.views += 1;
+        };
+
         Post.where('id', req.params.id).save({ views: post.attributes.views }, { patch: true })
           .then(function () {
             res.json(post);
@@ -242,11 +246,7 @@ router.route('/:id')
                 url: url,
                 post_id: req.params.id
               }).save()
-                .catch(function (err) {
-                  i = req.files.length;
-                  error = err;
-                })
-            })
+            });
         }
       })
       .then(function () {
@@ -262,7 +262,9 @@ router.route('/:id')
       });
   })
   .delete(isAuthenticated, function (req, res) {
-    new Post({ id: req.params.id }).destroy()
+    Post.where('id', req.params.id).save({
+      deleted: true
+    }, { patch: true })
       .then(function () {
         res.json({ success: true });
       })

@@ -14,7 +14,7 @@ const UserPost = (props) => {
             src={
               image.length === 0 ? 'https://i.imgur.com/IeBLmWd.png'
                 :
-                null
+                image[0].url
             }
             alt=""
           />
