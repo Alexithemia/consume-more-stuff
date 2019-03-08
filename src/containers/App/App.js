@@ -21,8 +21,11 @@ class App extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      selectedRoute: ''
+    };
 
+    this.selectNav = this.selectNav.bind(this)
   }
 
 
@@ -31,15 +34,22 @@ class App extends Component {
     return this.props.onLoad();
   }
 
+  selectNav(e) {
+    console.log(e.target.innerHTML);
+    this.setState({
+      selectedRoute: e.target.innerHTML
+    })
+  }
+
   render() {
     return (
       <div className="App">
         <Router>
           <>
-            <Header title={"CMS"} isLoggedIn={this.props.isLoggedIn} username={this.props.username} />
+            <Header title={"CMS"} isLoggedIn={this.props.isLoggedIn} username={this.props.username} selectNav={this.selectNav} />
 
             <div className="mainContainer">
-              <Navigation categories={this.props.categories} isLoggedIn={this.props.isLoggedIn} />
+              <Navigation categories={this.props.categories} isLoggedIn={this.props.isLoggedIn} selected={this.state.selectedRoute} selectNav={this.selectNav} />
               <Switch>
                 <Route exact={true} path='/register' component={Register} />
                 <Route exact={true} path='/login' component={Login} />
