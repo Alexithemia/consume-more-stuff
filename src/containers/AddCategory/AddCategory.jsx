@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addCategory, deleteCategory } from '../../actions';
+import { addCategory } from '../../actions';
 import './AddCategory.scss';
 
 class AddCategory extends Component {
@@ -13,6 +13,7 @@ class AddCategory extends Component {
 
     this.addNewCategory = this.addNewCategory.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+
   }
 
   addNewCategory(e) {
@@ -26,10 +27,6 @@ class AddCategory extends Component {
     }
   }
 
-  deleteOnSubmit(e) {
-    console.log(e.target)
-    // this.props.deleteCategory()
-  }
 
   handleSubmit(e) {
     e.preventDefault();
@@ -73,11 +70,8 @@ const mapDispatchToProps = (dispatch) => {
     addCategory: (category) => {
       const actionObject = addCategory(category);
       return dispatch(actionObject);
-    },
-    deleteCategory: (id) => {
-      const actionObject = deleteCategory(id);
-      return dispatch(actionObject);
     }
+
   }
 }
 
