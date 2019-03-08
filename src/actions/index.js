@@ -3,7 +3,7 @@
 export const REGISTER_USER = 'REGISTER_USER';
 export const LOGIN_USER = 'LOGIN_USER';
 export const LOGOUT_USER = 'LOGOUT_USER';
-export const LOAD_USERS = 'LOAD_USER';
+export const LOAD_USERS = 'LOAD_USERS';
 export const LOAD_CATEGORY = 'LOAD_CATEGORY';
 export const LOAD_CATEGORIES = 'LOAD_CATEGORIES';
 export const ADD_CATEGORY = 'ADD_CATEGORY';
@@ -120,6 +120,7 @@ export const loadUsers = () => {
         return response.json();
       })
       .then(user => {
+        console.log(user)
         return dispatch({
           type: LOAD_USERS,
           payload: user.users
