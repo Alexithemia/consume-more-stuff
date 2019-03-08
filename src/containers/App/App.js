@@ -16,11 +16,8 @@ import YourPosts from '../../containers/YourPosts';
 import MessagesView from '../../containers/MessagesView';
 import MessagesFromUserView from '../MessagesFromUserView';
 import AdminUserView from '../../containers/AdminUserView';
-<<<<<<< HEAD
 import AdminCategoryView from '../../containers/AdminCategoryView';
-=======
 import EditUserView from '../../containers/EditUserView';
->>>>>>> development
 
 class App extends Component {
   constructor(props) {
