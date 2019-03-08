@@ -398,12 +398,9 @@ export const loadUserPosts = () => {
         if (!response.ok) {
           throw Error(response.statusText);
         }
-
         return response.json();
       })
       .then(posts => {
-        console.log(posts);
-
         return dispatch({
           type: LOAD_USER_POSTS,
           payload: posts

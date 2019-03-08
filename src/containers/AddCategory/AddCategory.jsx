@@ -42,7 +42,6 @@ class AddCategory extends Component {
   }
 
   render() {
-    console.log(this.props)
     return (
       <div className="addFormContainer">
         <h1 className="addTitle">ADD NEW CATEGORY HERE</h1>
@@ -50,9 +49,7 @@ class AddCategory extends Component {
           <div className="name">NAME:
           <input type="text" name="category" className="add" value={this.state.categoryName} onChange={this.addNewCategory} />
           </div>
-          <div className="btnContainer">
-            <button className="submit" onClick={this.handleSubmit}>SUBMIT</button>
-          </div>
+          <button className="submit" onClick={this.handleSubmit}>SUBMIT</button>
         </form>
       </div>
     )

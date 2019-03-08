@@ -37,8 +37,8 @@ const cmsReducer = (state = initialState, action) => {
       return Object.assign({}, state, { categories: [...state.categories, action.payload.category] });
     case EDIT_CATEGORY:
       return Object.assign({}, state, { categories: [...action.payload] });
-    // case DELETE_CATEGORY:
-    // return Object.assign({}, state, { categories: [...action.payload] });
+    case DELETE_CATEGORY:
+      return Object.assign({}, state, { categories: [...action.payload] });
     case LOAD_CONDITIONS:
       return Object.assign({}, state, { postConditions: [...action.payload] });
     case LOAD_STATUSES:

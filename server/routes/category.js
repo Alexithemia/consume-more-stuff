@@ -93,11 +93,11 @@ router.route('/:id')
       });
   })
   .delete(isAdmin, function (req, res) {
-    Post.where("category_id", req.params.id).destroy()
-      .then(() => {
-        new Category({ id: req.params.id }).destroy()
-          .then(function () {
-            res.json({ success: true });
+    new Category({ id: req.params.id }).destroy()
+      .then(function () {
+        Category.forge().orderBy('name', 'ASC').fetchAll()
+          .then(function (categories) {
+            res.json(categories);
           })
       })
       .catch(function (err) {

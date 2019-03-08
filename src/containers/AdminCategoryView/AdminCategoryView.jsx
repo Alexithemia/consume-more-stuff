@@ -73,7 +73,9 @@ class AdminCategoryView extends Component {
       <div className="editCategoryContainer">
         <div className="titleContainer">
           <h1 className="title">Categories</h1>
-          <button className="add">+</button>
+          <div className="addCategoryContainer">
+            <AddCategory categories={this.props.categories} />
+          </div>
         </div>
         <div className="allCategoryContainer">
           {categoryList}
@@ -90,9 +92,7 @@ class AdminCategoryView extends Component {
           <EditCategory id={this.state.id} name={this.state.categoryName} close={this.closeModal} />
         </ReactModal>
 
-        <div className="addCategoryContainer">
-          <AddCategory categories={this.props.categories} />
-        </div>
+
       </div >
     )
   }

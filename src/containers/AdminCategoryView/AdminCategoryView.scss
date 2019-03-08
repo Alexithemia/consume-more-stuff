@@ -6,12 +6,12 @@
   // display: flex;
 // flex-direction: row;
   .titleContainer{
-    width: 20%;
-    margin-top: 1em;
-    margin-left: 1em;
+    width: 55%;
+    margin-top: 2em;
+    margin-left: 4em;
     margin-bottom: 2em;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
 
     .title{
       text-align: center;
@@ -19,20 +19,24 @@
       color: $contrast-font-color;
     }
 
-    .add{
-      background-color: $contrast-background-color;
-      color: $primary-font-color;
-      border: none;
-      font-size: 20px;
-      font-weight: bold;
+.addCategoryContainer{
+  display: flex;
+  justify-content: center;
+}
+    // .add{
+    //   background-color: $contrast-background-color;
+    //   color: $primary-font-color;
+    //   border: none;
+    //   font-size: 20px;
+    //   font-weight: bold;
   
-    }
+    // }
 
-    .add:hover{
-      background-color:  $primary-font-color;
-      border: 1px solid $contrast-background-color;
-      color: $contrast-background-color;
-    }
+    // .add:hover{
+    //   background-color:  $primary-font-color;
+    //   border: 1px solid $contrast-background-color;
+    //   color: $contrast-background-color;
+    // }
 
   }
       .allCategoryContainer{
