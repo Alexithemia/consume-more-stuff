@@ -1,5 +1,5 @@
 import { castStringToBool } from './helper'
-import { LOGIN_USER, LOGOUT_USER, DELETE_THREAD, LOAD_CATEGORIES, LOAD_STATUSES, LOAD_CATEGORY, LOAD_CONDITIONS, ADD_POST, LOAD_POSTS, LOAD_POST, SEARCH_POST, LOAD_USERMESSAGES, LOAD_CONVERSATION, SEND_MESSAGE, DELETE_MESSAGE, LOAD_USERS, LOAD_USER, LOAD_USER_POSTS } from '../actions';
+import { LOGIN_USER, LOGOUT_USER, DELETE_THREAD, LOAD_CATEGORIES, LOAD_STATUSES, LOAD_CATEGORY, LOAD_CONDITIONS, LOAD_POSTS, LOAD_POST, SEARCH_POST, LOAD_USERMESSAGES, LOAD_CONVERSATION, SEND_MESSAGE, DELETE_MESSAGE, LOAD_USERS, LOAD_USER, LOAD_USER_POSTS } from '../actions';
 const initialState = {
   posts: [],
   selectedPost: {},
@@ -36,8 +36,6 @@ const cmsReducer = (state = initialState, action) => {
       return Object.assign({}, state, { postConditions: [...action.payload] });
     case LOAD_STATUSES:
       return Object.assign({}, state, { postStatuses: [...action.payload] });
-    case ADD_POST:
-      return Object.assign({}, state, { posts: [...state.posts, action.payload] });
     case LOAD_POSTS:
       return Object.assign({}, state, { posts: [...action.payload] });
     case LOAD_POST:

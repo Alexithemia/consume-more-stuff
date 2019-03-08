@@ -82,6 +82,8 @@ router.route('/')
         for (let i = 0; i < req.files.length; i++) {
           uploadImage(req.files[i], req.body.title)
             .then(function (url) {
+              console.log('photos');
+
               Image.forge({
                 url: url,
                 post_id: postData.attributes.id
@@ -162,21 +164,19 @@ router.route('/search/:term')
 
 router.route('/user-posts')
   .get(isAuthenticated, function (req, res) {
-    const status_id = req.params.status;
 
     Post.where('user_id', req.user.id)
-    .orderBy('created_at', 'DESC')
-    .fetchAll({
-      withRelated: [{
-        category      : (table) => table.column('id', 'name'),
-        user          : (table) => table.column('id', 'first_name', 'last_name'),
-        postStatus    : (table) => table.column('id', 'name'),
-        postCondition : (table) => table.column('id', 'name'),
-        image         : (table) => table.column('id', 'post_id', 'url')
-      }]
-    })
+      .orderBy('created_at', 'DESC')
+      .fetchAll({
+        withRelated: [{
+          category: (table) => table.column('id', 'name'),
+          user: (table) => table.column('id', 'username'),
+          postStatus: (table) => table.column('id', 'name'),
+          postCondition: (table) => table.column('id', 'name'),
+          image: (table) => table.column('id', 'post_id', 'url')
+        }]
+      })
       .then(function (postList) {
-        console.log(postList);
         res.json(postList);
       })
       .catch(function (err) {
@@ -263,13 +263,10 @@ router.route('/:id')
       });
   })
   .delete(isAuthenticated, function (req, res) {
-    Image.where('post_id', req.params.id).destroy().then(() => {
-      new Post({ id: req.params.id }).destroy()
-        .then(function () {
-          res.json({ success: true });
-        })
-
-    })
+    new Post({ id: req.params.id }).destroy()
+      .then(function () {
+        res.json({ success: true });
+      })
       .catch(function (err) {
         res.status(500).json({ success: false, error: err });
       });

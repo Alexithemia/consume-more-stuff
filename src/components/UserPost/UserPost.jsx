@@ -4,90 +4,88 @@ import './UserPost.scss';
 import { Link } from 'react-router-dom';
 
 const UserPost = (props) => {
-  const { id, description, dimensions, image, manufacturer, model, notes, postCondition, postStatus, price, title, created_at, updated_at, user, views } = props.postData;
-
-  console.log(image);
+  const { id, description, dimensions, image, manufacturer, model, notes, postCondition, postStatus, price, title, created_at, user, views } = props.postData;
 
   return (
     <div className="user-post">
       <div className="post-container">
-        <Link to={ `/item/${ id }` } className="post-image-container">
+        <Link to={`/item/${id}`} className="post-image-container">
           <img
             src={
               image.length === 0 ? 'https://i.imgur.com/IeBLmWd.png'
-              :
-              null
+                :
+                null
             }
             alt=""
           />
         </Link>
 
         <div className="content">
-          <Link to={ `/item/${ id }` } className="post-data" id="post-title">{ title }</Link>
+          <Link to={`/item/${id}`} className="post-data" id="post-title">{title}</Link>
 
           <div className="post-data">
-            <span className="text-highlight">{ description }</span>
+            <span className="text-highlight">{description}</span>
           </div>
 
-          { notes ?
-              <div className="post-data">
-                Notes: <span className="text-highlight">{ notes }</span>
-              </div>
+          {notes ?
+            <div className="post-data">
+              Notes: <span className="text-highlight">{notes}</span>
+            </div>
             :
-              null
+            null
           }
 
           <div className="post-data">
-            Price: <span className="text-highlight">${ price }</span>
+            Price: <span className="text-highlight">${price}</span>
           </div>
 
           <div className="post-data">
-            Condition: <span className="text-highlight">{ postCondition.name }</span>
+            Condition: <span className="text-highlight">{postCondition.name}</span>
           </div>
 
           <div className="post-data">
-            Status: <span className="text-highlight">{ postStatus.name }</span>
+            Status: <span className="text-highlight">{postStatus.name}</span>
           </div>
 
-          { dimensions ? 
-              <div className="post-data">
-                Dimensions: <span className="text-highlight">{ dimensions }</span>
-              </div>
+          {dimensions ?
+            <div className="post-data">
+              Dimensions: <span className="text-highlight">{dimensions}</span>
+            </div>
             :
-              null
+            null
           }
 
-          { manufacturer ?
-              <div className="post-data">
-                Manufacturer: <span className="text-highlight">{ manufacturer }</span>
-              </div>
+          {manufacturer ?
+            <div className="post-data">
+              Manufacturer: <span className="text-highlight">{manufacturer}</span>
+            </div>
             :
-              null
+            null
           }
 
-          { model ?
-              <div className="post-data">
-                Model: <span className="text-highlight">{ model }</span>
-              </div>
+          {model ?
+            <div className="post-data">
+              Model: <span className="text-highlight">{model}</span>
+            </div>
             :
-              null
+            null
           }
 
           <div className="post-data">
-            By: <span className="text-highlight">{ user.first_name } { user.last_name }</span>
+            By: <span className="text-highlight">{user.username}</span>
           </div>
 
           <div className="post-data">
-            Viewed: <span className="text-highlight">{ views } times</span>
+            Viewed: <span className="text-highlight">{views} times</span>
           </div>
 
           <div className="post-data">
-            Created: <span className="text-highlight">{ new Date(created_at).toLocaleDateString('en-US', {
+            Created: <span className="text-highlight">{new Date(created_at).toLocaleDateString('en-US', {
               weekday: 'short',
               month: 'long',
               day: 'numeric',
               year: 'numeric'
-            }) }</span>
+            })}</span>
           </div>
         </div>
       </div>

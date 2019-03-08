@@ -4,7 +4,8 @@
 .navigation {
   background-color: $overlay-background-color;
   min-width: 250px;
-  height: 93vh;
+  height: auto;
+  min-height: 93vh;
   font-family: $primary-font, $font-type;
   z-index: 1;
 

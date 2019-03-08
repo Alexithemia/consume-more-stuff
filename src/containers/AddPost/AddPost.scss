@@ -65,12 +65,13 @@
     }
   }
 
-  .submit-wrap {
+  .submit-add-wrap {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 9.2em;
+    height: 4.2em;
+    width: 20em;
   
     input {
       background-color: $modal-background-color;
