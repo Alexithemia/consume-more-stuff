@@ -9,7 +9,7 @@ const SortedPosts = (props) => {
     const { id } = post;
 
     return (
-      <UserPost key={ id } postData={ post }/>
+      <UserPost key={ id } postData={ post } />
     );
   });
   
