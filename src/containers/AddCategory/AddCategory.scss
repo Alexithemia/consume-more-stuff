@@ -1,0 +1,27 @@
+@import '../../../sass/config';
+
+.addFormContainer{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+ 
+  .add-category{
+    display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  .name{
+    margin-bottom: 5px;
+    margin-top: 5px;
+  }
+
+  .submit{
+    background-color: $contrast-background-color;
+    color: white;
+    font-weight: bold;
+    font-family: $font-type;
+    font-size: 16px;
+  }
+  }
+}

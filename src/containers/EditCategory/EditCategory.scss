@@ -1,0 +1,83 @@
+@import '../../../sass/config';
+
+.edit-modal{
+  position: fixed;
+  top: 10em;
+  border-radius: $modal-border-radius;
+  background-color: $modal-background-color-2;
+  height: 15em; width: 25em;
+  overflow: hidden;
+  font-family: $primary-font, $font-type;
+
+  .editFormContainer{
+
+    .headerContainer {
+      border-radius: $modal-border-radius $modal-border-radius 0 0;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      background-color: $modal-background-color;
+      height: 3.5em;
+      .headerText {
+        border-radius: $modal-border-radius;
+        font-family: $primary-font, $font-type;
+        font-weight: 500;
+        font-size: 1.2em;
+        color: white;
+        letter-spacing: $letter-spacing;
+        position: relative;
+        left: 1em;
+      }
+    }
+  }
+
+  .formContainer{
+    margin: 1em;
+
+    .edit-form{
+
+      input{
+        font-family: $primary-font, $font-type;
+        font-size: 0.9em;
+        letter-spacing: 0.02em;
+        width: 99%;
+        margin-top: 1em;
+        padding-bottom: 0.4em;
+        outline: none;
+        border: none;
+        border-bottom: 0.05em solid $border-gray-color;
+        font-size: $nav-text-font-size;
+      }
+
+      .button-container{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-top: 3.5em;
+
+        .submit{
+         width: 100%;
+         background-color: grey;
+         border-radius: $modal-border-radius;
+         color: $primary-font-color;
+         height: 2em;
+         font-size: 14px;
+         font-weight: 500;
+      }
+    }
+  }
+}
+}
+
+.overlay {
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: $modal-overlay-color;
+}

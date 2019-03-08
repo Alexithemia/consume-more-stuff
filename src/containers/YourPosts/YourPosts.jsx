@@ -6,11 +6,11 @@ import './YourPosts.scss';
 import SortedPosts from '../../components/SortedPosts';
 
 class YourPosts extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
 
     this.state = {
-      newPost : {}
+      newPost: {}
     }
 
     this.sortPostsByStatusId = this.sortPostsByStatusId.bind(this);
@@ -26,30 +26,23 @@ class YourPosts extends Component {
 
   componentDidMount() {
     this.props.loadStatuses()
-    /*
-      .then(() => {
-        this.props.postStatuses.map(statusObject => {
-          return this.sortPostsByStatusId(statusObject.id);
-        });
-      });
-    */
+
     this.props.loadPostsByUser();
   }
 
   render() {
-    console.log('ran');
     return (
       <div className="your-posts">
         <div className="pending-wrap">
-          <SortedPosts title="Pending Items" posts={ this.sortPostsByStatusId(1) } />
+          <SortedPosts title="Pending Items" posts={this.sortPostsByStatusId(1)} />
         </div>
 
         <div className="current-wrap">
-          <SortedPosts title="Items on Sale" posts={ this.sortPostsByStatusId(2) } />
+          <SortedPosts title="Items on Sale" posts={this.sortPostsByStatusId(2)} />
         </div>
 
         <div className="sold-wrap">
-          <SortedPosts title="Sold Items" posts={ this.sortPostsByStatusId(3) } />
+          <SortedPosts title="Sold Items" posts={this.sortPostsByStatusId(3)} />
         </div>
       </div>
     );
@@ -58,19 +51,19 @@ class YourPosts extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    postStatuses : state.postStatuses,
-    posts : state.posts
+    postStatuses: state.postStatuses,
+    posts: state.posts
   };
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loadStatuses : () => {
+    loadStatuses: () => {
       const actionObject = loadStatuses();
 
       return dispatch(actionObject);
     },
-    loadPostsByUser : () => {
+    loadPostsByUser: () => {
       const actionObject = loadUserPosts();
 
       return dispatch(actionObject);

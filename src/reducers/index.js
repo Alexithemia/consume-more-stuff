@@ -1,5 +1,6 @@
 import { castStringToBool } from './helper'
-import { LOGIN_USER, LOGOUT_USER, DELETE_THREAD, LOAD_CATEGORIES, LOAD_STATUSES, LOAD_CATEGORY, LOAD_CONDITIONS, LOAD_POSTS, LOAD_POST, SEARCH_POST, LOAD_USERMESSAGES, LOAD_CONVERSATION, SEND_MESSAGE, DELETE_MESSAGE, LOAD_USERS, LOAD_USER, LOAD_USER_POSTS } from '../actions';
+import { LOGIN_USER, LOGOUT_USER, DELETE_THREAD, LOAD_CATEGORIES, DELETE_CATEGORY, ADD_CATEGORY, EDIT_CATEGORY, LOAD_STATUSES, LOAD_CATEGORY, LOAD_CONDITIONS, LOAD_POSTS, LOAD_POST, SEARCH_POST, LOAD_USERMESSAGES, LOAD_CONVERSATION, SEND_MESSAGE, DELETE_MESSAGE, LOAD_USERS, LOAD_USER, LOAD_USER_POSTS } from '../actions';
+
 const initialState = {
   posts: [],
   selectedPost: {},
@@ -32,6 +33,12 @@ const cmsReducer = (state = initialState, action) => {
       return Object.assign({}, state, { categories: [...action.payload] });
     case LOAD_CATEGORY:
       return Object.assign({}, state, { posts: [...action.payload] });
+    case ADD_CATEGORY:
+      return Object.assign({}, state, { categories: [...state.categories, action.payload.category] });
+    case EDIT_CATEGORY:
+      return Object.assign({}, state, { categories: [...action.payload] });
+    case DELETE_CATEGORY:
+      return Object.assign({}, state, { categories: [...action.payload] });
     case LOAD_CONDITIONS:
       return Object.assign({}, state, { postConditions: [...action.payload] });
     case LOAD_STATUSES:

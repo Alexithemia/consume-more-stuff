@@ -73,8 +73,6 @@ const Navigation = (props) => {
       }
     </div>
   );
-
-
 }
 
 

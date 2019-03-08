@@ -16,6 +16,7 @@ import YourPosts from '../../containers/YourPosts';
 import MessagesView from '../../containers/MessagesView';
 import MessagesFromUserView from '../MessagesFromUserView';
 import AdminUserView from '../../containers/AdminUserView';
+import AdminCategoryView from '../../containers/AdminCategoryView';
 import EditUserView from '../../containers/EditUserView';
 
 class App extends Component {
@@ -28,8 +29,6 @@ class App extends Component {
 
     this.selectNav = this.selectNav.bind(this)
   }
-
-
 
   componentDidMount() {
     return this.props.onLoad();
@@ -62,6 +61,7 @@ class App extends Component {
                 <Route exact={true} path='/search/:term' component={SearchPage} />
                 <Route exact={true} path='/dashboard/your-posts' component={YourPosts} />
                 <Route exact={true} path='/admin/users' component={AdminUserView} />
+                <Route exact={true} path='/admin/categories' component={AdminCategoryView} />
               </Switch>
             </div>
           </>
