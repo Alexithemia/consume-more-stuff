@@ -60,8 +60,14 @@ class App extends Component {
                 <Route exact={true} path='/item/:id' component={ItemDetailView} />
                 <Route exact={true} path='/search/:term' component={SearchPage} />
                 <Route exact={true} path='/dashboard/your-posts' component={YourPosts} />
-                <Route exact={true} path='/admin/users' component={AdminUserView} />
-                <Route exact={true} path='/admin/categories' component={AdminCategoryView} />
+                {this.props.isAdmin ?
+                  <>
+                    <Route exact={true} path='/admin/users' component={AdminUserView} />
+                    <Route exact={true} path='/admin/categories' component={AdminCategoryView} />
+                  </>
+                  :
+                  null
+                }
               </Switch>
             </div>
           </>
