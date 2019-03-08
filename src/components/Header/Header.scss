@@ -22,23 +22,34 @@
       display: flex;
       justify-content: flex-start;
       align-items: center;
-      text-decoration: none;
-
-      .title {
-        font-size: 2em;
-        font-weight: bold;
-        position: relative;
-        left: $distance-from-border * 1.5;
+      
+      .selectWrap{
+        width: 10em;
       }
 
-      .logo {
-        position: relative;
-        left: $distance-from-border;
-
-        .placeholderLogo {
-          background-color: $light-background-color;
-          height: 2.4em;
-          width: 2.4em;
+      a{
+        display: flex;
+        text-decoration: none;
+        color: $primary-font-color;
+        justify-content: flex-start;
+        align-items: center;
+        
+        .title {
+          font-size: 2em;
+          font-weight: bold;
+          position: relative;
+          left: $distance-from-border * 4;
+        }
+  
+        .logo {
+          position: relative;
+          left: $distance-from-border * 3;
+  
+          .placeholderLogo {
+            background-color: $light-background-color;
+            height: 2.4em;
+            width: 2.4em;
+          }
         }
       }
     }

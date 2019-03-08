@@ -16,13 +16,17 @@ import YourPosts from '../../containers/YourPosts';
 import MessagesView from '../../containers/MessagesView';
 import MessagesFromUserView from '../MessagesFromUserView';
 import AdminUserView from '../../containers/AdminUserView';
+import EditUserView from '../../containers/EditUserView';
 
 class App extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      selectedRoute: ''
+    };
 
+    this.selectNav = this.selectNav.bind(this)
   }
 
 
@@ -31,20 +35,27 @@ class App extends Component {
     return this.props.onLoad();
   }
 
+  selectNav(e) {
+    this.setState({
+      selectedRoute: e.target.innerHTML
+    })
+  }
+
   render() {
     return (
       <div className="App">
         <Router>
           <>
-            <Header title={"CMS"} isLoggedIn={this.props.isLoggedIn} username={this.props.username} />
+            <Header title={"CMS"} isLoggedIn={this.props.isLoggedIn} username={this.props.username} selectNav={this.selectNav} />
 
             <div className="mainContainer">
-              <Navigation categories={this.props.categories} isLoggedIn={this.props.isLoggedIn} />
+              <Navigation categories={this.props.categories} isLoggedIn={this.props.isLoggedIn} selected={this.state.selectedRoute} selectNav={this.selectNav} />
               <Switch>
                 <Route exact={true} path='/register' component={Register} />
                 <Route exact={true} path='/login' component={Login} />
                 <Route exact={true} path='/' component={Home} />
                 <Route exact={true} path='/dashboard/messages' component={MessagesView} />
+                <Route exact={true} path='/dashboard/settings' component={EditUserView} />
                 <Route exact={true} path='/dashboard/messages/:id' component={MessagesFromUserView} />
                 <Route exact={true} path='/category/:id' component={CategoryView} />
                 <Route exact={true} path='/item/:id' component={ItemDetailView} />

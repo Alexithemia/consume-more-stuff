@@ -5,7 +5,7 @@ import ReactModal from 'react-modal';
 import './ItemDetailView.scss';
 import { Link } from 'react-router-dom';
 
-import { loadPost } from '../../actions';
+import { loadPost, deletePost } from '../../actions';
 import ImageList from '../../components/ImageList';
 import EditPost from '../../containers/EditPost';
 import ItemSendMessage from '../../containers/ItemSendMessage';
@@ -57,7 +57,10 @@ class ItemDetailView extends Component {
   }
 
   deletePost() {
-    console.log(this.props.selectedPost.id);
+    this.props.onDelete(this.props.selectedPost.id)
+      .then(() => {
+        this.props.history.push('/');
+      });
   }
 
   render() {
@@ -210,6 +213,10 @@ const mapDispatchToProps = (dispatch) => {
   return {
     loadPost: (id) => {
       const actionObject = loadPost(id);
+      return dispatch(actionObject);
+    },
+    onDelete: (id) => {
+      const actionObject = deletePost(id);
       return dispatch(actionObject);
     }
   }

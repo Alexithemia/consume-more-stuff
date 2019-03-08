@@ -1,0 +1,57 @@
+@import '../../../sass/config';
+
+.form-wrap {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+
+  .input-wrap{
+    display: flex;
+    flex-direction: column;
+    width: 30%
+  }
+
+  label{
+    font-weight: bold;
+  }
+
+  input, textarea {
+    font-family: $primary-font, $font-type;
+    font-size: 0.9em;
+    letter-spacing: 0.02em;
+    width: 90%;
+    margin-top: .5em;
+    margin-bottom: .5em;
+    padding-bottom: 0.4em;
+    outline: none;
+    border: none;
+    border-bottom: 0.05em solid $border-gray-color;
+  }
+
+  .submit-wrap {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 9.2em;
+    width: 100%;
+  
+    input {
+      background-color: $modal-background-color;
+      color: $primary-font-color;
+      letter-spacing: $letter-spacing;
+      font-family: $primary-font, $font-type;
+      font-size: 0.9em;
+      font-weight: 500;
+      height: 3em;
+      width: 20%;
+      border: none;
+      border-radius: 0.5em;
+    }
+    .disabled{
+      background-color: grey;
+    }
+  }
+}

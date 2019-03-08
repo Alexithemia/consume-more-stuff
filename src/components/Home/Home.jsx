@@ -5,7 +5,7 @@ import './Home.scss';
 import { loadPosts } from '../../actions';
 
 class Home extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
 
     this.state = ({});
@@ -17,8 +17,6 @@ class Home extends Component {
 
   render() {
     const category = this.props.category;
-
-    console.log(this.props);
 
     return (
       <div className="homeContainer">
@@ -70,13 +68,13 @@ class Home extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    posts : state.posts
+    posts: state.posts
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loadPosts : () => {
+    loadPosts: () => {
       const actionObject = loadPosts();
 
       return dispatch(actionObject);
