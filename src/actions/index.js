@@ -10,6 +10,7 @@ export const LOAD_CONDITIONS = 'LOAD_CONDITIONS';
 export const LOAD_STATUSES = 'LOAD_STATUSES';
 export const ADD_POST = 'ADD_POST';
 export const EDIT_POST = 'EDIT_POST';
+export const DELETE_POST = 'DELETE_POST';
 export const LOAD_POSTS = 'LOAD_POSTS';
 export const LOAD_POST = 'LOAD_POST';
 export const SEARCH_POST = 'SEARCH_POST';
@@ -248,6 +249,26 @@ export const editPost = (newPost) => {
   }
 }
 
+export const deletePost = (id) => {
+  return (dispatch) => {
+    return fetch(`/api/posts/${id}`, {
+      method: 'DELETE'
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw Error(response.statusText)
+        }
+        return response.json()
+      })
+      .then((body) => {
+        return dispatch({
+          type: DELETE_POST,
+          payload: body
+        })
+      })
+  }
+}
+
 export const loadPosts = () => {
   return (dispatch) => {
     return fetch('/api/posts', {
@@ -321,8 +342,6 @@ export const sendMessage = (message) => {
         return response.json()
       })
       .then((response) => {
-        console.log(response);
-
         return dispatch({
           type: SEND_MESSAGE,
           payload: response.message

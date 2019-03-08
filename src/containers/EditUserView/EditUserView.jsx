@@ -89,21 +89,6 @@ class EditUserView extends Component {
   }
 
   render() {
-    // console.log(this.props);
-    // let username = this.state.username || this.props.user.username || '';
-    // console.log(username);
-
-
-    // if (this.props.user && this.state.username === '') {
-    //   this.setState({
-    //     username: this.props.user.username,
-    //     first_name: this.props.first_name,
-    //     last_name: this.props.last_name,
-    //     email: this.props.email,
-    //     isUsernameInvalid: false
-    //   })
-    // }
-
     return (
       <div className="form-wrap">
         <div className="input-wrap">
@@ -142,8 +127,6 @@ const mapDispatchToProps = (dispatch) => {
       return dispatch(actionObject);
     },
     onEdit: (editedUser) => {
-      console.log(editedUser);
-
       const actionObject = editUser(editedUser);
 
       return dispatch(actionObject);

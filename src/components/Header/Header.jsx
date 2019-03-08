@@ -47,11 +47,11 @@ class Header extends Component {
 
           <div className="loginStatusWrap">
             {isLoggedIn ?
-              <div className="loginStatus">
+              <div className="loginStatus" onClick={this.props.selectNav}>
                 Welcome back, {username}! <span onClick={this.onLogout} className="refLogin">Logout</span>
               </div>
               :
-              <div className="loginStatus">
+              <div className="loginStatus" onClick={this.props.selectNav}>
                 Need an account? <Link to="/login" className="refLogin">
                   Log in here.
               </Link>

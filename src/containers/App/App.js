@@ -35,7 +35,6 @@ class App extends Component {
   }
 
   selectNav(e) {
-    console.log(e.target.innerHTML);
     this.setState({
       selectedRoute: e.target.innerHTML
     })
