@@ -11,6 +11,7 @@ class AdminUserView extends Component {
   }
 
   render() {
+    (this.props)
     const users = this.props.users;
 
     return (
