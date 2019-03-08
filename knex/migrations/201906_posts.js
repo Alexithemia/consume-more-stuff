@@ -13,6 +13,7 @@ exports.up = function (knex, Promise) {
     table.string('dimensions')
     table.string('notes');
     table.integer('views').notNullable().defaultTo(0);
+    table.boolean('deleted').defaultTo(false);
     table.timestamps(true, true);
   })
 };

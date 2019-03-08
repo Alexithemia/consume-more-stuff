@@ -9,7 +9,7 @@ exports.seed = function (knex, Promise) {
         { id: 2, name: 'Electronics' },
         { id: 3, name: 'Appliances' },
         { id: 4, name: 'Pet Products' },
-        { id: 5, name: 'Health' }
+        { id: 5, name: 'HeEdshots' }
       ]);
     });
 };

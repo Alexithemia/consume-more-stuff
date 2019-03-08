@@ -32,7 +32,7 @@ function isAdmin(req, res, next) {
 
 router.route('/')
   .get(function (req, res) {
-    Category.forge().orderBy('name', 'ASC').fetchAll()
+    Category.where('deleted', false).orderBy('name', 'ASC').fetchAll()
       .then(function (categories) {
         res.json(categories);
       })
@@ -54,7 +54,7 @@ router.route('/')
 
 router.route('/:id')
   .get(function (req, res) {
-    Post.where('category_id', req.params.id).orderBy('created_at', 'ASC').fetchAll({
+    Post.where({ category_id: req.params.id, deleted: false }).orderBy('created_at', 'ASC').fetchAll({
       withRelated: [{
         'category': function (x) {
           x.column('id', 'name');
