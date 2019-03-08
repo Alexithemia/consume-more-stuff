@@ -3,7 +3,9 @@ import { connect } from 'react-redux';
 import ReactImageMagnify from 'react-image-magnify';
 import ReactModal from 'react-modal';
 import './ItemDetailView.scss';
-import { loadPost } from '../../actions';
+import { Link } from 'react-router-dom';
+
+import { loadPost, deletePost } from '../../actions';
 import ImageList from '../../components/ImageList';
 import EditPost from '../../containers/EditPost';
 import ItemSendMessage from '../../containers/ItemSendMessage';
@@ -55,12 +57,16 @@ class ItemDetailView extends Component {
   }
 
   deletePost() {
-    console.log(this.props.selectedPost.id);
+    this.props.onDelete(this.props.selectedPost.id)
+      .then(() => {
+        this.props.history.push('/');
+      });
   }
 
   render() {
-
     const { category, description, dimensions, image, manufacturer, model, title, price, postCondition, postStatus, user, notes, views, created_at, updated_at, user_id } = this.props.selectedPost;
+    const { id, isAdmin } = this.props
+
     return (
       <div className="itemDetailViewContainer">
         {this.props.selectedPost.user && (
@@ -116,7 +122,7 @@ class ItemDetailView extends Component {
                     Viewed: <span className="dynamic-data">{views} times</span>
                   </div>
 
-                  {user_id === this.props.id || this.props.isAdmin ?
+                  {user_id === id || isAdmin ?
                     <div className="options">
                       <div onClick={this.handleToggleModal} className="editPost">Edit</div>
                       <ReactModal
@@ -137,22 +143,33 @@ class ItemDetailView extends Component {
                     </div>
                     :
                     <div className="options">
-                      {/* <Link to={`/message/${ user }/${ id }`} className="messagePoster">Message Me</Link> */}
                       <div className="messagePosterContainer">
                         <button onClick={this.toggleModal} className="messagePoster">
                           Message Me
                         </button>
-
-                        <ReactModal
-                          isOpen={this.state.showMessageModal}
-                          onRequestClose={this.toggleModal}
-                          className="message-modal"
-                          overlayClassName="overlay"
-                          shouldCloseOnOverlayClick={true}
-                          ariaHideApp={false}
-                        >
-                          <ItemSendMessage />
-                        </ReactModal>
+                        {this.props.loggedIn ?
+                          <ReactModal
+                            isOpen={this.state.showMessageModal}
+                            onRequestClose={this.toggleModal}
+                            className="message-modal"
+                            overlayClassName="overlay"
+                            shouldCloseOnOverlayClick={true}
+                            ariaHideApp={false}
+                          >
+                            <ItemSendMessage toggleModal={this.toggleModal} />
+                          </ReactModal>
+                          :
+                          <ReactModal
+                            isOpen={this.state.showMessageModal}
+                            onRequestClose={this.toggleModal}
+                            className="login-message-modal"
+                            overlayClassName="overlay"
+                            shouldCloseOnOverlayClick={true}
+                            ariaHideApp={false}
+                          >
+                            <Link to="/login" className="loginLink">Please log in to send a message</Link>
+                          </ReactModal>
+                        }
                       </div>
                     </div>
                   }
@@ -188,7 +205,7 @@ const mapStateToProps = (state) => {
     selectedPost: state.selectedPost,
     id: state.id,
     isAdmin: state.isAdmin,
-
+    loggedIn: state.loggedIn
   }
 }
 
@@ -196,6 +213,10 @@ const mapDispatchToProps = (dispatch) => {
   return {
     loadPost: (id) => {
       const actionObject = loadPost(id);
+      return dispatch(actionObject);
+    },
+    onDelete: (id) => {
+      const actionObject = deletePost(id);
       return dispatch(actionObject);
     }
   }

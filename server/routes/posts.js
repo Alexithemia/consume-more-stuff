@@ -82,6 +82,8 @@ router.route('/')
         for (let i = 0; i < req.files.length; i++) {
           uploadImage(req.files[i], req.body.title)
             .then(function (url) {
+              console.log('photos');
+
               Image.forge({
                 url: url,
                 post_id: postData.attributes.id
@@ -139,7 +141,7 @@ router.route('/search/:term')
           x.column('id', 'name');
         },
         'user': function (x) {
-          x.column('id', 'first_name', 'last_name');
+          x.column('id', 'username');
         },
         'postStatus': function (x) {
           x.column('id', 'name');
@@ -159,6 +161,28 @@ router.route('/search/:term')
         res.json(err);
       });
   })
+
+router.route('/user-posts')
+  .get(isAuthenticated, function (req, res) {
+
+    Post.where('user_id', req.user.id)
+      .orderBy('created_at', 'DESC')
+      .fetchAll({
+        withRelated: [{
+          category: (table) => table.column('id', 'name'),
+          user: (table) => table.column('id', 'username'),
+          postStatus: (table) => table.column('id', 'name'),
+          postCondition: (table) => table.column('id', 'name'),
+          image: (table) => table.column('id', 'post_id', 'url')
+        }]
+      })
+      .then(function (postList) {
+        res.json(postList);
+      })
+      .catch(function (err) {
+        res.json(err);
+      });
+  });
 
 router.route('/:id')
   .get(function (req, res) {

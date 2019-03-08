@@ -37,7 +37,8 @@ router.route('/users')
     User.where('id', req.user.id).save({
       username: req.body.username,
       first_name: req.body.first_name,
-      last_name: req.body.last_name
+      last_name: req.body.last_name,
+      email: req.body.email
     }, { patch: true })
       .then(function () {
         res.json({ success: true });

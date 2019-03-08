@@ -185,7 +185,7 @@ class AddPost extends Component {
           </div>
         </form>
 
-        <div className="submit-wrap">
+        <div className="submit-add-wrap">
           {isCategoryInvalid || isConditionInvalid || isTitleInvalid ?
             <input className="disabled" onClick={this.handleOnSubmit} type="submit" value="SUBMIT" form="add-post-form" disabled />
             :

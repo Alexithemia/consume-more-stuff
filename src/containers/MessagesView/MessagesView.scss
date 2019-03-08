@@ -1,0 +1,12 @@
+@import '../../../sass/config';
+.messages-wrap{
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  width:100%;
+  height: auto;
+  h2{
+    font-size: 2.2em;
+    margin-top: .2em;
+  }
+}

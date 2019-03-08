@@ -3,9 +3,9 @@
 
 .navigation {
   background-color: $overlay-background-color;
-  width: 16%;
   min-width: 250px;
-  height: 93vh;
+  height: auto;
+  min-height: 93vh;
   font-family: $primary-font, $font-type;
   // z-index: 1;
 
@@ -35,27 +35,28 @@
       transition-duration: 150ms;
       position: relative;
       left: 1em;
-      width: 92.5%;
+      width: 80%;
       height: fit-content;
-
+      margin-top: 0.35em;
+      
       .text {
         font-size: 1.2em;
         color: $contrast-font-color;
         padding: 0.35em;
-        margin-top: 0.35em;
-        border-top-left-radius: 5px;
-        border-bottom-left-radius: 5px;
+        width: 100%;
+        border-radius: 5px;
         text-decoration: none;
       }
 
       &:first-child {
         margin-top: 0;
 
-        .text {
-          background-color: $contrast-background-color;
-          color: white;
-          font-weight: bold;
-        }
+      }
+
+      .select {
+        background-color: $contrast-background-color;
+        color: white;
+        font-weight: bold;
       }
 
       &:hover {

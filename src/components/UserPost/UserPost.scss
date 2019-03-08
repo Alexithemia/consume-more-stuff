@@ -1,0 +1,49 @@
+@import '../../../sass/config';
+
+.user-post {
+  color: white;
+  transition: all 250ms ease-out;
+  border-radius: $modal-border-radius;
+  box-shadow: $box-shadow-gray;
+  margin: $post-margin $post-margin $post-margin $post-margin;
+  width: 24em;
+
+  .post-container {
+    .post-image-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: $post-gray;
+      border-top-left-radius: $modal-border-radius;
+      border-top-right-radius: $modal-border-radius;
+      margin-bottom: 0.5em;
+      height: 18em;
+
+      img {
+        height: 85%;
+        width: 85%;
+      }
+    }
+  }
+
+  .content {
+    .post-data {
+      margin-top: 0.35em;
+      margin-bottom: 0.35em;
+      margin-left: 0.35em;
+      color: $contrast-font-color;
+      letter-spacing: 0.02em;
+  
+      .text-highlight {
+        color : $gray-font-color;
+      }
+    }
+  
+    #post-title { font-weight: 600; text-decoration: none; }
+  }
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: $box-shadow-gray-hover;
+  }
+}

@@ -1,0 +1,22 @@
+@import '../../../sass/config';
+
+.conversation-wrap{
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  width:100%;
+}
+
+.replyForm{
+  display: flex;
+  flex-flow: column nowrap;
+  .reply{
+    resize: none;
+  }
+  .sendButton{
+    justify-self: flex-end;
+    width: 8em;
+    background-color: $contrast-background-color;
+    border-radius: 5px;
+  }
+}

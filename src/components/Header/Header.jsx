@@ -28,24 +28,30 @@ class Header extends Component {
     return (
       <div className="header">
         <div className="headerWrap">
-          <Link to="/" className="titleWrap">
-            <div className="logo">
-              {/* <img src="" alt="" srcSet=""/> */}
-              {/* use a blank square for now */}
-              <div className="placeholderLogo"></div>
+          {/* <div onClick={this.props.selectNav} className="linkwrap"> */}
+          <div className="titleWrap">
+            <div className="selectWrap" onClick={this.props.selectNav}>
+              <Link to="/" >
+                <div className="logo">
+                  {/* <img src="" alt="" srcSet=""/> */}
+                  {/* use a blank square for now */}
+                  <div className="placeholderLogo"></div>
+                </div>
+                <div className="title">{title}</div>
+              </Link>
             </div>
-            <div className="title">{title}</div>
-          </Link>
+          </div>
+          {/* </div> */}
 
           <SearchBar />
 
           <div className="loginStatusWrap">
             {isLoggedIn ?
-              <div className="loginStatus">
+              <div className="loginStatus" onClick={this.props.selectNav}>
                 Welcome back, {username}! <span onClick={this.onLogout} className="refLogin">Logout</span>
               </div>
               :
-              <div className="loginStatus">
+              <div className="loginStatus" onClick={this.props.selectNav}>
                 Need an account? <Link to="/login" className="refLogin">
                   Log in here.
               </Link>
