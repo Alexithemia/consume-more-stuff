@@ -6,11 +6,8 @@ import NewPost from '../../containers/NewPost';
 
 const Navigation = (props) => {
 
-
   const categoryList = props.categories.map(current => {
     const { id, name } = current;
-
-
 
     return (
       <li key={id} className="navItem" onClick={props.selectNav}>
@@ -21,7 +18,6 @@ const Navigation = (props) => {
         }
       </li>
     );
-
   });
 
   return (
@@ -64,6 +60,35 @@ const Navigation = (props) => {
                 <Link to="/dashboard/settings" className="text">Settings</Link>
               }
             </li>
+
+            {props.isAdmin ?
+              <>
+                <div className="navTitle">
+                  <span className="text">Admin</span>
+                </div>
+
+                <ul className="navMenu">
+                  <li className="navItem" onClick={props.selectNav}>
+                    {props.selected === 'Categories' ?
+                      <Link to="/admin/categories" className="text select">Categories</Link>
+                      :
+                      <Link to="/admin/categories" className="text">Categories</Link>
+                    }
+                  </li>
+
+                  <li className="navItem" onClick={props.selectNav}>
+                    {props.selected === 'Users' ?
+                      <Link to="/admin/users" className="text select">Users</Link>
+                      :
+                      <Link to="/admin/users" className="text">Users</Link>
+                    }
+                  </li>
+                </ul>
+
+              </>
+              :
+              null
+            }
           </ul>
 
           <NewPost categories={props.categories} />
@@ -71,6 +96,8 @@ const Navigation = (props) => {
         :
         <div className="navTitle">Log in for more!</div>
       }
+
+
     </div>
   );
 }

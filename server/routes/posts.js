@@ -82,7 +82,6 @@ router.route('/')
         for (let i = 0; i < req.files.length; i++) {
           uploadImage(req.files[i], req.body.title)
             .then(function (url) {
-              console.log('photos');
 
               Image.forge({
                 url: url,

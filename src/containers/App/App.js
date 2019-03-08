@@ -48,7 +48,7 @@ class App extends Component {
             <Header title={"CMS"} isLoggedIn={this.props.isLoggedIn} username={this.props.username} selectNav={this.selectNav} />
 
             <div className="mainContainer">
-              <Navigation categories={this.props.categories} isLoggedIn={this.props.isLoggedIn} selected={this.state.selectedRoute} selectNav={this.selectNav} />
+              <Navigation categories={this.props.categories} isLoggedIn={this.props.isLoggedIn} isAdmin={this.props.isAdmin} selected={this.state.selectedRoute} selectNav={this.selectNav} />
               <Switch>
                 <Route exact={true} path='/register' component={Register} />
                 <Route exact={true} path='/login' component={Login} />
@@ -75,7 +75,8 @@ const mapStateToProps = (state) => {
   return {
     categories: state.categories,
     username: state.username,
-    isLoggedIn: state.loggedIn
+    isLoggedIn: state.loggedIn,
+    isAdmin: state.isAdmin
   }
 }
 

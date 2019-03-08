@@ -27,7 +27,6 @@ class AddCategory extends Component {
     }
   }
 
-
   handleSubmit(e) {
     e.preventDefault();
 
@@ -38,7 +37,6 @@ class AddCategory extends Component {
     this.setState({
       categoryName: '',
     })
-
   }
 
   render() {
@@ -68,7 +66,6 @@ const mapDispatchToProps = (dispatch) => {
       const actionObject = addCategory(category);
       return dispatch(actionObject);
     }
-
   }
 }
 

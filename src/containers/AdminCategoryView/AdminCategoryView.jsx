@@ -91,8 +91,6 @@ class AdminCategoryView extends Component {
         >
           <EditCategory id={this.state.id} name={this.state.categoryName} close={this.closeModal} />
         </ReactModal>
-
-
       </div >
     )
   }
