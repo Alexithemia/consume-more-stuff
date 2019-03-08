@@ -1,5 +1,5 @@
 import { LOGIN_USER, LOGOUT_USER, LOAD_USERS } from '../actions';
-import { LOAD_CATEGORIES, LOAD_STATUSES, LOAD_CATEGORY, LOAD_CONDITIONS, ADD_POST, LOAD_POSTS, LOAD_POST, SEARCH_POST } from '../actions';
+import { LOAD_CATEGORIES, LOAD_STATUSES, LOAD_CATEGORY, ADD_CATEGORY, EDIT_CATEGORY, DELETE_CATEGORY, LOAD_CONDITIONS, ADD_POST, LOAD_POSTS, LOAD_POST, SEARCH_POST } from '../actions';
 
 const initialState = {
   posts: [],
@@ -29,6 +29,12 @@ const cmsReducer = (state = initialState, action) => {
       return Object.assign({}, state, { categories: [...action.payload] });
     case LOAD_CATEGORY:
       return Object.assign({}, state, { posts: [...action.payload] });
+    case ADD_CATEGORY:
+      return Object.assign({}, state, { categories: [...state.categories, action.payload.category] });
+    case EDIT_CATEGORY:
+      return Object.assign({}, state, { categories: [...action.payload] });
+    // case DELETE_CATEGORY:
+    // return Object.assign({}, state, { categories: [...action.payload] });
     case LOAD_CONDITIONS:
       return Object.assign({}, state, { postConditions: [...action.payload] });
     case LOAD_STATUSES:

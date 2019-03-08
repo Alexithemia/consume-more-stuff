@@ -44,8 +44,8 @@ router.route('/')
     Category.forge({
       name: req.body.name,
     }).save()
-      .then(function () {
-        res.json({ success: true });
+      .then(function (category) {
+        res.json({ success: true, category: category });
       })
       .catch(function (err) {
         res.json({ success: false, error: err })
@@ -83,16 +83,22 @@ router.route('/:id')
   .put(isAdmin, function (req, res) {
     Category.where('id', req.params.id).save({ name: req.body.name }, { patch: true })
       .then(function () {
-        res.json({ success: true });
+        Category.forge().orderBy('name', 'ASC').fetchAll()
+          .then(function (categories) {
+            res.json(categories);
+          })
       })
       .catch(function (err) {
         res.json({ success: false, error: err });
       });
   })
   .delete(isAdmin, function (req, res) {
-    new Category({ id: req.params.id }).destroy()
-      .then(function () {
-        res.json({ success: true });
+    Post.where("category_id", req.params.id).destroy()
+      .then(() => {
+        new Category({ id: req.params.id }).destroy()
+          .then(function () {
+            res.json({ success: true });
+          })
       })
       .catch(function (err) {
         res.status(500).json({ success: false, error: err });

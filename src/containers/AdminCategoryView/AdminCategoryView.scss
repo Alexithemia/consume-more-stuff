@@ -1,0 +1,90 @@
+@import '../../../sass/config';
+
+.editCategoryContainer{
+  width: 100%;
+  color: $gray-font-color;
+  // display: flex;
+// flex-direction: row;
+  .titleContainer{
+    width: 20%;
+    margin-top: 1em;
+    margin-left: 1em;
+    margin-bottom: 2em;
+    display: flex;
+    justify-content: space-around;
+
+    .title{
+      text-align: center;
+      font-size: 25px;
+      color: $contrast-font-color;
+    }
+
+    .add{
+      background-color: $contrast-background-color;
+      color: $primary-font-color;
+      border: none;
+      font-size: 20px;
+      font-weight: bold;
+  
+    }
+
+    .add:hover{
+      background-color:  $primary-font-color;
+      border: 1px solid $contrast-background-color;
+      color: $contrast-background-color;
+    }
+
+  }
+      .allCategoryContainer{
+        width: 100%;
+  
+        .categoryContainer{
+          margin-bottom: 1em;
+          margin-left: 1em;
+          display: flex;
+          justify-content: space-around;
+
+          .categoryName{
+            width: 10%;
+          }
+
+          .category{
+            width: 25%;
+          }
+
+          .btn{
+            width: auto;
+
+            .edit{
+              background-color: $contrast-background-color;
+              color: $primary-font-color;
+              border: none;
+              font-size: 16px;
+              font-family: $font-type;
+              font-weight: bold;
+            }
+
+            .edit:hover{
+              background-color: $primary-font-color;
+              border: 1px solid $green-hover-color;
+              color: $green-hover-color;
+            }
+
+            .delete{
+              background-color: $contrast-background-color;
+              color: $primary-font-color;
+              border: none;
+              font-size: 16px;
+              font-family: $font-type;
+              font-weight: bold;
+            }
+
+            .delete:hover{
+              background-color: $primary-font-color;
+              border: 1px solid red;
+              color: red;
+            }
+          }
+        }
+      }
+}

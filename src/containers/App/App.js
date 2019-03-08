@@ -23,8 +23,6 @@ class App extends Component {
 
   }
 
-
-
   componentDidMount() {
     return this.props.onLoad();
   }

@@ -6,6 +6,9 @@ export const LOGOUT_USER = 'LOGOUT_USER';
 export const LOAD_USERS = 'LOAD_USER';
 export const LOAD_CATEGORY = 'LOAD_CATEGORY';
 export const LOAD_CATEGORIES = 'LOAD_CATEGORIES';
+export const ADD_CATEGORY = 'ADD_CATEGORY';
+export const EDIT_CATEGORY = 'EDIT_CATEGORY';
+export const DELETE_CATEGORY = 'DELETE_CATEGORY';
 export const LOAD_CONDITIONS = 'LOAD_CONDITIONS';
 export const LOAD_STATUSES = 'LOAD_STATUSES';
 export const ADD_POST = 'ADD_POST';
@@ -148,6 +151,66 @@ export const loadCategory = (id) => {
           payload: body
         })
       })
+  }
+}
+
+export const addCategory = (category) => {
+  return (dispatch) => {
+    return fetch('/api/category', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(category)
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(body => {
+        dispatch({
+          type: ADD_CATEGORY,
+          payload: body
+        });
+      });
+  }
+}
+
+
+export const editCategories = (editCategory) => {
+  return (dispatch) => {
+    return fetch(`/api/category/${editCategory.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(editCategory),
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(body => {
+        dispatch({
+          type: EDIT_CATEGORY,
+          payload: body
+        });
+      });
+  }
+}
+
+export const deleteCategory = (id) => {
+  return (dispatch) => {
+    return fetch(`/api/category/${id}`, {
+      method: 'DELETE'
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(body => {
+        dispatch({
+          type: DELETE_CATEGORY,
+          payload: body
+        });
+      });
   }
 }
 
