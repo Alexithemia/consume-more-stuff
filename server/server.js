@@ -20,6 +20,9 @@ app.use(session({
   saveUninitialized: false,
 }));
 
+console.log('directory', __dirname);
+
+app.use(express.static(__dirname + '/../build'));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -72,11 +75,12 @@ passport.use(new LocalStrategy(function (username, password, done) {
     });
 }));
 
-app.get('/', (req, res) => {
-  return res.send('smoke test');
+app.use('/api', api);
+
+app.get('/*', function (req, res) {
+  res.render(__dirname + '/../build/index.html');
 });
 
-app.use('/api', api);
 
 app.listen(PORT, () => {
   console.log(`Server is running on PORT ${PORT}`);
